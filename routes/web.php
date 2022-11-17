@@ -3,6 +3,7 @@
 use App\Http\Controllers\Generator\ApiIntegrationController;
 use App\Http\Controllers\Generator\ControllerRequestRouteController;
 use App\Http\Controllers\Generator\MigrationModelController;
+use App\Services\LoteriasService;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
