@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConferidorController;
 use App\Http\Controllers\Generator\ApiIntegrationController;
 use App\Http\Controllers\Generator\ControllerRequestRouteController;
 use App\Http\Controllers\Generator\MigrationModelController;
@@ -27,3 +28,5 @@ Route::get('/get-select-options-inputs', [ControllerRequestRouteController::clas
  */
 Route::get('/apis-integrations', [ApiIntegrationController::class, 'index']);
 Route::post('/generate-api-integrations', [ApiIntegrationController::class, 'generateApiIntegration']);
+
+Route::post('/conferir-resultado', [ConferidorController::class, 'checkResult']);

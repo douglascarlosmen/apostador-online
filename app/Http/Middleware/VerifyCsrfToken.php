@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        '/criar-migration-e-model'
+        '/criar-migration-e-model',
+        '/conferir-resultado'
     ];
 }
