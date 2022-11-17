@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign("loto_id")->references("id")->on("lotos");
             $table->string('name');
             $table->integer('contest_number');
-            $table->string('string')->nullable();
+            $table->string('contest_date')->nullable();
             $table->string('place')->nullable();
             $table->longText('dozens');
             $table->longText('awards')->nullable();

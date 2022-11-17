@@ -16,7 +16,7 @@ class LotoResult extends Model
         "loto_id",
         "name",
         "contest_number",
-        "string",
+        "contest_date",
         "place",
         "dozens",
         "awards",
