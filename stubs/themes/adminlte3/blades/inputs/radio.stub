@@ -1,0 +1,9 @@
+{{-- radio input --}}
+<div class="col-sm-6">
+    <div class="form-group">
+        <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="customRadio1" name="$INPUT_NAME$" $INPUT_REQUIRED$ $INPUT_CHECKED$ $INPUT_DISABLED$>
+            <label for="customRadio1" class="custom-control-label">$INPUT_LABEL$</label>
+        </div>
+    </div>
+</div>

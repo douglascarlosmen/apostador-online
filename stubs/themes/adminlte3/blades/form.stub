@@ -1,0 +1,37 @@
+@extends('application.template.main')
+
+@section('page_header', '$FORM_HEADER$')
+
+@section('content')
+
+    <form action="$FORM_ACTION$" method="POST">
+        @csrf
+        $FORM_METHOD$
+        <!-- Dados box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Dados</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                   $FORM_INPUTS$
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        $FORM_BUTTON$
+
+    </form>
+
+@endsection

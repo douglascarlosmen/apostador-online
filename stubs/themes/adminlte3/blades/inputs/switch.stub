@@ -1,0 +1,9 @@
+{{-- switch input --}}
+<div class="col-md-12">
+    <div class="form-group">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" name="$INPUT_NAME$" $INPUT_REQUIRED$ $INPUT_CHECKED$ $INPUT_DISABLED$>
+            <label class="custom-control-label" for="customSwitch1">$INPUT_LABEL$</label>
+        </div>
+    </div>
+</div>

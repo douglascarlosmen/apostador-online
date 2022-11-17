@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Services;
+
+class ViaCepService
+{
+    protected $zipcode;
+
+    public function __construct(string $zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    public function getAddressInfo()
+    {
+        $url = "https://viacep.com.br/ws/" . $this->zipcode . "/json/";
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $viacep = curl_exec($curl);
+
+        return json_decode($viacep, true);
+    }
+}

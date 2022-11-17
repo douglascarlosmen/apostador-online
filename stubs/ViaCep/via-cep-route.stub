@@ -1,0 +1,6 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ViaCepApiController;
+
+Route::get('get-address-info-by-zipcode/{zipcode}', [ViaCepApiController::class, 'getAddressInfoByZipcode']);

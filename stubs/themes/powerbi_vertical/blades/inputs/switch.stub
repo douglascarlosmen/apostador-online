@@ -1,0 +1,9 @@
+{{-- checkbox input --}}
+<div class="col-md-12">
+    <div class="form-group">
+        <div class="checkbox">
+            <input type="checkbox" id="Checkbox_1" name="$INPUT_NAME$" value="$INPUT_VALUE$" $INPUT_REQUIRED$ $INPUT_CHECKED$ $INPUT_DISABLED$>
+            <label for="Checkbox_1">$INPUT_LABEL$</label>
+        </div>
+    </div>
+</div>

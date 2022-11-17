@@ -1,0 +1,25 @@
+{
+    "name": {
+        "type": "string"
+    },
+    "nickname": {
+        "type": "string",
+        "nullable": true
+    },
+    "age": {
+        "type": "integer",
+        "default": 18
+    },
+    "user_id": {
+        "type": "unsignedBigInteger",
+        "fk_to": "users"
+    }
+}
+
+
+// sem fk
+// {\"name\":{\"type\":\"string\"},\"nickname\":{\"type\":\"string\",\"nullable\":true},\"age\":{\"type\":\"integer\",\"default\":18}}
+
+//com fk
+// {\"name\":{\"type\":\"string\"},\"nickname\":{\"type\":\"string\",\"nullable\":true},\"age\":{\"type\":\"integer\",\"default\":18},\"user_id\":{\"type\":\"unsignedBigInteger\",\"fk_to\": \"users\"}}
+

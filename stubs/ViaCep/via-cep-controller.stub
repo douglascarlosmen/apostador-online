@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\ViaCepService;
+
+class ViaCepApiController extends Controller
+{
+    public function getAddressInfoByZipcode(string $zipcode)
+    {
+        return response([
+            'data' => (new ViaCepService($zipcode))->getAddressInfo()
+        ]);
+    }
+}

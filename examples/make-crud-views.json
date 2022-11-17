@@ -1,0 +1,63 @@
+// Form
+{
+    "Nome": {
+        "input_name": "name",
+        "input_value": "Douglas",
+        "required": true,
+        "input_type": "text"
+    },
+    "Email": {
+        "input_name": "email",
+        "input_type": "text"
+    },
+    "Idade": {
+        "input_name": "age",
+        "required": true,
+        "input_type": "text"
+    },
+    "Opção 1": {
+        "input_name": "option1",
+        "input_type": "checkbox"
+    },
+    "Opção 2": {
+        "input_name": "option2",
+        "input_checked": true,
+        "input_type": "radio"
+    },
+    "Opção 3": {
+        "input_name": "option3",
+        "input_checked": true,
+        "required": true,
+        "input_type": "switch"
+    },
+    "Renda Mensal": {
+        "input_name": "mensal_profit",
+        "input_type": "select",
+        "input_options": [
+            {"value": 1, "label": "select opção 1"},
+            {"value": 2, "label": "select opção 2"},
+            {"value": 3, "label": "select opção 3"}
+        ]
+    }
+}
+
+// Table
+{
+    "table_heads": [
+        "ID",
+        "Nome",
+        "Email",
+        "Idade"
+    ],
+    "table_rows": [
+        {
+            "data": [
+                "id",
+                "name",
+                "email",
+                "age"
+            ]
+        }
+    ]
+}
+

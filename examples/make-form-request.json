@@ -1,0 +1,14 @@
+{
+    "name": {
+        "is_required": true
+    },
+    "email": {
+        "is_email": true
+    },
+    "manager_email": {
+        "is_required": true,
+        "is_email": true
+    }
+}
+
+// {\"name\":{\"is_required\":true},\"email\":{\"is_email\": true},\"manager_email\":{\"is_required\":true,\"is_email\":true}}

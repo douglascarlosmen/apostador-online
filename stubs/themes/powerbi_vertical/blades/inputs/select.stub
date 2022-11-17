@@ -1,0 +1,10 @@
+{{-- select input --}}
+<div class="col-md-12">
+    <div class="form-group">
+        <label class="form-label">$INPUT_LABEL$</label>
+        <select class="form-select" name="$INPUT_NAME$" $INPUT_REQUIRED$ $INPUT_DISABLED$>
+            <option value="">Selecione ...</option>
+            $INPUT_OPTIONS$
+        </select>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="col-md-12">
+    <!-- $INPUT_LABEL$ input -->
+    <div class="form-group">
+        <label>$INPUT_LABEL$</label>
+        <input type="$INPUT_TYPE$" name="$INPUT_NAME$" class="form-control" placeholder="Digite..."
+            $INPUT_REQUIRED$ value="$INPUT_VALUE$" $INPUT_DISABLED$/>
+    </div>
+</div>

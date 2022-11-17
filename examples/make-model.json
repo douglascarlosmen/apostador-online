@@ -1,0 +1,20 @@
+{
+    "fields": [
+        "campo1",
+        "campo2",
+        "campo3",
+        "campo4"
+    ]
+}
+
+// {\"fields\":[\"campo1\",\"campo2\",\"campo3\",\"campo4\"]}
+
+{
+    "user": {
+        "type": "belongsTo",
+        "related_to": "User::class",
+        "foreign_key": "user_id"
+    }
+}
+
+{\"user\":{\"type\":\"belongsTo\",\"related_to\": \"User::class\",\"foreign_key\": \"user_id\"}}
