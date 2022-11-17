@@ -30,3 +30,7 @@ Route::get('/apis-integrations', [ApiIntegrationController::class, 'index']);
 Route::post('/generate-api-integrations', [ApiIntegrationController::class, 'generateApiIntegration']);
 
 Route::post('/conferir-resultado', [ConferidorController::class, 'checkResult']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
