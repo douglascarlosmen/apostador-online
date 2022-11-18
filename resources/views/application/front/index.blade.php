@@ -72,6 +72,10 @@
 
 <section id="results" class="container mt-3" style="display: none">
     <h1 class="text-center">Confira os seus resultados</h1>
+    <div id="resume-games">
+
+    </div>
+    <h1 class="text-center">Veja o resultado de cada jogo</h1>
     <div id="place-games" class="row justify-content-center">
 
     </div>
@@ -89,11 +93,19 @@
     const LOTTERY_BUTTON = $("#lottery-button");
     const TEXT_CHECK = $("#text-check");
     const PLACE_GAMES = $("#place-games");
+    const RESUME_GAMES = $("#resume-games");
     const RESULTS_CONTAINER = $("#results");
-
 
     var resultsChoosen = false;
     var lottery = "mega-sena";
+
+    var megasenaLottery = { min: 1, max: 60, totalPrize: 6, elegiblePrize: 4 };
+    var lotofacilLottery = { min: 1, max: 25, totalPrize: 15, elegiblePrize: 11 };
+    var lotomaniaLottery = { min: 1, max: 100, totalPrize: 20, elegiblePrize: 15 };
+    var quinaLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 2 };
+    var duplaLottery = { min: 1, max: 50, totalPrize: 6, elegiblePrize: 3 };
+    var diaLottery = { min: 1, max: 31, totalPrize: 7, elegiblePrize: 4 };
+    var timeLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 3 };
 
     applyLotteryNumbers(null);
 
@@ -105,32 +117,24 @@
 
         if (getOptions) {
             getContestOptions(lottery);
-        }else{
-            RESULTS_CONTAINER.hide();
         }
 
-        let megasenaNumbers = { min: 1, max: 60 }
-        let lotofacilNumbers = { min: 1, max: 25 }
-        let lotomaniaNumbers = { min: 1, max: 100 }
-        let quinaNumbers = { min: 1, max: 80 }
-        let duplaNumbers = { min: 1, max: 50 }
-        let diaNumbers = { min: 1, max: 31 }
-        let timeNumbers = { min: 1, max: 80 }
+        RESULTS_CONTAINER.hide();
 
         NUMBERS_CONTAINER.html('');
         switch (lottery){
             case "mega-sena":
-                for(let i = megasenaNumbers.min; i <= megasenaNumbers.max; i++){
+                for(let i = megasenaLottery.min; i <= megasenaLottery.max; i++){
                     NUMBERS_CONTAINER.append(`<span class="col-5 megasena-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "lotofacil":
-                for(let i = lotofacilNumbers.min; i <= lotofacilNumbers.max; i++){
+                for(let i = lotofacilLottery.min; i <= lotofacilLottery.max; i++){
                     NUMBERS_CONTAINER.append(`<span class="col-5 lotofacil-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "lotomania":
-                for(let i = lotomaniaNumbers.min; i <= lotomaniaNumbers.max; i++){
+                for(let i = lotomaniaLottery.min; i <= lotomaniaLottery.max; i++){
                     if (i == 100){
                         NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(00, 2)}</strong></span>`)
                     }else{
@@ -139,22 +143,22 @@
                 }
                 break;
             case "dupla-sena":
-                for(let i = duplaNumbers.min; i <= duplaNumbers.max; i++){
+                for(let i = duplaLottery.min; i <= duplaLottery.max; i++){
                     NUMBERS_CONTAINER.append(`<span class="col-5 dupla-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "quina":
-                for(let i = quinaNumbers.min; i <= quinaNumbers.max; i++){
+                for(let i = quinaLottery.min; i <= quinaLottery.max; i++){
                     NUMBERS_CONTAINER.append(`<span class="col-5 quina-number" id="number-${leftPad(i, 2)}""><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "dia-de-sorte":
-                for(let i = duplaNumbers.min; i <= duplaNumbers.max; i++){
+                for(let i = duplaLottery.min; i <= duplaLottery.max; i++){
                     NUMBERS_CONTAINER.append(`<span class="col-5 dia-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "timemania":
-                for(let i = timeNumbers.min; i <= timeNumbers.max; i++){
+                for(let i = timeLottery.min; i <= timeLottery.max; i++){
                     NUMBERS_CONTAINER.append(`<span class="col-5 time-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
@@ -282,21 +286,25 @@
             })
     }
 
+    let resultsTemplate = "";
     function getContestResult(){
         let contestNumber = CONTEST_SELECT.val();
         CHECK_BUTTON.attr("disabled", false);
         CONTEST_SELECT.attr("disabled", true);
         LOTTERY_SELECT.attr("disabled", true);
         LOTTERY_BUTTON.attr("disabled", true);
+        resultsTemplate = "";
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
                 resultsChoosen = true;
                 response.data.dozens.forEach(item => {
                     NUMBERS_CONTAINER.children(`#number-${item}`).addClass('selected')
+                    resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${item}</b></span>`;
                 })
                 freeActions();
             })
             .catch(error => {
+                console.log(error);
                 console.log(error.response.data);
                 freeActions();
             })
@@ -318,7 +326,8 @@
         CONTEST_SELECT.attr("disabled", true);
         LOTTERY_SELECT.attr("disabled", true);
         LOTTERY_BUTTON.attr("disabled", true);
-        PLACE_GAMES.html('')
+        PLACE_GAMES.html('');
+        RESUME_GAMES.html('');
         axios.post("{{route('check.results')}}", {
             dozens_text: TEXT_CHECK.val(),
             contest_number: CONTEST_SELECT.val(),
@@ -333,13 +342,13 @@
 
                     let betsTemplate = "";
                     splittedBet.forEach(bet => {
-                        betsTemplate += `<span class="numbers ${getLotteryNumberClass()}"><b>${bet}</b></span>`;
+                        betsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${bet}</b></span>`;
                     });
 
                     let matchesTemplate = "";
                     splittedMatch.forEach(match => {
                         if (match)
-                            matchesTemplate += `<span class="numbers ${getLotteryNumberClass()} selected"><b>${match}</b></span>`;
+                            matchesTemplate += `<span class="numbers ${getLotteryClass()} selected"><b>${match}</b></span>`;
                         else
                             matchesTemplate += `<span> Nenhuma dezena acertada. </span>`
                     });
@@ -364,6 +373,7 @@
                     `
                     PLACE_GAMES.append(template);
                 })
+                RESUME_GAMES.append(getBetsResume(response.data.bets.length, response.data.points));
                 RESULTS_CONTAINER.show();
                 CHECK_BUTTON.attr("disabled", false);
                 freeActions();
@@ -375,34 +385,194 @@
             })
     }
 
-    function getLotteryNumberClass(){
-        let lotteryNumberClass = "mega-sena";
+    function getLotteryClass(classType = 'number'){
+        let lotteryNumberClass = "";
+        let lotteryClass = "";
+        let lotteryBorderClass = "";
 
+        if (classType == 'number'){
+            switch(lottery){
+                case "mega-sena":
+                    lotteryNumberClass = "megasena-number";
+                    break;
+                case "lotofacil":
+                    lotteryNumberClass = "lotofacil-number";
+                    break;
+                case "lotomania":
+                    lotteryNumberClass = "lotomania-number";
+                    break;
+                case "dupla-sena":
+                    lotteryNumberClass = "dupla-number";
+                    break;
+                case "quina":
+                    lotteryNumberClass = "quina-number";
+                    break;
+                case "dia-de-sorte":
+                    lotteryNumberClass = "dia-number";
+                    break;
+                case "timemania":
+                    lotteryNumberClass = "time-number";
+                    break;
+            }
+
+            return lotteryNumberClass;
+        }else if (classType == 'border'){
+            switch(lottery){
+                case "mega-sena":
+                    lotteryBorderClass = "megasena-border";
+                    break;
+                case "lotofacil":
+                    lotteryBorderClass = "lotofacil-border";
+                    break;
+                case "lotomania":
+                    lotteryBorderClass = "lotomania-border";
+                    break;
+                case "dupla-sena":
+                    lotteryBorderClass = "dupla-border";
+                    break;
+                case "quina":
+                    lotteryBorderClass = "quina-border";
+                    break;
+                case "dia-de-sorte":
+                    lotteryBorderClass = "dia-border";
+                    break;
+                case "timemania":
+                    lotteryBorderClass = "time-border";
+                    break;
+            }
+
+            return lotteryBorderClass;
+        }else if (classType == 'lottery'){
+            switch(lottery){
+                case "mega-sena":
+                    lotteryClass = "megasena";
+                    break;
+                case "lotofacil":
+                    lotteryClass = "lotofacil";
+                    break;
+                case "lotomania":
+                    lotteryClass = "lotomania";
+                    break;
+                case "dupla-sena":
+                    lotteryClass = "dupla";
+                    break;
+                case "quina":
+                    lotteryClass = "quina";
+                    break;
+                case "dia-de-sorte":
+                    lotteryClass = "dia";
+                    break;
+                case "timemania":
+                    lotteryClass = "time";
+                    break;
+            }
+
+            return lotteryClass;
+        }
+    }
+
+    function getBetsResume(totalGames, points){
+        let template = "";
+        template += `<b mb-2>TOTAL DE JOGOS: ${totalGames}</b>`;
+        template += `<div class="row mt-1 mb-1">${resultsTemplate}</div>`;
+        template += `<b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO ${CONTEST_SELECT.val()}</b>`;
+
+        let tableHeaderTemplate = "<th>PONTOS</th>";
+        let tableRowTemplate = "<th>ACERTOS</th>";
+        let icon = ""
         switch(lottery){
             case "mega-sena":
-                lotteryNumberClass = "megasena-number";
+                for(let i = megasenaLottery.totalPrize; i >= 1; i--){
+                    if (i >= megasenaLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
             case "lotofacil":
-                lotteryNumberClass = "lotofacil-number";
+                for(let i = lotofacilLottery.totalPrize; i >= 1; i--){
+                    if (i >= lotofacilLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
             case "lotomania":
-                lotteryNumberClass = "lotomania-number";
+                for(let i = lotomaniaLottery.totalPrize; i >= 1; i--){
+                    if (i >= lotomaniaLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
             case "dupla-sena":
-                lotteryNumberClass = "dupla-number";
+                for(let i = duplaLottery.totalPrize; i >= 1; i--){
+                    if (i >= duplaLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
             case "quina":
-                lotteryNumberClass = "quina-number";
+                for(let i = quinaLottery.totalPrize; i >= 1; i--){
+                    if (i >= quinaLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
             case "dia-de-sorte":
-                lotteryNumberClass = "dia-number";
+                for(let i = diaLottery.totalPrize; i >= 1; i--){
+                    if (i >= diaLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
             case "timemania":
-                lotteryNumberClass = "time-number";
+                for(let i = timeLottery.totalPrize; i >= 1; i--){
+                    if (i >= timeLottery.elegiblePrize)
+                        icon = `<i class="fas fa-trophy"></i>`;
+                    else
+                        icon = "";
+                    tableHeaderTemplate += `<th>${icon} ${i}</th>`;
+                    tableRowTemplate += `<td>${getPoints(i, points)}</td>`
+                }
                 break;
-        }
+        };
 
-        return lotteryNumberClass;
+        template += `
+            <table class="table ${getLotteryClass('border')}">
+                <thead class="${getLotteryClass('lottery')}">
+                    <tr class="text-center">
+                        ${tableHeaderTemplate}
+                    <tr>
+                </thead>
+
+                <tbody>
+                    <tr class="text-center">
+                        ${tableRowTemplate}
+                    <tr>
+                <tbody>
+            </table>
+        `
+        return template;
+    }
+
+    function getPoints(index, points){
+        return  points.filter(x => x==index).length;
     }
 </script>
 
