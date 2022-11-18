@@ -65,9 +65,13 @@ body{
 }
 
 .megasena-number{
-    background-color: var(--mega);
     color: var(--mega) !important;
     border: 3px var(--mega) solid;
+}
+
+.megasena-number.selected{
+    background-color: var(--mega) !important;
+    color: white !important;
 }
 
 .lotofacil{
@@ -80,9 +84,13 @@ body{
 }
 
 .lotofacil-number{
-    background-color: var(--lotofacil);
     color: var(--lotofacil) !important;
     border: 3px var(--lotofacil) solid;
+}
+
+.lotofacil-number.selected{
+    background-color: var(--lotofacil) !important;
+    color: white !important;
 }
 
 .lotomania{
@@ -95,9 +103,13 @@ body{
 }
 
 .lotomania-number{
-    background-color: var(--lotomania);
     color: var(--lotomania) !important;
     border: 3px var(--lotomania) solid;
+}
+
+.lotomania-number.selected{
+    background-color: var(--lotomania) !important;
+    color: white !important;
 }
 
 .quina{
@@ -110,9 +122,13 @@ body{
 }
 
 .quina-number{
-    background-color: var(--quina);
     color: var(--quina) !important;
     border: 3px var(--quina) solid;
+}
+
+.quina-number.selected{
+    background-color: var(--quina) !important;
+    color: white !important;
 }
 
 .dupla{
@@ -125,9 +141,13 @@ body{
 }
 
 .dupla-number{
-    background-color: var(--dupla);
     color: var(--dupla) !important;
     border: 3px var(--dupla) solid;
+}
+
+.dupla-number.selected{
+    background-color: var(--dupla) !important;
+    color: white !important;
 }
 
 .dia{
@@ -140,9 +160,13 @@ body{
 }
 
 .dia-number{
-    background-color: var(--dia);
     color: var(--dia) !important;
     border: 3px var(--dia) solid;
+}
+
+.dia-number.selected{
+    background-color: var(--dia) !important;
+    color: white !important;
 }
 
 .time{
@@ -155,7 +179,10 @@ body{
 }
 
 .time-number{
-    background-color: var(--time);
     color: var(--time-green) !important;
     border: 3px var(--time) solid;
+}
+
+.time-number.selected{
+    background-color: var(--time) !important;
 }

@@ -11,7 +11,7 @@ class AxiosController extends Controller
     {
         $contestsNumbersArray = LotoResult::whereHas('loto', function ($query) use ($request) {
             $query->where('name', $request->loto_name);
-        })->get()->keyBy('contest_number')->keys()->toArray();
+        })->limit(10)->get()->keyBy('contest_number')->keys()->toArray();
 
         return response([
             'contestsNumbers' => $contestsNumbersArray
