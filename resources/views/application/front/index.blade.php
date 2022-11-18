@@ -113,6 +113,10 @@
     function applyLotteryNumbers(event, getOptions = true){
         let oldLottery = lottery;
         if (event != null) lottery = event.target.value;
+
+        if (lottery == "")
+            return Swal.fire("Aviso!", "Escolha uma loteria para exibir os concursos.", "warning");
+
         resultsChoosen = false;
         changeLotteryLayout(oldLottery, lottery);
 
@@ -291,6 +295,10 @@
     let resultsTemplate = "";
     function getContestResult(){
         let contestNumber = CONTEST_SELECT.val();
+
+        if (contestNumber == "")
+            return Swal.fire("Aviso!", "Escolha um concurso para exibir os resultados.", "warning");
+
         CHECK_BUTTON.attr("disabled", false);
         CONTEST_SELECT.attr("disabled", true);
         LOTTERY_SELECT.attr("disabled", true);
