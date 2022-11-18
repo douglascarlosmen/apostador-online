@@ -18,7 +18,11 @@ class ConferidorController extends Controller
 
         if ($request->dozens_text != '') {
 
+            $response = [];
+
             $rowsArray = preg_split('/\n|\r\n?/', $request->dozens_text);
+
+
 
             foreach ($rowsArray as $index => $row) {
                 foreach ($this->oneDigitNumbers() as $oneDigitNumber) {
@@ -26,14 +30,31 @@ class ConferidorController extends Controller
                 }
             }
 
-            $resultsArray = [];
+            $response['bets'] = $rowsArray;
 
-            foreach ($rowsArray as $row) {
+            $pointsArray = [];
+            $matchesArray = [];
+
+            foreach ($response['bets'] as $index => $row) {
                 $dozensBetArray = explode(',', $row);
-                $resultsArray[] = (new ConferidorService)->checkNumberOfHits($dozensBetArray, $resultDozensArray);
+                $pointsArray[] = (new ConferidorService)->checkNumberOfHits($dozensBetArray, $resultDozensArray);
+                $matchesArray[] = array_intersect($dozensBetArray, $resultDozensArray);
             }
 
-            return response(['results' => $resultsArray]);
+            foreach ($matchesArray as $matchArray) {
+
+                $tmpString = '';
+
+                foreach($matchArray as $index => $match) {
+                    $tmpString .= "$match,";
+                }
+
+                $response['matches'][] = substr($tmpString, 0, -1);
+            }
+
+            $response['points'] = $pointsArray;
+
+            return response($response);
         }
     }
 

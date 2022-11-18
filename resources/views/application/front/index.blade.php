@@ -57,15 +57,19 @@
         </div>
 
         <div class="col-md-6 pt-4">
+            <form action="/conferir-resultado" method="post">
+            <input type="hidden" name="loto_name" value="mega-sena">
+            <input type="hidden" name="contest_number" value="2539">
             <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small>
-            <textarea name="" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06,"></textarea>
+            <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06,"></textarea>
             <input id="text-file" type="file" accept=".txt" onchange="uploadFile()" class="form-control" style="display: none"/>
-            <button class="btn btn-secondary w-100 mb-2" id="upload-button">
+            <button type="button" class="btn btn-secondary w-100 mb-2" id="upload-button">
                 Importar Jogos
             </button>
             <button class="btn w-100 megasena" id="check-bet">
                 <b>Conferir Apostas<b>
             </button>
+        </form>
         </div>
     </div>
 </section>
