@@ -17,4 +17,13 @@ class AxiosController extends Controller
             'contestsNumbers' => $contestsNumbersArray
         ]);
     }
+
+    public function getResultByConstestNumberAndLoto(Request $request)
+    {
+        $result = LotoResult::whereHas('loto', function ($query) use ($request) {
+            $query->where('name', $request->loto_name);
+        })->where('contest_number', $request->contest_number)->first();
+
+        return response(['dozens' => json_decode($result->dozens, true)]);
+    }
 }
