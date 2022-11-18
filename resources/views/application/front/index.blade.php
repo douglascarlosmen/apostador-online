@@ -44,6 +44,9 @@
 </section>
 
 <section id="contest-numbers" class="container mt-3">
+    <div id="resume-games">
+
+    </div>
     <div class="row">
         <div class="col-md-6">
             <div id="contest-display">
@@ -72,10 +75,6 @@
 </section>
 
 <section id="results" class="container mt-3" style="display: none">
-    <h1 class="text-center">Confira os seus resultados</h1>
-    <div id="resume-games">
-
-    </div>
     <h1 class="text-center">Veja o resultado de cada jogo</h1>
     <div id="place-games" class="row justify-content-center">
 
@@ -125,6 +124,7 @@
             getContestOptions(lottery);
         }
 
+        RESUME_GAMES.hide();
         RESULTS_CONTAINER.hide();
 
         NUMBERS_CONTAINER.html('');
@@ -389,6 +389,7 @@
                 })
                 RESUME_GAMES.append(getBetsResume(response.data.bets.length, response.data.points));
                 RESULTS_CONTAINER.show();
+                RESUME_GAMES.show();
                 CHECK_BUTTON.attr("disabled", false);
                 freeActions();
             })
