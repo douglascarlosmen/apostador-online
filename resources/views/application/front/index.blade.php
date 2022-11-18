@@ -58,15 +58,22 @@
 
         <div class="col-md-6 pt-4">
             <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small>
-            <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06,"></textarea>
+            <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06"></textarea>
             <input id="text-file" type="file" accept=".txt" onchange="uploadFile()" class="form-control" style="display: none"/>
             <button class="btn btn-secondary w-100 mb-2" id="upload-button">
                 Importar Jogos
             </button>
-            <button class="btn w-100 megasena" id="check-bet">
+            <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()" disabled>
                 <b>Conferir Apostas<b>
             </button>
         </div>
+    </div>
+</section>
+
+<section id="results" class="container mt-3" style="display: none">
+    <h1 class="text-center">Confira os seus resultados</h1>
+    <div id="place-games">
+
     </div>
 </section>
 
@@ -81,6 +88,9 @@
     const CONTEST_SELECT = $("#contest-select");
     const LOTTERY_SELECT = $("#lottery-select");
     const LOTTERY_BUTTON = $("#lottery-button");
+    const TEXT_CHECK = $("#text-check");
+    const PLACE_GAMES = $("#place-games");
+    const RESULTS_CONTAINER = $("#results");
 
     var lottery = "mega-sena";
 
@@ -91,8 +101,12 @@
         if (event != null) lottery = event.target.value;
 
         changeLotteryLayout(oldLottery, lottery);
-        
-        if (getOptions) getContestOptions(lottery);
+
+        if (getOptions) {
+            getContestOptions(lottery);
+        }else{
+            RESULTS_CONTAINER.hide();
+        }
 
         let megasenaNumbers = { min: 1, max: 60 }
         let lotofacilNumbers = { min: 1, max: 25 }
@@ -269,6 +283,7 @@
 
     function getContestResult(){
         let contestNumber = CONTEST_SELECT.val();
+        CHECK_BUTTON.attr("disabled", false);
         CONTEST_SELECT.attr("disabled", true);
         LOTTERY_SELECT.attr("disabled", true);
         LOTTERY_BUTTON.attr("disabled", true);
@@ -289,6 +304,31 @@
         CONTEST_SELECT.attr("disabled", false);
         LOTTERY_SELECT.attr("disabled", false);
         LOTTERY_BUTTON.attr("disabled", false);
+    }
+
+    function checkBets(){
+        if (!TEXT_CHECK.val())
+            return Swal.fire("Aviso!", "Preencha pelo menos um jogo para conferir os resultados", "warning");
+
+        CHECK_BUTTON.attr("disabled", true);
+        CONTEST_SELECT.attr("disabled", true);
+        LOTTERY_SELECT.attr("disabled", true);
+        LOTTERY_BUTTON.attr("disabled", true);
+        axios.post("{{route('check.results')}}", {
+            dozens_text: TEXT_CHECK.val(),
+            contest_number: CONTEST_SELECT.val(),
+            loto_name: lottery
+        })
+            .then(response => {
+                RESULTS_CONTAINER.show();
+                console.log(response.data);
+                CHECK_BUTTON.attr("disabled", false);
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                CHECK_BUTTON.attr("disabled", false);
+                freeActions()
+            })
     }
 </script>
 
