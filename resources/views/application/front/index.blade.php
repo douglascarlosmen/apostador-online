@@ -17,26 +17,26 @@
     <div class="row">
         <div class="col-md-4">
             <label for="lottery">Escolha a loteria</label>
-            <select name="lottery" id="lottery" class="form-control" onchange="applyLotteryNumbers(event)">
-                <option value="megasena">Mega-Sena</option>
+            <select name="lottery" id="lottery-select" class="form-control" onchange="applyLotteryNumbers(event)">
+                <option value="mega-sena">Mega-Sena</option>
                 <option value="lotofacil">Lotofácil</option>
                 <option value="lotomania">Lotomania</option>
-                <option value="duplasena">Dupla-Sena</option>
+                <option value="dupla-sena">Dupla-Sena</option>
                 <option value="quina">Quina</option>
-                <option value="diadesorte">Dia de Sorte</option>
+                <option value="dia-de-sorte">Dia de Sorte</option>
                 <option value="timemania">Timemania</option>
             </select>
         </div>
 
         <div class="col-md-4">
             <label for="contest">Escolha um concurso</label>
-            <select name="contest" id="contest" class="form-control">
-                <option value=""></option>
+            <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null, false)">
+
             </select>
         </div>
 
         <div class="col-md-4 d-flex align-items-end">
-            <button class="btn btn-success w-100">
+            <button class="btn btn-success w-100" id="lottery-button" onclick="getContestResult()">
                 Escolher
             </button>
         </div>
@@ -58,15 +58,22 @@
 
         <div class="col-md-6 pt-4">
             <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small>
-            <textarea name="" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06,"></textarea>
+            <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06"></textarea>
             <input id="text-file" type="file" accept=".txt" onchange="uploadFile()" class="form-control" style="display: none"/>
             <button class="btn btn-secondary w-100 mb-2" id="upload-button">
                 Importar Jogos
             </button>
-            <button class="btn w-100 megasena" id="check-bet">
+            <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()" disabled>
                 <b>Conferir Apostas<b>
             </button>
         </div>
+    </div>
+</section>
+
+<section id="results" class="container mt-3" style="display: none">
+    <h1 class="text-center">Confira os seus resultados</h1>
+    <div id="place-games" class="row justify-content-center">
+
     </div>
 </section>
 
@@ -75,14 +82,31 @@
 
 @section("scripts")
 <script>
-    var lottery = "megasena";
+    const NUMBERS_CONTAINER = $("#numbers");
+    const NUMBERS_HEADER = $("#numbers-header");
+    const CHECK_BUTTON = $("#check-bet");
+    const CONTEST_SELECT = $("#contest-select");
+    const LOTTERY_SELECT = $("#lottery-select");
+    const LOTTERY_BUTTON = $("#lottery-button");
+    const TEXT_CHECK = $("#text-check");
+    const PLACE_GAMES = $("#place-games");
+    const RESULTS_CONTAINER = $("#results");
+
+    var lottery = "mega-sena";
+
     applyLotteryNumbers(null);
 
-    function applyLotteryNumbers(event){
+    function applyLotteryNumbers(event, getOptions = true){
         let oldLottery = lottery;
         if (event != null) lottery = event.target.value;
 
         changeLotteryLayout(oldLottery, lottery);
+
+        if (getOptions) {
+            getContestOptions(lottery);
+        }else{
+            RESULTS_CONTAINER.hide();
+        }
 
         let megasenaNumbers = { min: 1, max: 60 }
         let lotofacilNumbers = { min: 1, max: 25 }
@@ -92,58 +116,54 @@
         let diaNumbers = { min: 1, max: 31 }
         let timeNumbers = { min: 1, max: 80 }
 
-        const NUMBERS_CONTAINER = $("#numbers");
         NUMBERS_CONTAINER.html('');
         switch (lottery){
-            case "megasena":
+            case "mega-sena":
                 for(let i = megasenaNumbers.min; i <= megasenaNumbers.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 megasena-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 megasena-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "lotofacil":
                 for(let i = lotofacilNumbers.min; i <= lotofacilNumbers.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 lotofacil-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 lotofacil-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "lotomania":
                 for(let i = lotomaniaNumbers.min; i <= lotomaniaNumbers.max; i++){
                     if (i == 100){
-                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number"><strong>${leftPad(00, 2)}</strong></span>`)
+                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(00, 2)}</strong></span>`)
                     }else{
-                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                     }
                 }
                 break;
-            case "duplasena":
+            case "dupla-sena":
                 for(let i = duplaNumbers.min; i <= duplaNumbers.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 dupla-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 dupla-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "quina":
                 for(let i = quinaNumbers.min; i <= quinaNumbers.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 quina-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 quina-number" id="number-${leftPad(i, 2)}""><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
-            case "diadesorte":
+            case "dia-de-sorte":
                 for(let i = duplaNumbers.min; i <= duplaNumbers.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 dia-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 dia-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "timemania":
                 for(let i = timeNumbers.min; i <= timeNumbers.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 time-number"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 time-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
         }
     }
 
     function changeLotteryLayout(oldLottery, lottery){
-        const NUMBERS_CONTAINER = $("#numbers");
-        const NUMBERS_HEADER = $("#numbers-header");
-        const CHECK_BUTTON = $("#check-bet");
         //Remove old style
         switch (oldLottery){
-            case "megasena":
+            case "mega-sena":
                 NUMBERS_CONTAINER.removeClass("megasena-border");
                 NUMBERS_HEADER.removeClass("megasena");
                 CHECK_BUTTON.removeClass("megasena");
@@ -158,7 +178,7 @@
                 NUMBERS_HEADER.removeClass("lotomania");
                 CHECK_BUTTON.removeClass("lotomania");
                 break;
-            case "duplasena":
+            case "dupla-sena":
                 NUMBERS_CONTAINER.removeClass("dupla-border");
                 NUMBERS_HEADER.removeClass("dupla");
                 CHECK_BUTTON.removeClass("dupla");
@@ -168,7 +188,7 @@
                 NUMBERS_HEADER.removeClass("quina");
                 CHECK_BUTTON.removeClass("quina");
                 break;
-            case "diadesorte":
+            case "dia-de-sorte":
                 NUMBERS_CONTAINER.removeClass("dia-border");
                 NUMBERS_HEADER.removeClass("dia");
                 CHECK_BUTTON.removeClass("dia");
@@ -183,7 +203,7 @@
         //add new style
         NUMBERS_HEADER.html('');
         switch(lottery){
-            case "megasena":
+            case "mega-sena":
                 NUMBERS_CONTAINER.addClass("megasena-border");
                 NUMBERS_HEADER.addClass("megasena");
                 NUMBERS_HEADER.append("<i>Mega-Sena</i>");
@@ -201,7 +221,7 @@
                 NUMBERS_HEADER.append("<i>Lotomania</i>");
                 CHECK_BUTTON.addClass("lotomania");
                 break;
-            case "duplasena":
+            case "dupla-sena":
                 NUMBERS_CONTAINER.addClass("dupla-border");
                 NUMBERS_HEADER.addClass("dupla");
                 NUMBERS_HEADER.append("<i>Dupla-Sena</i>");
@@ -213,7 +233,7 @@
                 NUMBERS_HEADER.append("<i>Quina</i>");
                 CHECK_BUTTON.addClass("quina");
                 break;
-            case "diadesorte":
+            case "dia-de-sorte":
                 NUMBERS_CONTAINER.addClass("dia-border");
                 NUMBERS_HEADER.addClass("dia");
                 NUMBERS_HEADER.append("<i>Dia de Sorte</i>");
@@ -247,6 +267,140 @@
     $('#upload-button').on('click', function (){
         $('#text-file')[0].click();
     });
+
+    function getContestOptions(){
+        axios.get(`{{route('lottery.contest')}}?loto_name=${lottery}`)
+            .then(response => {
+                CONTEST_SELECT.html('');
+                response.data.contestsNumbers.forEach(item => {
+                    CONTEST_SELECT.append(`<option value=${item}>${item}</option>`)
+                })
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            })
+    }
+
+    function getContestResult(){
+        let contestNumber = CONTEST_SELECT.val();
+        CHECK_BUTTON.attr("disabled", false);
+        CONTEST_SELECT.attr("disabled", true);
+        LOTTERY_SELECT.attr("disabled", true);
+        LOTTERY_BUTTON.attr("disabled", true);
+        axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
+            .then(response => {
+                response.data.dozens.forEach(item => {
+                    NUMBERS_CONTAINER.children(`#number-${item}`).addClass('selected')
+                })
+                freeActions();
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                freeActions();
+            })
+    }
+
+    function freeActions(){
+        CONTEST_SELECT.attr("disabled", false);
+        LOTTERY_SELECT.attr("disabled", false);
+        LOTTERY_BUTTON.attr("disabled", false);
+    }
+
+    function checkBets(){
+        if (!TEXT_CHECK.val())
+            return Swal.fire("Aviso!", "Preencha pelo menos um jogo para conferir os resultados", "warning");
+
+        CHECK_BUTTON.attr("disabled", true);
+        CONTEST_SELECT.attr("disabled", true);
+        LOTTERY_SELECT.attr("disabled", true);
+        LOTTERY_BUTTON.attr("disabled", true);
+        PLACE_GAMES.html('')
+        axios.post("{{route('check.results')}}", {
+            dozens_text: TEXT_CHECK.val(),
+            contest_number: CONTEST_SELECT.val(),
+            loto_name: lottery
+        })
+            .then(response => {
+                console.log(response.data);
+                let splittedBet = "";
+                let splittedMatch = "";
+                response.data.bets.forEach((item, i) => {
+                    splittedBet = item.split(',');
+                    splittedMatch = response.data.matches[i].split(',');
+
+                    let betsTemplate = "";
+                    splittedBet.forEach(bet => {
+                        betsTemplate += `<span class="numbers ${getLotteryNumberClass()}">${bet}</span>`;
+                    });
+
+                    let matchesTemplate = "";
+                    splittedMatch.forEach(match => {
+                        if (match)
+                            matchesTemplate += `<span class="numbers ${getLotteryNumberClass()} selected">${match}</span>`;
+                        else
+                            matchesTemplate += `<span> Nenhuma dezena acertada. </span>`
+                    });
+
+                    let template = `
+                    <div id="bet-${i}" class="card col-md-3 m-2 p-2 shadow-lg">
+                        <div class="card-body">
+                            <p>Jogo ${i + 1} - ${response.data.points[i]} Acertos</p>
+                            <div class="row">
+                                <div class="row">
+                                    ${betsTemplate}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="row">
+                                    ${matchesTemplate}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    PLACE_GAMES.append(template);
+                })
+                RESULTS_CONTAINER.show();
+                CHECK_BUTTON.attr("disabled", false);
+                freeActions();
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                CHECK_BUTTON.attr("disabled", false);
+                freeActions();
+            })
+    }
+
+    function getLotteryNumberClass(){
+        let lotteryNumberClass = "mega-sena";
+
+        switch(lottery){
+            case "mega-sena":
+                lotteryNumberClass = "megasena-number";
+                break;
+            case "lotofacil":
+                lotteryNumberClass = "lotofacil-number";
+                break;
+            case "lotomania":
+                lotteryNumberClass = "lotomania-number";
+                break;
+            case "dupla-sena":
+                lotteryNumberClass = "dupla-number";
+                break;
+            case "quina":
+                lotteryNumberClass = "quina-number";
+                break;
+            case "dia-de-sorte":
+                lotteryNumberClass = "dia-number";
+                break;
+            case "timemania":
+                lotteryNumberClass = "time-number";
+                break;
+        }
+
+        return lotteryNumberClass;
+    }
 </script>
 
 @endsection

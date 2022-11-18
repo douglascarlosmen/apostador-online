@@ -21,7 +21,7 @@ body{
     display: inline-block;
 }
 
-#numbers span{
+#numbers span, .numbers{
     border-radius: 100%;
     background-color: white;
     display: flex;
