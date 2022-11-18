@@ -58,7 +58,7 @@
 
         <div class="col-md-6 pt-4">
             <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small>
-            <textarea name="" id="" cols="30" rows="10" class="form-control bets mb-3" placeholder="01;02;03;04;05;06;"></textarea>
+            <textarea name="" id="" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06,"></textarea>
             <button class="btn w-100 megasena" id="check-bet">
                 <b>Conferir Apostas<b>
             </button>
