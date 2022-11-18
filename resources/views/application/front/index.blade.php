@@ -120,6 +120,7 @@
 
         resultsChoosen = false;
         changeLotteryLayout(oldLottery, lottery);
+        dozens = [];
 
         if (getOptions) {
             getContestOptions(lottery);
@@ -298,11 +299,14 @@
     }
 
     let resultsTemplate = "";
-    function getContestResult(){
+    async function getContestResult(){
         let contestNumber = CONTEST_SELECT.val();
 
         if (contestNumber == "")
             return Swal.fire("Aviso!", "Escolha um concurso para exibir os resultados.", "warning");
+
+        dozens = [];
+        await clearDozens();
 
         CHECK_BUTTON.attr("disabled", false);
         CONTEST_SELECT.attr("disabled", true);
@@ -312,9 +316,8 @@
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
                 resultsChoosen = true;
-                dozens = [];
-                response.data.dozens.forEach(item => {
-                    toggleDozen(`number-${item}`);
+                response.data.dozens.forEach(async item => {
+                    await toggleDozen(`number-${item}`);
                     resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${item}</b></span>`;
                 })
                 freeActions();
@@ -337,6 +340,8 @@
             return Swal.fire("Aviso!", "Escolha um concurso para exibir os resultados.", "warning");
         if (!TEXT_CHECK.val())
             return Swal.fire("Aviso!", "Preencha pelo menos um jogo para conferir os resultados", "warning");
+        if (!overLotteryNumbersLimit())
+            return Swal.fire("Aviso!", "Os resultados para essa loteria estão inválidos.", "warning");
 
         CHECK_BUTTON.attr("disabled", true);
         CONTEST_SELECT.attr("disabled", true);
@@ -611,6 +616,13 @@
         }
         TEXT_TOTAL_GAMES.html('');
         TEXT_TOTAL_GAMES.append(`Total de Jogos: ${lineCount}`);
+   }
+
+   function clearDozens(){
+        for(let i = 0; i < NUMBERS_CONTAINER.children().length; i++){
+            let children = NUMBERS_CONTAINER.children()[i];
+            children.classList.remove("selected");
+        }
    }
 
    function toggleDozen(id){
