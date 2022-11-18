@@ -35,7 +35,7 @@
             </select>
         </div>
 
-        <div class="col-md-4 d-flex align-items-end">
+        <div class="col-md-4 d-flex align-items-end mt-2">
             <button class="btn btn-success w-100" id="lottery-button" onclick="getContestResult()">
                 Escolher
             </button>
@@ -487,9 +487,21 @@
 
     function getBetsResume(totalGames, points){
         let template = "";
-        template += `<b mb-2>TOTAL DE JOGOS: ${totalGames}</b>`;
-        template += `<div class="row mt-1 mb-1">${resultsTemplate}</div>`;
-        template += `<b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO ${CONTEST_SELECT.val()}</b>`;
+        template += `
+            <div class="row justify-content-between">
+                <div class="col-md-10">
+                    <b mb-2>TOTAL DE JOGOS: ${totalGames}</b>
+                    <div class="row mt-1 mb-1">${resultsTemplate}</div>
+                    <b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO ${CONTEST_SELECT.val()}</b>
+                </div>
+                <div class="col-md-2">
+                    <img src="{{asset('img/logo-apostador.png')}}" alt="logo" height="100">
+                </div>
+            </div>
+        `
+        template += ``;
+        template += ``;
+        template += ``;
 
         let tableHeaderTemplate = "<th>PONTOS</th>";
         let tableRowTemplate = "<th>ACERTOS</th>";
@@ -568,19 +580,21 @@
         };
 
         template += `
-            <table class="table ${getLotteryClass('border')}">
-                <thead class="${getLotteryClass('lottery')}">
-                    <tr class="text-center">
-                        ${tableHeaderTemplate}
-                    <tr>
-                </thead>
+            <div class="table-responsive">
+                <table class="table ${getLotteryClass('border')} w-100">
+                    <thead class="${getLotteryClass('lottery')}">
+                        <tr class="text-center">
+                            ${tableHeaderTemplate}
+                        <tr>
+                    </thead>
 
-                <tbody>
-                    <tr class="text-center">
-                        ${tableRowTemplate}
-                    <tr>
-                <tbody>
-            </table>
+                    <tbody>
+                        <tr class="text-center">
+                            ${tableRowTemplate}
+                        <tr>
+                    <tbody>
+                </table>
+            </div>
         `
         return template;
     }
