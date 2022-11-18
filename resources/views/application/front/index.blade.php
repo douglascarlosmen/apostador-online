@@ -18,6 +18,7 @@
         <div class="col-md-4 mt-2">
             <label for="lottery">Escolha a loteria</label>
             <select name="lottery" id="lottery-select" class="form-control" onchange="applyLotteryNumbers(event)">
+                <option value="">CLIQUE AQUI E ESCOLHA</option>
                 <option value="mega-sena">Mega-Sena</option>
                 <option value="lotofacil">Lotofácil</option>
                 <option value="lotomania">Lotomania</option>
@@ -31,7 +32,7 @@
         <div class="col-md-4 mt-2">
             <label for="contest">Escolha um concurso</label>
             <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null, false)">
-
+                <option value="">CLIQUE AQUI E ESCOLHA</option>
             </select>
         </div>
 
@@ -273,6 +274,7 @@
         axios.get(`{{route('lottery.contest')}}?loto_name=${lottery}`)
             .then(response => {
                 CONTEST_SELECT.html('');
+                CONTEST_SELECT.append('<option value="">CLIQUE AQUI E ESCOLHA</option>')
                 response.data.contestsNumbers.forEach(item => {
                     CONTEST_SELECT.append(`<option value=${item}>${item}</option>`)
                 })
