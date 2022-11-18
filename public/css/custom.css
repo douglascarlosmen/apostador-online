@@ -1,0 +1,156 @@
+:root {
+    --mega: #00923F;
+    --lotofacil: #A349A4;
+    --lotomania: #E1753B;
+    --quina: #37287F;
+    --dupla: #8F293F;
+    --dia: #DAA505;
+    --time: #FFED00;
+    --time-green: #006600;
+  }
+
+body{
+    font-family: 'Poppins', sans-serif !important;
+}
+
+#numbers{
+    background-color: #FEFDDC;
+    height: 100%;
+    border-radius: 10px;
+    padding: 20px 20px 20px 20px;
+    display: inline-block;
+}
+
+#numbers span{
+    border-radius: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Roboto';
+}
+
+#numbers-header{
+    font-size: 21px;
+    margin: 8px;
+    padding: 6px 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    border-radius: 5px;
+    position: relative;
+    top: 15px;
+    left: 15px;
+}
+
+/* LOTTERY STYLES */
+.megasena{
+    background-color: var(--mega);
+    color: white;
+}
+
+.megasena-border{
+    border: 3px var(--mega) solid;
+}
+
+.megasena-number{
+    background-color: var(--mega);
+    color: var(--mega) !important;
+    border: 3px var(--mega) solid;
+}
+
+.lotofacil{
+    background-color: var(--lotofacil);
+    color: white;
+}
+
+.lotofacil-border{
+    border: 3px var(--lotofacil) solid;
+}
+
+.lotofacil-number{
+    background-color: var(--lotofacil);
+    color: var(--lotofacil) !important;
+    border: 3px var(--lotofacil) solid;
+}
+
+.lotomania{
+    background-color: var(--lotomania);
+    color: white;
+}
+
+.lotomania-border{
+    border: 3px var(--lotomania) solid;
+}
+
+.lotomania-number{
+    background-color: var(--lotomania);
+    color: var(--lotomania) !important;
+    border: 3px var(--lotomania) solid;
+}
+
+.quina{
+    background-color: var(--quina);
+    color: white;
+}
+
+.quina-border{
+    border: 3px var(--quina) solid;
+}
+
+.quina-number{
+    background-color: var(--quina);
+    color: var(--quina) !important;
+    border: 3px var(--quina) solid;
+}
+
+.dupla{
+    background-color: var(--dupla);
+    color: white;
+}
+
+.dupla-border{
+    border: 3px var(--dupla) solid;
+}
+
+.dupla-number{
+    background-color: var(--dupla);
+    color: var(--dupla) !important;
+    border: 3px var(--dupla) solid;
+}
+
+.dia{
+    background-color: var(--dia);
+    color: white;
+}
+
+.dia-border{
+    border: 3px var(--dia) solid;
+}
+
+.dia-number{
+    background-color: var(--dia);
+    color: var(--dia) !important;
+    border: 3px var(--dia) solid;
+}
+
+.time{
+    background-color: var(--time);
+    color: var(--time-green) !important;
+}
+
+.time-border{
+    border: 3px var(--time) solid;
+}
+
+.time-number{
+    background-color: var(--time);
+    color: var(--time-green) !important;
+    border: 3px var(--time) solid;
+}
