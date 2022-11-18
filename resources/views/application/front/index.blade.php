@@ -67,7 +67,7 @@
             <button class="btn btn-secondary w-100 mb-2" id="upload-button">
                 Importar Jogos
             </button>
-            <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()" disabled>
+            <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()">
                 <b>Conferir Apostas</b>
             </button>
         </div>
@@ -308,17 +308,14 @@
         dozens = [];
         await clearDozens();
 
-        CHECK_BUTTON.attr("disabled", false);
         CONTEST_SELECT.attr("disabled", true);
         LOTTERY_SELECT.attr("disabled", true);
         LOTTERY_BUTTON.attr("disabled", true);
-        resultsTemplate = "";
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
                 resultsChoosen = true;
                 response.data.dozens.forEach(async item => {
                     await toggleDozen(`number-${item}`);
-                    resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${item}</b></span>`;
                 })
                 freeActions();
             })
@@ -336,12 +333,16 @@
     }
 
     function checkBets(){
-        if (!resultsChoosen)
-            return Swal.fire("Aviso!", "Escolha um concurso para exibir os resultados.", "warning");
         if (!TEXT_CHECK.val())
             return Swal.fire("Aviso!", "Preencha pelo menos um jogo para conferir os resultados", "warning");
         if (!overLotteryNumbersLimit())
             return Swal.fire("Aviso!", "Os resultados para essa loteria estão inválidos.", "warning");
+
+
+        resultsTemplate = "";
+        dozens.forEach(dozen => {
+            resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
+        });
 
         CHECK_BUTTON.attr("disabled", true);
         CONTEST_SELECT.attr("disabled", true);
