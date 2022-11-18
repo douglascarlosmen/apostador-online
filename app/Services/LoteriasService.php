@@ -24,6 +24,8 @@ class LoteriasService
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
             $response = curl_exec($curl);
 
@@ -53,6 +55,8 @@ class LoteriasService
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
             $response = curl_exec($curl);
 
@@ -82,6 +86,8 @@ class LoteriasService
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
             $response = curl_exec($curl);
 
@@ -111,6 +117,8 @@ class LoteriasService
             $curl = curl_init($url);
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
             $response = curl_exec($curl);
 
