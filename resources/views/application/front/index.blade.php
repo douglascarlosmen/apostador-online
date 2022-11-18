@@ -13,9 +13,9 @@
 @section("content")
 @include("application.front.template.navbar")
 
-<section id="contest-selection" class="container mt-3">
+<section id="contest-selection" class="container pt-5">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 mt-2">
             <label for="lottery">Escolha a loteria</label>
             <select name="lottery" id="lottery-select" class="form-control" onchange="applyLotteryNumbers(event)">
                 <option value="mega-sena">Mega-Sena</option>
@@ -28,7 +28,7 @@
             </select>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4 mt-2">
             <label for="contest">Escolha um concurso</label>
             <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null, false)">
 
@@ -64,7 +64,7 @@
                 Importar Jogos
             </button>
             <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()" disabled>
-                <b>Conferir Apostas<b>
+                <b>Conferir Apostas</b>
             </button>
         </div>
     </div>
@@ -76,7 +76,6 @@
 
     </div>
 </section>
-
 
 @endsection
 
@@ -92,6 +91,8 @@
     const PLACE_GAMES = $("#place-games");
     const RESULTS_CONTAINER = $("#results");
 
+
+    var resultsChoosen = false;
     var lottery = "mega-sena";
 
     applyLotteryNumbers(null);
@@ -99,7 +100,7 @@
     function applyLotteryNumbers(event, getOptions = true){
         let oldLottery = lottery;
         if (event != null) lottery = event.target.value;
-
+        resultsChoosen = false;
         changeLotteryLayout(oldLottery, lottery);
 
         if (getOptions) {
@@ -289,6 +290,7 @@
         LOTTERY_BUTTON.attr("disabled", true);
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
+                resultsChoosen = true;
                 response.data.dozens.forEach(item => {
                     NUMBERS_CONTAINER.children(`#number-${item}`).addClass('selected')
                 })
@@ -307,6 +309,8 @@
     }
 
     function checkBets(){
+        if (!resultsChoosen)
+            return Swal.fire("Aviso!", "Escolha um concurso para exibir os resultados.", "warning");
         if (!TEXT_CHECK.val())
             return Swal.fire("Aviso!", "Preencha pelo menos um jogo para conferir os resultados", "warning");
 
@@ -321,7 +325,6 @@
             loto_name: lottery
         })
             .then(response => {
-                console.log(response.data);
                 let splittedBet = "";
                 let splittedMatch = "";
                 response.data.bets.forEach((item, i) => {
@@ -330,13 +333,13 @@
 
                     let betsTemplate = "";
                     splittedBet.forEach(bet => {
-                        betsTemplate += `<span class="numbers ${getLotteryNumberClass()}">${bet}</span>`;
+                        betsTemplate += `<span class="numbers ${getLotteryNumberClass()}"><b>${bet}</b></span>`;
                     });
 
                     let matchesTemplate = "";
                     splittedMatch.forEach(match => {
                         if (match)
-                            matchesTemplate += `<span class="numbers ${getLotteryNumberClass()} selected">${match}</span>`;
+                            matchesTemplate += `<span class="numbers ${getLotteryNumberClass()} selected"><b>${match}</b></span>`;
                         else
                             matchesTemplate += `<span> Nenhuma dezena acertada. </span>`
                     });
@@ -344,7 +347,7 @@
                     let template = `
                     <div id="bet-${i}" class="card col-md-3 m-2 p-2 shadow-lg">
                         <div class="card-body">
-                            <p>Jogo ${i + 1} - ${response.data.points[i]} Acertos</p>
+                            <b>Jogo ${i + 1} - ${response.data.points[i]} Acertos</b>
                             <div class="row">
                                 <div class="row">
                                     ${betsTemplate}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{asset('img/logo-apostador.png')}}" rel="shortcut icon">
     <title>Apostador Online</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
@@ -18,6 +19,12 @@
     <div class="main-page">
         @yield('content')
     </div>
+
+    <footer class="mt-4">
+        <div class="container">
+            &copy; 2022 Desenvolvido por WeXark
+        </div>
+    </footer>
 
      <!-- jQuery -->
      <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
