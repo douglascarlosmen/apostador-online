@@ -46,7 +46,7 @@
 <section id="contest-numbers" class="container mt-3">
     <div class="row">
         <div class="col-md-6">
-            <div class="" id="contest-display">
+            <div id="contest-display">
                 <span id="numbers-header" class="megasena">
                     <i>Mega-Sena</i>
                 </span>
@@ -56,8 +56,12 @@
             </div>
         </div>
 
-        <div class="col-md-6">
-            LOGICA DE IMPORTAÇÃO
+        <div class="col-md-6 pt-4">
+            <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small>
+            <textarea name="" id="" cols="30" rows="10" class="form-control bets mb-3" placeholder="01;02;03;04;05;06;"></textarea>
+            <button class="btn w-100 megasena" id="check-bet">
+                <b>Conferir Apostas<b>
+            </button>
         </div>
     </div>
 </section>
@@ -132,35 +136,43 @@
     function changeLotteryLayout(oldLottery, lottery){
         const NUMBERS_CONTAINER = $("#numbers");
         const NUMBERS_HEADER = $("#numbers-header");
+        const CHECK_BUTTON = $("#check-bet");
         //Remove old style
         switch (oldLottery){
             case "megasena":
                 NUMBERS_CONTAINER.removeClass("megasena-border");
                 NUMBERS_HEADER.removeClass("megasena");
+                CHECK_BUTTON.removeClass("megasena");
                 break;
             case "lotofacil":
                 NUMBERS_CONTAINER.removeClass("lotofacil-border");
                 NUMBERS_HEADER.removeClass("lotofacil");
+                CHECK_BUTTON.removeClass("lotofacil");
                 break;
             case "lotomania":
                 NUMBERS_CONTAINER.removeClass("lotomania-border");
                 NUMBERS_HEADER.removeClass("lotomania");
+                CHECK_BUTTON.removeClass("lotomania");
                 break;
             case "duplasena":
                 NUMBERS_CONTAINER.removeClass("dupla-border");
                 NUMBERS_HEADER.removeClass("dupla");
+                CHECK_BUTTON.removeClass("dupla");
                 break;
             case "quina":
                 NUMBERS_CONTAINER.removeClass("quina-border");
                 NUMBERS_HEADER.removeClass("quina");
+                CHECK_BUTTON.removeClass("quina");
                 break;
             case "diadesorte":
                 NUMBERS_CONTAINER.removeClass("dia-border");
                 NUMBERS_HEADER.removeClass("dia");
+                CHECK_BUTTON.removeClass("dia");
                 break;
             case "timemania":
                 NUMBERS_CONTAINER.removeClass("time-border");
                 NUMBERS_HEADER.removeClass("time");
+                CHECK_BUTTON.removeClass("time");
                 break;
         }
 
@@ -171,36 +183,43 @@
                 NUMBERS_CONTAINER.addClass("megasena-border");
                 NUMBERS_HEADER.addClass("megasena");
                 NUMBERS_HEADER.append("<i>Mega-Sena</i>");
+                CHECK_BUTTON.addClass("megasena");
                 break;
             case "lotofacil":
                 NUMBERS_CONTAINER.addClass("lotofacil-border");
                 NUMBERS_HEADER.addClass("lotofacil");
                 NUMBERS_HEADER.append("<i>Lotofácil</i>");
+                CHECK_BUTTON.addClass("lotofacil");
                 break;
             case "lotomania":
                 NUMBERS_CONTAINER.addClass("lotomania-border");
                 NUMBERS_HEADER.addClass("lotomania");
                 NUMBERS_HEADER.append("<i>Lotomania</i>");
+                CHECK_BUTTON.addClass("lotomania");
                 break;
             case "duplasena":
                 NUMBERS_CONTAINER.addClass("dupla-border");
                 NUMBERS_HEADER.addClass("dupla");
                 NUMBERS_HEADER.append("<i>Dupla-Sena</i>");
+                CHECK_BUTTON.addClass("dupla");
                 break;
             case "quina":
                 NUMBERS_CONTAINER.addClass("quina-border");
                 NUMBERS_HEADER.addClass("quina");
                 NUMBERS_HEADER.append("<i>Quina</i>");
+                CHECK_BUTTON.addClass("quina");
                 break;
             case "diadesorte":
                 NUMBERS_CONTAINER.addClass("dia-border");
                 NUMBERS_HEADER.addClass("dia");
                 NUMBERS_HEADER.append("<i>Dia de Sorte</i>");
+                CHECK_BUTTON.addClass("dia");
                 break;
             case "timemania":
                 NUMBERS_CONTAINER.addClass("time-border");
                 NUMBERS_HEADER.addClass("time");
                 NUMBERS_HEADER.append("<i>Timemania</i>");
+                CHECK_BUTTON.addClass("time");
                 break;
         }
 
@@ -209,7 +228,7 @@
     function leftPad(value, totalWidth, paddingChar) {
         var length = totalWidth - value.toString().length + 1;
         return Array(length).join(paddingChar || '0') + value;
-    };
+    }
 </script>
 
 @endsection

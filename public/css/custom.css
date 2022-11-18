@@ -49,6 +49,11 @@ body{
     left: 15px;
 }
 
+.bets{
+    background-color: #d0d2d4 !important;
+    resize: none;
+}
+
 /* LOTTERY STYLES */
 .megasena{
     background-color: var(--mega);
