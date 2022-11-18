@@ -18,7 +18,6 @@
         <div class="col-md-4 mt-2">
             <label for="lottery">Escolha a loteria</label>
             <select name="lottery" id="lottery-select" class="form-control" onchange="applyLotteryNumbers(event)">
-                <option value="">CLIQUE AQUI E ESCOLHA</option>
                 <option value="mega-sena">Mega-Sena</option>
                 <option value="lotofacil">Lotofácil</option>
                 <option value="lotomania">Lotomania</option>
@@ -32,7 +31,7 @@
         <div class="col-md-4 mt-2">
             <label for="contest">Escolha um concurso</label>
             <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null, false)">
-                <option value="">CLIQUE AQUI E ESCOLHA</option>
+
             </select>
         </div>
 
@@ -58,8 +57,9 @@
         </div>
 
         <div class="col-md-6 pt-4">
-            <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small>
-            <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06"></textarea>
+            <small>Use uma nova linha para conferir mais de uma aposta. Siga o padrão proposto abaixo:</small><br>
+            <b id="total-games">Total de Jogos: 0</b>
+            <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06" onchange="getLinesCount()"></textarea>
             <input id="text-file" type="file" accept=".txt" onchange="uploadFile()" class="form-control" style="display: none"/>
             <button class="btn btn-secondary w-100 mb-2" id="upload-button">
                 Importar Jogos
@@ -86,13 +86,14 @@
 
 @section("scripts")
 <script>
-    const NUMBERS_CONTAINER = $("#numbers");
+        const NUMBERS_CONTAINER = $("#numbers");
     const NUMBERS_HEADER = $("#numbers-header");
     const CHECK_BUTTON = $("#check-bet");
     const CONTEST_SELECT = $("#contest-select");
     const LOTTERY_SELECT = $("#lottery-select");
     const LOTTERY_BUTTON = $("#lottery-button");
     const TEXT_CHECK = $("#text-check");
+    const TEXT_TOTAL_GAMES = $("#total-games");
     const PLACE_GAMES = $("#place-games");
     const RESUME_GAMES = $("#resume-games");
     const RESULTS_CONTAINER = $("#results");
@@ -268,8 +269,12 @@
         var file = document.getElementById("text-file").files[0];
         var reader = new FileReader();
         reader.onload = function (e) {
+            const text = this.result;
             var textArea = document.getElementById("text-check");
             textArea.value = e.target.result;
+
+            getLinesCount(text.split('\n'));
+
         };
         reader.readAsText(file);
     }
@@ -282,9 +287,8 @@
         axios.get(`{{route('lottery.contest')}}?loto_name=${lottery}`)
             .then(response => {
                 CONTEST_SELECT.html('');
-                CONTEST_SELECT.append('<option value="">CLIQUE AQUI E ESCOLHA</option>')
                 response.data.contestsNumbers.forEach(item => {
-                    CONTEST_SELECT.append(`<option value=${item}>${item}</option>`)
+                    CONTEST_SELECT.append(`<option value=${item}>Concurso ${item}</option>`)
                 })
             })
             .catch(error => {
@@ -584,6 +588,14 @@
     function getPoints(index, points){
         return  points.filter(x => x==index).length;
     }
-</script>
 
+    function getLinesCount(lines = TEXT_CHECK.val().split("\n")){
+        let lineCount = 0;
+        for (var i = 0; i < lines.length; i++) {
+            if (lines[i].length > 0) lineCount++;
+        }
+        TEXT_TOTAL_GAMES.html('');
+        TEXT_TOTAL_GAMES.append(`Total de Jogos: ${lineCount}`);
+   }
+</script>
 @endsection
