@@ -17,23 +17,24 @@ class ConferidorController extends Controller
         $resultDozensArray = json_decode($lotoResult->dozens, true);
 
         if ($request->dozens_text != '') {
-            $dozensText = $request->dozens_text;
-            foreach ($this->oneDigitNumbers() as $oneDigitNumber) {
-                $dozensText = preg_replace("/\b$oneDigitNumber\b/", "0$oneDigitNumber", $dozensText);
-            }
 
-            $dozensBetArray = explode(',', $request->dozens_text);
-        } else {
-            $dozensBetArray = $request->dozens;
+            $rowsArray = preg_split('/\n|\r\n?/', $request->dozens_text);
 
-            foreach ($dozensBetArray as $index => $dozenBet) {
-                if (strlen($dozenBet) < 2 && in_array($dozenBet, $this->oneDigitNumbers())) {
-                    $dozensBetArray = preg_replace("/\b$dozenBet\b/", "0$dozenBet", $dozensBetArray);
+            foreach ($rowsArray as $index => $row) {
+                foreach ($this->oneDigitNumbers() as $oneDigitNumber) {
+                    $rowsArray[$index] = preg_replace("/\b$oneDigitNumber\b/", "0$oneDigitNumber", $row);
                 }
             }
+
+            $resultsArray = [];
+
+            foreach ($rowsArray as $row) {
+                $dozensBetArray = explode(',', $row);
+                $resultsArray[] = (new ConferidorService)->checkNumberOfHits($dozensBetArray, $resultDozensArray);
+            }
+
+            return response(['results' => $resultsArray]);
         }
-        
-        return (new ConferidorService)->checkNumberOfHits($dozensBetArray, $resultDozensArray);
     }
 
     private function oneDigitNumbers()
