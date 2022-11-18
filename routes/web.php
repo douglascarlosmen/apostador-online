@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\ConferidorController;
 use App\Http\Controllers\Generator\ApiIntegrationController;
 use App\Http\Controllers\Generator\ControllerRequestRouteController;
 use App\Http\Controllers\Generator\MigrationModelController;
-use App\Services\LoteriasService;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'application.front.index');
@@ -33,3 +32,9 @@ Route::prefix('/generator')->group(function(){
     Route::get('/apis-integrations', [ApiIntegrationController::class, 'index']);
     Route::post('/generate-api-integrations', [ApiIntegrationController::class, 'generateApiIntegration']);
 });
+
+Route::post('/conferir-resultado', [ConferidorController::class, 'checkResult']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
