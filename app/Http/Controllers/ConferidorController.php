@@ -10,11 +10,7 @@ class ConferidorController extends Controller
 {
     public function checkResult(Request $request)
     {
-        $lotoResult = LotoResult::where('contest_number', $request->contest_number)->whereHas('loto', function ($query) use ($request) {
-            $query->where('name', $request->loto_name);
-        })->firstOrFail();
-
-        $resultDozensArray = json_decode($lotoResult->dozens, true);
+        $resultDozensArray = $request->dozens;
 
         if ($request->dozens_text != '') {
 

@@ -85,7 +85,7 @@
 
 @section("scripts")
 <script>
-        const NUMBERS_CONTAINER = $("#numbers");
+    const NUMBERS_CONTAINER = $("#numbers");
     const NUMBERS_HEADER = $("#numbers-header");
     const CHECK_BUTTON = $("#check-bet");
     const CONTEST_SELECT = $("#contest-select");
@@ -98,6 +98,7 @@
     const RESULTS_CONTAINER = $("#results");
 
     var resultsChoosen = false;
+    let dozens = [];
     var lottery = "mega-sena";
 
     var megasenaLottery = { min: 1, max: 60, totalPrize: 6, elegiblePrize: 4 };
@@ -131,41 +132,41 @@
         switch (lottery){
             case "mega-sena":
                 for(let i = megasenaLottery.min; i <= megasenaLottery.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 megasena-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 megasena-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "lotofacil":
                 for(let i = lotofacilLottery.min; i <= lotofacilLottery.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 lotofacil-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 lotofacil-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "lotomania":
                 for(let i = lotomaniaLottery.min; i <= lotomaniaLottery.max; i++){
                     if (i == 100){
-                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(00, 2)}</strong></span>`)
+                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-00" onclick="toggleDozen('number-00')"><strong>00</strong></span>`)
                     }else{
-                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
+                        NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                     }
                 }
                 break;
             case "dupla-sena":
                 for(let i = duplaLottery.min; i <= duplaLottery.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 dupla-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 dupla-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "quina":
                 for(let i = quinaLottery.min; i <= quinaLottery.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 quina-number" id="number-${leftPad(i, 2)}""><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 quina-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "dia-de-sorte":
                 for(let i = duplaLottery.min; i <= duplaLottery.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 dia-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 dia-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
             case "timemania":
                 for(let i = timeLottery.min; i <= timeLottery.max; i++){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 time-number" id="number-${leftPad(i, 2)}"><strong>${leftPad(i, 2)}</strong></span>`)
+                    NUMBERS_CONTAINER.append(`<span class="col-5 time-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
                 }
                 break;
         }
@@ -311,8 +312,9 @@
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
                 resultsChoosen = true;
+                dozens = [];
                 response.data.dozens.forEach(item => {
-                    NUMBERS_CONTAINER.children(`#number-${item}`).addClass('selected')
+                    toggleDozen(`number-${item}`);
                     resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${item}</b></span>`;
                 })
                 freeActions();
@@ -344,6 +346,7 @@
         RESUME_GAMES.html('');
         axios.post("{{route('check.results')}}", {
             dozens_text: TEXT_CHECK.val(),
+            dozens,
             contest_number: CONTEST_SELECT.val(),
             loto_name: lottery
         })
@@ -500,9 +503,6 @@
                 </div>
             </div>
         `
-        template += ``;
-        template += ``;
-        template += ``;
 
         let tableHeaderTemplate = "<th>PONTOS</th>";
         let tableRowTemplate = "<th>ACERTOS</th>";
@@ -611,6 +611,50 @@
         }
         TEXT_TOTAL_GAMES.html('');
         TEXT_TOTAL_GAMES.append(`Total de Jogos: ${lineCount}`);
+   }
+
+   function toggleDozen(id){
+        let element = NUMBERS_CONTAINER.children(`#${id}`)
+        if (element.hasClass("selected")){
+            element.removeClass('selected');
+            let index = dozens.indexOf(element.children(0).html());
+            dozens.splice(index, 1);
+        }else{
+            if (overLotteryNumbersLimit())
+                return Swal.fire("Aviso!", "Você selecionou o número máximo para essa loteria.", "warning");
+
+            element.addClass('selected');
+            dozens.push(element.children(0).html());
+        }
+   }
+
+   function overLotteryNumbersLimit(){
+        let maxNumber = 6;
+        switch(lottery){
+            case "mega-sena":
+                maxNumber = megasenaLottery.totalPrize;
+                break;
+            case "lotofacil":
+                maxNumber = lotofacilLottery.totalPrize;
+                break;
+            case "lotomania":
+                maxNumber = lotomaniaLottery.totalPrize;
+                break;
+            case "dupla-sena":
+                maxNumber = duplaLottery.totalPrize;
+                break;
+            case "quina":
+                maxNumber = quinaLottery.totalPrize;
+                break;
+            case "dia-de-sorte":
+                maxNumber = diaLottery.totalPrize;
+                break;
+            case "timemania":
+                maxNumber = timeLottery.totalPrize;
+                break;
+        };
+
+        return (dozens.length + 1) > maxNumber;
    }
 </script>
 @endsection
