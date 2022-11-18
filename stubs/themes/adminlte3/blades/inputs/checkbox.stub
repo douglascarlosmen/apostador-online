@@ -1,9 +1,0 @@
-{{-- checkbox input --}}
-<div class="col-md-12">
-    <div class="form-group">
-        <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="customCheckbox1" name="$INPUT_NAME$" value="$INPUT_VALUE$" $INPUT_REQUIRED$ $INPUT_CHECKED$ $INPUT_DISABLED$>
-            <label for="customCheckbox1" class="custom-control-label">$INPUT_LABEL$</label>
-        </div>
-    </div>
-</div>
