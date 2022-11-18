@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AxiosController;
 use App\Http\Controllers\ConferidorController;
 use App\Http\Controllers\Generator\ApiIntegrationController;
 use App\Http\Controllers\Generator\ControllerRequestRouteController;
@@ -34,6 +35,7 @@ Route::prefix('/generator')->group(function(){
 });
 
 Route::post('/conferir-resultado', [ConferidorController::class, 'checkResult']);
+Route::get('/obter-numero-de-concursos-pela-loteria', [AxiosController::class, 'getContestsByLoto']);
 
 Auth::routes();
 
