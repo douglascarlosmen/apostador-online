@@ -14,8 +14,12 @@ class GeneratorController extends Controller
         $dozens = [];
         while (count($dozens) < $request->maxPrize){
             $randomNumber = rand(1, $request->maxNumber);
-            if (!array_search($randomNumber, $dozens))
+            if (!array_search($randomNumber, $dozens)){
+                if ($randomNumber == 100) $randomNumber = 00;
+
                 $dozens[] = str_pad($randomNumber, 2, "0", STR_PAD_LEFT);
+
+            }
         }
 
         $info = new stdClass();

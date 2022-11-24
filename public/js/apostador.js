@@ -14,6 +14,7 @@ const RESULTS_CONTAINER = $("#results");
 
 var resultsChoosen = false;
 let dozens = [];
+let selectedGames = [];
 var lottery = "mega-sena";
 
 var megasenaLottery = { min: 1, max: 60, totalPrize: 6, elegiblePrize: 4, minSelected: 6, maxSelected: 15 };
@@ -41,6 +42,8 @@ function applyLotteryNumbers(event, getOptions = true){
 
     RESUME_GAMES.hide();
     RESULTS_CONTAINER.hide();
+    $("#selected-games").html('');
+    selectedGames = [];
 
     NUMBERS_CONTAINER.html('');
     switch (lottery){
@@ -293,7 +296,7 @@ function clearDozens(){
 
 function toggleDozen(id){
     if (blockClick) return;
-    
+
     let element = NUMBERS_CONTAINER.children(`#${id}`)
     if (element.hasClass("selected")){
         element.removeClass('selected');

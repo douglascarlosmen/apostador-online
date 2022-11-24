@@ -38,7 +38,7 @@
     </div>
     <div class="row">
         <div class="col-md-4 d-flex align-items-end mt-2">
-            <button class="btn btn-success w-100" id="lottery-button" onclick="getNumbers()">
+            <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()">
                 <i class="fas fa-thumbs-up"></i> Palpite Apostador
             </button>
         </div>
@@ -46,6 +46,55 @@
             <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()">
                 <i class="fas fa-chart-bar"></i> Mostrar Premiação
             </button>
+        </div>
+        <div class="col-md-4 d-flex align-items-end mt-2">
+            <button class="btn btn-outline-success w-100" id="lastGameButton" onclick="selectGame()">
+                <i class="fas fa-check"></i> Selecionar Jogo
+            </button>
+        </div>
+    </div>
+</section>
+
+<section id="lastGameContainer" class="container mt-3" style="display: none">
+    <div class="row d-flex flex-row justify-content-center">
+        <h4 class="text-center w-100" id="contestLabel">Estatísticas do Último Concurso</h4>
+        <div class="col-md-6 p-2">
+            <div id="lastGame" class="row d-flex flex-row justify-content-center mb-2">
+
+            </div>
+            <div class="w-100 bg-black text-white p-2 text-center">
+                <b>Parâmetros Principais</b>
+            </div>
+            <div class="border p-2 d-flex flex-row justify-content-center">
+                <div class="col-md-6 d-flex flex-row justify-content-center">
+                    <span>Par:</span>
+                    <span id="lastEven" class="text-bold ml-2">0</span>
+                </div>
+                |
+                <div class="col-md-6 d-flex flex-row justify-content-center">
+                    <span>Ímpar:</span>
+                    <span id="lastOdd" class="text-bold ml-2">0</span>
+                </div>
+            </div>
+            <div class="border p-2 d-flex flex-row justify-content-center">
+                <span>Números de Fibonacci:</span>
+                <span id="lastFibonacci" class="text-bold ml-2">0</span>
+            </div>
+            <div class="w-100 bg-black text-white p-2 text-center mt-3">
+                <b>Parâmetros Secundários</b>
+            </div>
+            <div class="border p-2 d-flex flex-row justify-content-center">
+                <span>Primos:</span>
+                <span id="lastPrime" class="text-bold ml-2">0</span>
+            </div>
+            <div class="border p-2 d-flex flex-row justify-content-center">
+                <span>Múltiplos de 3:</span>
+                <span id="threeMultiple" class="text-bold ml-2">0</span>
+            </div>
+            <div class="border p-2 d-flex flex-row justify-content-center">
+                <span>Soma das Dezenas:</span>
+                <span id="lastSum" class="text-bold ml-2">0</span>
+            </div>
         </div>
     </div>
 </section>
@@ -108,47 +157,10 @@
     </div>
 </section>
 
-<section id="lastGameContainer" class="container mt-3" style="display: none">
-    <div class="row d-flex flex-row justify-content-center">
-        <h4 class="text-center w-100" id="contestLabel">Estatísticas do Último Concurso</h4>
-        <div class="col-md-6 p-2">
-            <div id="lastGame" class="row d-flex flex-row justify-content-center mb-2">
+<section id="selected-games-container" class="container mt-3">
+    <h4 class="text-center w-100">Jogos Selecionados</h4>
+    <div id="selected-games">
 
-            </div>
-            <div class="w-100 bg-black text-white p-2 text-center">
-                <b>Parâmetros Principais</b>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <div class="col-md-6 d-flex flex-row justify-content-center">
-                    <span>Par:</span>
-                    <span id="lastEven" class="text-bold ml-2">0</span>
-                </div>
-                |
-                <div class="col-md-6 d-flex flex-row justify-content-center">
-                    <span>Ímpar:</span>
-                    <span id="lastOdd" class="text-bold ml-2">0</span>
-                </div>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Números de Fibonacci:</span>
-                <span id="lastFibonacci" class="text-bold ml-2">0</span>
-            </div>
-            <div class="w-100 bg-black text-white p-2 text-center mt-3">
-                <b>Parâmetros Secundários</b>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Primos:</span>
-                <span id="lastPrime" class="text-bold ml-2">0</span>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Múltiplos de 3:</span>
-                <span id="threeMultiple" class="text-bold ml-2">0</span>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Soma das Dezenas:</span>
-                <span id="lastSum" class="text-bold ml-2">0</span>
-            </div>
-        </div>
     </div>
 </section>
 

@@ -265,3 +265,56 @@ function getDefaultParams(){
     }
     return params;
 }
+
+function selectGame(){
+    if (dozens.length == 0)
+        return Swal.fire("Aviso!", "Você precisa gerar um jogo para selecioná-lo.", "warning");
+    selectedGames.push(dozens);
+    renderSelectedgames();
+
+}
+
+function deleteGame(index){
+    return Swal.fire({
+        title: 'Tem certeza?',
+        text: "Ao remover esse jogo pode não ser possível recuperá-lo.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, remover'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            selectedGames.splice(index, 1);
+            renderSelectedgames();
+        }
+    })
+}
+
+function renderSelectedgames(){
+    let template = "";
+    selectedGames.forEach((gameDozens, index) =>{
+        let resultsTemplate = "";
+        gameDozens.forEach(dozen => {
+            resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
+        });
+        template += `
+                <div class="row justify-content-around align-items-center">
+                    <div class="col-2 text-center">
+                        <b>Jogo ${index + 1}</b>
+                    </div>
+                    <div class="col-8">
+                        <div class="row justify-content-center">
+                            ${resultsTemplate}
+                        </div>
+                    </div>
+                    <div class="col-2 text-center" style="cursor: pointer" onclick="deleteGame(${index})">
+                        <i class="fa fa-trash text-danger"></i>
+                    </div>
+                </div>
+                <hr>
+            `
+    });
+
+    $("#selected-games").html('').append(template);
+}
