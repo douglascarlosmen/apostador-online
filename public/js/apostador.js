@@ -1,3 +1,5 @@
+let blockClick = false;
+
 const NUMBERS_CONTAINER = $("#numbers");
 const NUMBERS_HEADER = $("#numbers-header");
 const CHECK_BUTTON = $("#check-bet");
@@ -290,13 +292,15 @@ function clearDozens(){
 }
 
 function toggleDozen(id){
+    if (blockClick) return;
+    
     let element = NUMBERS_CONTAINER.children(`#${id}`)
     if (element.hasClass("selected")){
         element.removeClass('selected');
         let index = dozens.indexOf(element.children(0).html());
         dozens.splice(index, 1);
     }else{
-        if (overLotteryNumbersLimit())
+        if ((dozens.length + 1) > getLotteryMaxPrize())
             return Swal.fire("Aviso!", "Você selecionou o número máximo para essa loteria.", "warning");
 
         element.addClass('selected');
@@ -304,31 +308,60 @@ function toggleDozen(id){
     }
 }
 
-function overLotteryNumbersLimit(){
-    let maxNumber = 6;
+function getLotteryMaxPrize(){
+    let maxPrize = 6;
     switch(lottery){
         case "mega-sena":
-            maxNumber = megasenaLottery.totalPrize;
+            maxPrize = megasenaLottery.totalPrize;
             break;
         case "lotofacil":
-            maxNumber = lotofacilLottery.totalPrize;
+            maxPrize = lotofacilLottery.totalPrize;
             break;
         case "lotomania":
-            maxNumber = lotomaniaLottery.totalPrize;
+            maxPrize = lotomaniaLottery.totalPrize;
             break;
         case "dupla-sena":
-            maxNumber = duplaLottery.totalPrize;
+            maxPrize = duplaLottery.totalPrize;
             break;
         case "quina":
-            maxNumber = quinaLottery.totalPrize;
+            maxPrize = quinaLottery.totalPrize;
             break;
         case "dia-de-sorte":
-            maxNumber = diaLottery.totalPrize;
+            maxPrize = diaLottery.totalPrize;
             break;
         case "timemania":
-            maxNumber = timeLottery.totalPrize;
+            maxPrize = timeLottery.totalPrize;
             break;
     };
 
-    return (dozens.length + 1) > maxNumber;
+    return maxPrize;
+}
+
+function getLotteryMaxNumber(){
+    let maxNumber = 6;
+    switch(lottery){
+        case "mega-sena":
+            maxNumber = megasenaLottery.max;
+            break;
+        case "lotofacil":
+            maxNumber = lotofacilLottery.max;
+            break;
+        case "lotomania":
+            maxNumber = lotomaniaLottery.max;
+            break;
+        case "dupla-sena":
+            maxNumber = duplaLottery.max;
+            break;
+        case "quina":
+            maxNumber = quinaLottery.max;
+            break;
+        case "dia-de-sorte":
+            maxNumber = diaLottery.max;
+            break;
+        case "timemania":
+            maxNumber = timeLottery.max;
+            break;
+    };
+
+    return maxNumber;
 }

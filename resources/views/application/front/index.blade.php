@@ -153,7 +153,7 @@
     function checkBets(){
         if (!TEXT_CHECK.val())
             return Swal.fire("Aviso!", "Preencha pelo menos um jogo para conferir os resultados", "warning");
-        if (!overLotteryNumbersLimit())
+        if (!(dozens.length + 1) > getLotteryMaxPrize())
             return Swal.fire("Aviso!", "Os resultados para essa loteria estão inválidos.", "warning");
 
 
