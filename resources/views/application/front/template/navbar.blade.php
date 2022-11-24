@@ -13,69 +13,21 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Inicio</a>
                 </li>
-                {{-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Dia de Sorte
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
+                @if (Auth::user())
+                <li class="nav-item active">
+                    <a class="nav-link" href="/gerador">Gerador</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Lotofácil
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Dupla-Sena
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Lotomania
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Mega-Sena
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Quina
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Timemania
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Gerador</a>
-                    </div>
-                </li> --}}
+                @endif
+            </ul>
+            <ul class="navbar-nav">
+                @if (Auth::user())
+                <form action="/logout" method="POST">
+                    @csrf
+                    <button class="btn nav-link">
+                        Sair
+                    </button>
+                </form>
+                @endif
             </ul>
         </div>
     </div>

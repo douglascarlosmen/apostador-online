@@ -5,6 +5,7 @@ use App\Http\Controllers\ConferidorController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'application.front.index');
+Route::view('/gerador', 'application.front.generator');
 
 Route::post('/conferir-resultado', [ConferidorController::class, 'checkResult'])->name('check.results');
 Route::get('/obter-numero-de-concursos-pela-loteria', [AxiosController::class, 'getContestsByLoto'])->name('lottery.contest');
