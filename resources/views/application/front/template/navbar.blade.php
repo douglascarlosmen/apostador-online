@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="{{asset('img/logo-apostador.png')}}" width="160" height="80" alt="">
+            <img src="{{asset('img/logo-apostador.png')}}" width="160" alt="">
           </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,11 +13,9 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Inicio</a>
                 </li>
-                @if (Auth::user())
                 <li class="nav-item active">
                     <a class="nav-link" href="/gerador">Gerador</a>
                 </li>
-                @endif
             </ul>
             <ul class="navbar-nav">
                 @if (Auth::user())
