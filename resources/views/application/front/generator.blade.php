@@ -7,6 +7,14 @@
         float:left;
         position: relative;
     }
+
+    .ok{
+        color: #28a745!important
+    }
+
+    .text-bold{
+        color: #DC3545;
+    }
 </style>
 @endsection
 
@@ -65,36 +73,36 @@
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <div class="col-md-6 d-flex flex-row justify-content-center">
                     <span>Par:</span>
-                    <span id="even" class="text-success text-bold ml-2">0</span>
+                    <span id="even" class="text-bold ml-2">0</span>
                 </div>
                 |
                 <div class="col-md-6 d-flex flex-row justify-content-center">
                     <span>Ímpar:</span>
-                    <span id="odd" class="text-success text-bold ml-2">0</span>
+                    <span id="odd" class="text-bold ml-2">0</span>
                 </div>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Repetidos do Anterior:</span>
-                    <span id="lastResultsMatch" class="text-success text-bold ml-2">0</span>
+                <span id="lastResultsMatch" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Números de Fibonacci:</span>
-                <span id="fibonacci" class="text-success text-bold ml-2">0</span>
+                <span id="fibonacci" class="text-bold ml-2">0</span>
             </div>
             <div class="w-100 bg-black text-white p-2 text-center mt-3">
                 <b>Parâmetros Secundários</b>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Primos:</span>
-                <span id="prime" class="text-success text-bold ml-2">0</span>
+                <span id="prime" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Múltiplos de 3:</span>
-                <span id="threeMultiple" class="text-success text-bold ml-2">0</span>
+                <span id="threeMultiple" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Soma das Dezenas:</span>
-                <span id="sum" class="text-success text-bold ml-2">0</span>
+                <span id="sum" class="text-bold ml-2">0</span>
             </div>
         </div>
     </div>
@@ -113,32 +121,32 @@
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <div class="col-md-6 d-flex flex-row justify-content-center">
                     <span>Par:</span>
-                    <span id="lastEven" class="text-success text-bold ml-2">0</span>
+                    <span id="lastEven" class="text-bold ml-2">0</span>
                 </div>
                 |
                 <div class="col-md-6 d-flex flex-row justify-content-center">
                     <span>Ímpar:</span>
-                    <span id="lastOdd" class="text-success text-bold ml-2">0</span>
+                    <span id="lastOdd" class="text-bold ml-2">0</span>
                 </div>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Números de Fibonacci:</span>
-                <span id="lastFibonacci" class="text-success text-bold ml-2">0</span>
+                <span id="lastFibonacci" class="text-bold ml-2">0</span>
             </div>
             <div class="w-100 bg-black text-white p-2 text-center mt-3">
                 <b>Parâmetros Secundários</b>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Primos:</span>
-                <span id="lastPrime" class="text-success text-bold ml-2">0</span>
+                <span id="lastPrime" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Múltiplos de 3:</span>
-                <span id="threeMultiple" class="text-success text-bold ml-2">0</span>
+                <span id="threeMultiple" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Soma das Dezenas:</span>
-                <span id="lastSum" class="text-success text-bold ml-2">0</span>
+                <span id="lastSum" class="text-bold ml-2">0</span>
             </div>
         </div>
     </div>
@@ -148,6 +156,7 @@
 
 @section("scripts")
 <script src="{{asset('js/apostador.js')}}"></script>
+<script src="{{asset('js/generator.js')}}"></script>
 <script>
     blockClick = true;
     applyLotteryNumbers(null, false);
@@ -158,10 +167,11 @@
 
         axios.post(`{{route('generate')}}`,{
             lottery,
-            maxNumber: getLotteryMaxNumber(),
-            maxPrize: getLotteryMaxPrize(),
+            maxNumber: getLotteryData().max,
+            maxPrize: getLotteryData().minSelected,
         })
             .then(response => {
+                console.log(response.data);
                 //Primary
                 $("#even").html(response.data.info.even);
                 $("#odd").html(response.data.info.odd);
@@ -175,9 +185,10 @@
                 response.data.dozens.forEach(async item => {
                     await toggleDozen(`number-${item}`);
                 });
+                setDefaultParams(response.data);
                 blockClick = true;
 
-                $("#contestLabel").html(`Estatísticas do Último Concurso ${$response.data.lastResult.contestNumber}`);
+                $("#contestLabel").html(`Estatísticas do Último Concurso ${response.data.lastResult.contestNumber}`);
                 //Primary
                 $("#lastEven").html(response.data.lastResult.even);
                 $("#lastOdd").html(response.data.lastResult.odd);
@@ -191,8 +202,10 @@
                     resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
                 });
                 $("#lastGame").html(resultsTemplate);
+                setLastGameParams(response.data);
             })
             .catch(error => {
+                console.log(error);
                 console.log(error.response.data);
             })
     }
