@@ -37,19 +37,24 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 d-flex align-items-end mt-2">
+        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
             <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()">
                 <i class="fas fa-thumbs-up"></i> Palpite Apostador
             </button>
         </div>
-        <div class="col-md-4 d-flex align-items-end mt-2">
+        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
             <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()">
                 <i class="fas fa-chart-bar"></i> Mostrar Premiação
             </button>
         </div>
-        <div class="col-md-4 d-flex align-items-end mt-2">
+        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
             <button class="btn btn-outline-success w-100" id="lastGameButton" onclick="selectGame()">
                 <i class="fas fa-check"></i> Selecionar Jogo
+            </button>
+        </div>
+        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
+            <button class="btn btn-outline-danger w-100" onclick="deleteAllGames()">
+                <i class="fa fa-trash"></i> Limpar Jogos
             </button>
         </div>
     </div>
@@ -158,15 +163,8 @@
 </section>
 
 <section id="selected-games-container" class="container mt-3">
-    <div class="row align-items-center justify-content-center mb-4">
-        <div class="col-10">
-            <h4 class="text-center">Jogos Selecionados</h4>
-        </div>
-        <div class="col-2">
-            <button class="btn btn-danger w-100" onclick="deleteAllGames()">
-                <i class="fa fa-trash"></i> Limpar Todos
-            </button>
-        </div>
+    <div class="row">
+        <h4 class="text-center">Jogos Selecionados</h4>
     </div>
     <div id="selected-games">
 
