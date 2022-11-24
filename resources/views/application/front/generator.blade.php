@@ -163,9 +163,7 @@
 </section>
 
 <section id="selected-games-container" class="container mt-3">
-    <div class="row">
-        <h4 class="text-center">Jogos Selecionados</h4>
-    </div>
+    <h4 class="text-center">Jogos Selecionados</h4>
     <div id="selected-games">
 
     </div>
