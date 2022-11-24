@@ -158,7 +158,16 @@
 </section>
 
 <section id="selected-games-container" class="container mt-3">
-    <h4 class="text-center w-100">Jogos Selecionados</h4>
+    <div class="row align-items-center justify-content-center mb-4">
+        <div class="col-10">
+            <h4 class="text-center">Jogos Selecionados</h4>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-danger w-100" onclick="deleteAllGames()">
+                <i class="fa fa-trash"></i> Limpar Todos
+            </button>
+        </div>
+    </div>
     <div id="selected-games">
 
     </div>

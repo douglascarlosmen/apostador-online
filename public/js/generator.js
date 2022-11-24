@@ -271,7 +271,23 @@ function selectGame(){
         return Swal.fire("Aviso!", "Você precisa gerar um jogo para selecioná-lo.", "warning");
     selectedGames.push(dozens);
     renderSelectedgames();
+}
 
+function deleteAllGames(){
+    return Swal.fire({
+        title: 'Tem certeza?',
+        text: "Ao remover todos os jogos pode não ser possível recuperá-los.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, remover'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            selectedGames = [];
+            renderSelectedgames();
+        }
+    })
 }
 
 function deleteGame(index){
