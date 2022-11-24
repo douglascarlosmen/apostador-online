@@ -123,7 +123,7 @@
         dozens = [];
 
         if (getOptions) {
-            getContestOptions(lottery);
+            getContestOptions(true);
         }
 
         RESUME_GAMES.hide();
@@ -285,13 +285,16 @@
         $('#text-file')[0].click();
     });
 
-    function getContestOptions(){
+    function getContestOptions(getResults = false){
         axios.get(`{{route('lottery.contest')}}?loto_name=${lottery}`)
             .then(response => {
                 CONTEST_SELECT.html('');
                 response.data.contestsNumbers.forEach(item => {
                     CONTEST_SELECT.append(`<option value=${item}>Concurso ${item}</option>`)
-                })
+                });
+
+                if (getResults)
+                    getContestResult();
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -505,13 +508,13 @@
                     <b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO ${CONTEST_SELECT.val()}</b>
                 </div>
                 <div class="col-md-2">
-                    <img src="{{asset('img/logo-apostador.png')}}" alt="logo" height="100">
+                    <img src="{{asset('img/logo-apostador.png')}}" alt="logo" class="w-100">
                 </div>
             </div>
         `
 
-        let tableHeaderTemplate = "<th>PONTOS</th>";
-        let tableRowTemplate = "<th>ACERTOS</th>";
+        let tableHeaderTemplate = "<th style='width: 50px'>PONTOS</th>";
+        let tableRowTemplate = "<th style='width: 50px'>ACERTOS</th>";
         let icon = ""
         switch(lottery){
             case "mega-sena":
