@@ -25,15 +25,18 @@ var duplaLottery = { min: 1, max: 50, totalPrize: 6, elegiblePrize: 3, minSelect
 var diaLottery = { min: 1, max: 31, totalPrize: 7, elegiblePrize: 4, minSelected: 6, maxSelected: 15  };
 var timeLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 3, minSelected: 10, maxSelected: 10  };
 
-function applyLotteryNumbers(event, getOptions = true){
+async function applyLotteryNumbers(getOptions = true){
     let oldLottery = lottery;
-    if (event != null) lottery = event.target.value;
+    let splittedUrl = location.href.split('/');
+    lottery = splittedUrl[splittedUrl.length - 1];
 
     if (lottery == "")
         return Swal.fire("Aviso!", "Escolha uma loteria para exibir os concursos.", "warning");
 
     resultsChoosen = false;
-    changeLotteryLayout(oldLottery, lottery);
+    await changeLotteryLayout(oldLottery, lottery);
+    CHECK_BUTTON.show();
+    $("#contest-display").show();
     dozens = [];
 
     if (getOptions) {
@@ -89,7 +92,7 @@ function applyLotteryNumbers(event, getOptions = true){
     }
 }
 
-function changeLotteryLayout(oldLottery, lottery){
+async function changeLotteryLayout(oldLottery, lottery){
     //Remove old style
     switch (oldLottery){
         case "mega-sena":

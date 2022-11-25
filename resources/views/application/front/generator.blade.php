@@ -110,7 +110,7 @@
     </div>
     <div class="row mb-2">
         <div class="col-md-6">
-            <div id="contest-display">
+            <div id="contest-display" style="display: none">
                 <span id="numbers-header" class="megasena">
                     <i>Mega-Sena</i>
                 </span>
@@ -176,7 +176,7 @@
 <script src="{{asset('js/generator.js')}}"></script>
 <script>
     blockClick = true;
-    applyLotteryNumbers(null, false);
+    applyLotteryNumbers(false);
 
     async function getNumbers(){
         dozens = [];

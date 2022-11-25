@@ -15,29 +15,25 @@
 
 <section id="contest-selection" class="container pt-5">
     <div class="row">
-        <div class="col-md-4 mt-2">
-            <label for="lottery">Escolha a loteria</label>
-            <select name="lottery" id="lottery-select" class="form-control" onchange="applyLotteryNumbers(event)">
-                <option value="mega-sena">Mega-Sena</option>
-                <option value="lotofacil">Lotofácil</option>
-                <option value="lotomania">Lotomania</option>
-                <option value="dupla-sena">Dupla-Sena</option>
-                <option value="quina">Quina</option>
-                <option value="dia-de-sorte">Dia de Sorte</option>
-                <option value="timemania">Timemania</option>
-            </select>
-        </div>
-
-        <div class="col-md-4 mt-2">
+        <div class="col-md-3 mt-2">
             <label for="contest">Escolha um concurso</label>
             <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null, false)">
 
             </select>
         </div>
-
-        <div class="col-md-4 d-flex align-items-end mt-2">
+        <div class="col-md-3 d-flex align-items-end mt-2">
             <button class="btn btn-success w-100" id="lottery-button" onclick="getContestResult()">
                 Escolher
+            </button>
+        </div>
+        <div class="col-md-3 d-flex align-items-end mt-2">
+            <button class="btn btn-secondary w-100" id="upload-button">
+                Importar Jogos
+            </button>
+        </div>
+        <div class="col-md-3 d-flex align-items-end mt-2">
+            <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()" style="display: none">
+                <b>Conferir Apostas</b>
             </button>
         </div>
     </div>
@@ -49,7 +45,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div id="contest-display">
+            <div id="contest-display" style="display: none">
                 <span id="numbers-header" class="megasena">
                     <i>Mega-Sena</i>
                 </span>
@@ -64,12 +60,6 @@
             <b id="total-games">Total de Jogos: 0</b>
             <textarea name="dozens_text" id="text-check" cols="30" rows="10" class="form-control bets mb-3" placeholder="01,02,03,04,05,06" onchange="getLinesCount()"></textarea>
             <input id="text-file" type="file" accept=".txt" onchange="uploadFile()" class="form-control" style="display: none"/>
-            <button class="btn btn-secondary w-100 mb-2" id="upload-button">
-                Importar Jogos
-            </button>
-            <button class="btn w-100 megasena" id="check-bet" onclick="checkBets()">
-                <b>Conferir Apostas</b>
-            </button>
         </div>
     </div>
 </section>
@@ -86,7 +76,7 @@
 @section("scripts")
 <script src="{{asset('js/apostador.js')}}"></script>
 <script>
-    applyLotteryNumbers(null);
+    applyLotteryNumbers();
 
     function uploadFile(){
         var file = document.getElementById("text-file").files[0];
