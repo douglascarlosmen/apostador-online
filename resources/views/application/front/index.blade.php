@@ -217,7 +217,7 @@
         template += `
             <div class="row justify-content-between">
                 <div class="col-md-10">
-                    <b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO ${CONTEST_SELECT.val()}</b>
+                    <b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO: ${CONTEST_SELECT.val()}</b>
                     <div class="row mt-1 mb-1">${resultsTemplate}</div>
                 </div>
                 <div class="col-md-2">
