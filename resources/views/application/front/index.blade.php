@@ -15,16 +15,11 @@
 
 <section id="contest-selection" class="container pt-5">
     <div class="row">
-        <div class="col-md-3 mt-2">
+        <div class="col-md-6 mt-2">
             <label for="contest">Escolha um concurso</label>
-            <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null, false)">
+            <select name="contest" id="contest-select" class="form-control" onchange="applyLotteryNumbers(null)">
 
             </select>
-        </div>
-        <div class="col-md-3 d-flex align-items-end mt-2">
-            <button class="btn btn-success w-100" id="lottery-button" onclick="getContestResult()">
-                Escolher
-            </button>
         </div>
         <div class="col-md-3 d-flex align-items-end mt-2">
             <button class="btn btn-secondary w-100" id="upload-button">
@@ -222,9 +217,8 @@
         template += `
             <div class="row justify-content-between">
                 <div class="col-md-10">
-                    <b mb-2>TOTAL DE JOGOS: ${totalGames}</b>
-                    <div class="row mt-1 mb-1">${resultsTemplate}</div>
                     <b mb-2>${lottery.replace('-', " ").toUpperCase()} CONCURSO ${CONTEST_SELECT.val()}</b>
+                    <div class="row mt-1 mb-1">${resultsTemplate}</div>
                 </div>
                 <div class="col-md-2">
                     <img src="{{asset('img/logo-apostador.png')}}" alt="logo" class="w-100">

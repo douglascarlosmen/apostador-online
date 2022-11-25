@@ -25,7 +25,7 @@ var duplaLottery = { min: 1, max: 50, totalPrize: 6, elegiblePrize: 3, minSelect
 var diaLottery = { min: 1, max: 31, totalPrize: 7, elegiblePrize: 4, minSelected: 6, maxSelected: 15  };
 var timeLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 3, minSelected: 10, maxSelected: 10  };
 
-async function applyLotteryNumbers(getOptions = true){
+async function applyLotteryNumbers(getOptions = true, getContestResults = true){
     let oldLottery = lottery;
     let splittedUrl = location.href.split('/');
     lottery = splittedUrl[splittedUrl.length - 1];
@@ -39,9 +39,8 @@ async function applyLotteryNumbers(getOptions = true){
     $("#contest-display").show();
     dozens = [];
 
-    if (getOptions) {
-        getContestOptions(true);
-    }
+    if (getOptions) await getContestOptions(true);
+    if (getContestResults) getContestResult();
 
     RESUME_GAMES.hide();
     RESULTS_CONTAINER.hide();
