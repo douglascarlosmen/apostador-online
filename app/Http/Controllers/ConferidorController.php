@@ -16,9 +16,9 @@ class ConferidorController extends Controller
 
             $response = [];
 
-            $rowsArray = preg_split('/\n|\r\n?/', $request->dozens_text);
+            $dozens_text = preg_replace('/[ ]{2,}|[\t]|[ ]/', ',', trim($request->dozens_text));
 
-
+            $rowsArray = preg_split('/\n|\r\n?/', $dozens_text);
 
             foreach ($rowsArray as $index => $row) {
                 foreach ($this->oneDigitNumbers() as $oneDigitNumber) {
