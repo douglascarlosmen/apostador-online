@@ -23,20 +23,6 @@
 
 <section id="contest-selection" class="container pt-5">
     <div class="row">
-        <div class="col-md-12 mt-2">
-            <label for="lottery">Escolha a loteria</label>
-            <select name="lottery" id="lottery-select" class="form-control" onchange="applyLotteryNumbers(event, false)">
-                <option value="mega-sena">Mega-Sena</option>
-                <option value="lotofacil">Lotofácil</option>
-                <option value="lotomania">Lotomania</option>
-                <option value="dupla-sena">Dupla-Sena</option>
-                <option value="quina">Quina</option>
-                <option value="dia-de-sorte">Dia de Sorte</option>
-                <option value="timemania">Timemania</option>
-            </select>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
             <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()">
                 <i class="fas fa-thumbs-up"></i> Palpite Apostador
@@ -110,7 +96,7 @@
     </div>
     <div class="row mb-2">
         <div class="col-md-6">
-            <div id="contest-display">
+            <div id="contest-display" style="display: none">
                 <span id="numbers-header" class="megasena">
                     <i>Mega-Sena</i>
                 </span>
@@ -176,7 +162,7 @@
 <script src="{{asset('js/generator.js')}}"></script>
 <script>
     blockClick = true;
-    applyLotteryNumbers(null, false);
+    applyLotteryNumbers(false, false);
 
     async function getNumbers(){
         dozens = [];
