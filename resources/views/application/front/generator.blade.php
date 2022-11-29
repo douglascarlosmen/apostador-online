@@ -15,6 +15,17 @@
     .text-bold{
         color: #DC3545;
     }
+
+    .loading-overlay{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 @endsection
 
@@ -80,7 +91,7 @@
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Múltiplos de 3:</span>
-                <span id="threeMultiple" class="text-bold ml-2">0</span>
+                <span id="lastThreeMultiple" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Soma das Dezenas:</span>
@@ -161,56 +172,81 @@
 <script src="{{asset('js/apostador.js')}}"></script>
 <script src="{{asset('js/generator.js')}}"></script>
 <script>
-    blockClick = true;
+    let lastResult;
+
+    axios.post("{{route('generate.last')}}", { lottery })
+        .then(response => {
+            lastResult = response.data.lastResult;
+        })
+        .catch(error => {
+            console.log(error.response.data);
+        })
+
     applyLotteryNumbers(false, false);
 
-    async function getNumbers(){
-        dozens = [];
-        await clearDozens();
+    function getNumbers(){
+        let maxNumber = getLotteryData().max;
+        let maxPrize = getLotteryData().minSelected;
 
-        axios.post(`{{route('generate')}}`,{
-            lottery,
-            maxNumber: getLotteryData().max,
-            maxPrize: getLotteryData().minSelected,
-        })
-            .then(response => {
-                console.log(response.data);
-                //Primary
-                $("#even").html(response.data.info.even);
-                $("#odd").html(response.data.info.odd);
-                $("#lastResultsMatch").html(response.data.info.lastLotteryDozensMatch);
-                $("#fibonacci").html(response.data.info.fibonacci);
-                //Secondary
-                $("#prime").html(response.data.info.prime);
-                $("#threeMultiple").html(response.data.info.threeMultiple);
-                $("#sum").html(response.data.info.sum);
-                blockClick = false;
-                response.data.dozens.forEach(async item => {
-                    await toggleDozen(`number-${item}`);
-                });
-                setDefaultParams(response.data);
-                blockClick = true;
+        let params = getDefaultParams();
+        let randomNumber = 0;
+        let releaseGenerator = false;
+        let count = 0;
+        while(releaseGenerator != true){
+            let generatedDozens = [];
+            let info = {
+                even: 0,
+                odd: 0,
+                fibonacci: 0,
+                prime: 0,
+                sum: 0,
+                threeMultiple: 0,
+                dozens: 0
+            };
+            while (generatedDozens.length < maxPrize){
+                randomNumber = Math.floor(Math.random() * (maxNumber)) + 1;
+                let generatedDozen = randomNumber.toString().padStart(2, "0");
+                if (generatedDozen == "100") generatedDozen = "00";
+                if (!generatedDozens.includes(generatedDozen)){
+                    generatedDozens.push(generatedDozen);
+                }
+            }
 
-                $("#contestLabel").html(`Estatísticas do Último Concurso ${response.data.lastResult.contestNumber}`);
-                //Primary
-                $("#lastEven").html(response.data.lastResult.even);
-                $("#lastOdd").html(response.data.lastResult.odd);
-                $("#lastFibonacci").html(response.data.lastResult.fibonacci);
-                //Secondary
-                $("#lastPrime").html(response.data.lastResult.prime);
-                $("#lastThreeMultiple").html(response.data.lastResult.threeMultiple);
-                $("#lastSum").html(response.data.lastResult.sum);
-                let resultsTemplate = "";
-                response.data.lastResult.dozens.forEach(dozen => {
-                    resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
-                });
-                $("#lastGame").html(resultsTemplate);
-                setLastGameParams(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-                console.log(error.response.data);
-            })
+            generatedDozens.forEach(dozen => {
+                let intDozen = parseInt(dozen);
+                if (intDozen % 2 == 0) info.even++;
+                else if (intDozen % 2 != 0) info.odd++;
+
+                if (isPrime(intDozen)) info.prime++;
+
+                if (isFibonacci(intDozen)) info.fibonacci++;
+
+                if (intDozen % 3 == 0) info.threeMultiple++;
+
+                info.sum += intDozen;
+            });
+            info.dozens = generatedDozens.length;
+
+            count++;
+            if (count > 2500){
+                alert("Não conseguimos gerar um jogo adequado.");
+                break;
+            }
+            //Check if the combination matches the parameters
+            if (
+                info.odd >= params.minOdd && info.odd <= params.maxOdd &&
+                info.sum >= params.minSum && info.sum <= params.maxSum &&
+                info.even >= params.minEven && info.even <= params.maxEven &&
+                info.prime >= params.minPrime && info.prime <= params.maxPrime &&
+                info.threeMultiple >= params.minThreeMultiple && info.threeMultiple <= params.maxThreeMultiple &&
+                info.fibonacci >= params.minFibonacci && info.fibonacci <= params.maxFibonacci
+            ) {
+                info.lastLotteryDozensMatch = lastResult.dozens.filter((obj) => generatedDozens.indexOf(obj) !== -1).length;
+                dozens = generatedDozens;
+                releaseGenerator = true;
+                showGenerateResults(info, lastResult);
+            }
+        }
     }
 
     let lastGameToggled = false;

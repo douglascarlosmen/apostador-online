@@ -1,83 +1,83 @@
-function setDefaultParams(data){
+function setDefaultParams(info){
     let params = getDefaultParams();
 
-    if (data.info.lastLotteryDozensMatch >= params.minCompare && data.info.lastLotteryDozensMatch <= params.maxCompare) {
+    if (info.lastLotteryDozensMatch >= params.minCompare && info.lastLotteryDozensMatch <= params.maxCompare) {
         $('#lastResultsMatch').addClass('ok');
     }else{
         $('#lastResultsMatch').removeClass('ok');
     }
 
-    if (data.info.odd >= params.minOdd && data.info.odd <= params.maxOdd) {
+    if (info.odd >= params.minOdd && info.odd <= params.maxOdd) {
         $('#odd').addClass('ok');
     }else{
         $('#odd').removeClass('ok');
     }
 
-    if (data.info.even >= params.minEven && data.info.even <= params.maxEven) {
+    if (info.even >= params.minEven && info.even <= params.maxEven) {
         $('#even').addClass('ok');
     }else{
         $('#even').removeClass('ok');
     }
 
-    if (data.info.prime >= params.minPrime && data.info.prime <= params.maxPrime) {
+    if (info.prime >= params.minPrime && info.prime <= params.maxPrime) {
         $('#prime').addClass('ok');
     }else{
         $('#prime').removeClass('ok');
     }
 
-    if (data.info.threeMultiple >= params.minThreeMultiple && data.info.threeMultiple <= params.maxThreeMultiple) {
+    if (info.threeMultiple >= params.minThreeMultiple && info.threeMultiple <= params.maxThreeMultiple) {
         $('#threeMultiple').addClass('ok');
     }else{
         $('#threeMultiple').removeClass('ok');
     }
 
-    if (data.info.fibonacci >= params.minFibonacci && data.info.fibonacci <= params.maxFibonacci) {
+    if (info.fibonacci >= params.minFibonacci && info.fibonacci <= params.maxFibonacci) {
         $('#fibonacci').addClass('ok');
     }else{
         $('#fibonacci').removeClass('ok');
     }
 
-    if (data.info.sum >= params.minSum && data.info.sum <= params.maxSum) {
+    if (info.sum >= params.minSum && info.sum <= params.maxSum) {
         $('#sum').addClass('ok');
     }else{
         $('#sum').removeClass('ok');
     }
 }
 
-function setLastGameParams(data){
+function setLastGameParams(lastResult){
     let params = getDefaultParams();
 
-    if (data.lastResult.odd >= params.minOdd && data.lastResult.odd <= params.maxOdd) {
+    if (lastResult.odd >= params.minOdd && lastResult.odd <= params.maxOdd) {
         $('#lastOdd').addClass('ok');
     }else{
         $('#lastOdd').removeClass('ok');
     }
 
-    if (data.lastResult.even >= params.minEven && data.lastResult.even <= params.maxEven) {
+    if (lastResult.even >= params.minEven && lastResult.even <= params.maxEven) {
         $('#lastEven').addClass('ok');
     }else{
         $('#lastEven').removeClass('ok');
     }
 
-    if (data.lastResult.prime >= params.minPrime && data.lastResult.prime <= params.maxPrime) {
+    if (lastResult.prime >= params.minPrime && lastResult.prime <= params.maxPrime) {
         $('#lastPrime').addClass('ok');
     }else{
         $('#lastPrime').removeClass('ok');
     }
 
-    if (data.lastResult.threeMultiple >= params.minThreeMultiple && data.lastResult.threeMultiple <= params.maxThreeMultiple) {
+    if (lastResult.threeMultiple >= params.minThreeMultiple && lastResult.threeMultiple <= params.maxThreeMultiple) {
         $('#lastThreeMultiple').addClass('ok');
     }else{
         $('#lastThreeMultiple').removeClass('ok');
     }
 
-    if (data.lastResult.fibonacci >= params.minFibonacci && data.lastResult.fibonacci <= params.maxFibonacci) {
+    if (lastResult.fibonacci >= params.minFibonacci && lastResult.fibonacci <= params.maxFibonacci) {
         $('#lastFibonacci').addClass('ok');
     }else{
         $('#lastFibonacci').removeClass('ok');
     }
 
-    if (data.lastResult.sum >= params.minSum && data.lastResult.sum <= params.maxSum) {
+    if (lastResult.sum >= params.minSum && lastResult.sum <= params.maxSum) {
         $('#lastSum').addClass('ok');
     }else{
         $('#lastSum').removeClass('ok');
@@ -116,7 +116,7 @@ function getDefaultParams(){
                 maxCompare: 10,
                 minOdd: 7,
                 maxOdd: 9,
-                mineven: 6,
+                minEven: 6,
                 maxEven: 8,
                 minBorder: 9,
                 maxBorder: 11,
@@ -138,7 +138,7 @@ function getDefaultParams(){
                 maxCompare: 15,
                 minOdd: 15,
                 maxOdd: 35,
-                mineven: 15,
+                minEven: 15,
                 maxEven: 35,
                 minBorder: 0,
                 maxBorder: 0,
@@ -160,7 +160,7 @@ function getDefaultParams(){
                 maxCompare: 2,
                 minOdd: 1,
                 maxOdd: 4,
-                mineven: 1,
+                minEven: 1,
                 maxEven: 4,
                 minBorder: 0,
                 maxBorder: 0,
@@ -182,7 +182,7 @@ function getDefaultParams(){
                 maxCompare: 3,
                 minOdd: 3,
                 maxOdd: 5,
-                mineven: 2,
+                minEven: 2,
                 maxEven: 4,
                 minBorder: 0,
                 maxBorder: 0,
@@ -204,7 +204,7 @@ function getDefaultParams(){
                 maxCompare: 1,
                 minOdd: 2,
                 maxOdd: 4,
-                mineven: 2,
+                minEven: 2,
                 maxEven: 4,
                 minBorder: 0,
                 maxBorder: 0,
@@ -226,7 +226,7 @@ function getDefaultParams(){
                 maxCompare: 2,
                 minOdd: 2,
                 maxOdd: 8,
-                mineven: 2,
+                minEven: 2,
                 maxEven: 8,
                 minBorder: 0,
                 maxBorder: 0,
@@ -248,7 +248,7 @@ function getDefaultParams(){
                 maxCompare: 1,
                 minOdd: 2,
                 maxOdd: 4,
-                mineven: 2,
+                minEven: 2,
                 maxEven: 4,
                 minBorder: 0,
                 maxBorder: 0,
@@ -275,19 +275,20 @@ function selectGame(){
 
 function deleteAllGames(){
     return Swal.fire({
-        title: 'Tem certeza?',
-        text: "Ao remover todos os jogos pode não ser possível recuperá-los.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, remover'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            selectedGames = [];
-            renderSelectedgames();
-        }
-    })
+            title: 'Tem certeza?',
+            text: "Ao remover todos os jogos pode não ser possível recuperá-los.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, remover'
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                selectedGames = [];
+                renderSelectedgames();
+            }
+        })
 }
 
 function deleteGame(index){
@@ -333,4 +334,64 @@ function renderSelectedgames(){
     });
 
     $("#selected-games").html('').append(template);
+}
+
+function showGenerateResults(info, lastResult){
+    //Primary
+    $("#even").html(info.even);
+    $("#odd").html(info.odd);
+    $("#lastResultsMatch").html(info.lastLotteryDozensMatch);
+    $("#fibonacci").html(info.fibonacci);
+    //Secondary
+    $("#prime").html(info.prime);
+    $("#threeMultiple").html(info.threeMultiple);
+    $("#sum").html(info.sum);
+    clearDozens();
+
+    dozens.forEach(async item => {
+        await toggleDozen(`number-${item}`);
+    });
+    setDefaultParams(info);
+
+    $("#contestLabel").html(`Estatísticas do Último Concurso ${lastResult.contestNumber}`);
+    //Primary
+    $("#lastEven").html(lastResult.even);
+    $("#lastOdd").html(lastResult.odd);
+    $("#lastFibonacci").html(lastResult.fibonacci);
+    //Secondary
+    $("#lastPrime").html(lastResult.prime);
+    $("#lastThreeMultiple").html(lastResult.threeMultiple);
+    $("#lastSum").html(lastResult.sum);
+    let resultsTemplate = "";
+    lastResult.dozens.forEach(dozen => {
+        resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
+    });
+    $("#lastGame").html(resultsTemplate);
+    setLastGameParams(lastResult);
+}
+
+function isPrime(number){
+    if (number == 1)
+        return false;
+
+    for (i = 2; i <= number/2; i++){
+        if (number % i == 0)
+            return false;
+    }
+    return true;
+}
+
+function isPerfectSquare(number){
+    s = parseInt(Math.sqrt(number));
+    return (s * s == number);
+}
+
+// Returns true if n is a
+// Fibonacci Number, else false
+function isFibonacci(number){
+    // n is Fibonacci if one of
+    // 5*n*n + 4 or 5*n*n - 4 or
+    // both is a perfect square
+    return isPerfectSquare(5 * number * number + 4) ||
+        isPerfectSquare(5 * number * number - 4);
 }

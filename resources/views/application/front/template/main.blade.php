@@ -16,6 +16,10 @@
     @yield("css")
 </head>
 <body>
+    <div class="loading-overlay" id="loading-overlay" style="display: none">
+        <b>Carregando...</b>
+    </div>
+
     <div class="main-page">
         @yield('content')
     </div>
