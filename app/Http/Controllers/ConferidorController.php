@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LotoResult;
+use App\Helpers\Helper;
 use App\Services\ConferidorService;
 use Illuminate\Http\Request;
 
@@ -21,8 +21,9 @@ class ConferidorController extends Controller
             $rowsArray = preg_split('/\n|\r\n?/', $dozens_text);
 
             foreach ($rowsArray as $index => $row) {
-                foreach ($this->oneDigitNumbers() as $oneDigitNumber) {
-                    $rowsArray[$index] = preg_replace("/\b$oneDigitNumber\b/", "0$oneDigitNumber", $row);
+                foreach (Helper::oneDigitNumbers() as $oneDigitNumber) {
+                    $row = preg_replace("/\b$oneDigitNumber\b/", "0$oneDigitNumber", $row);
+                    $rowsArray[$index] = $row;
                 }
             }
 
@@ -52,10 +53,5 @@ class ConferidorController extends Controller
 
             return response($response);
         }
-    }
-
-    private function oneDigitNumbers()
-    {
-        return ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
     }
 }
