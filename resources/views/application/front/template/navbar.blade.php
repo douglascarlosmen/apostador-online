@@ -18,6 +18,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/dia-de-sorte">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/dia-de-sorte">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/dia-de-sorte">Tabela de Movimentação</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -28,6 +29,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/lotofacil">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/lotofacil">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/lotofacil">Tabela de Movimentação</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -38,6 +40,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/dupla-sena">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/dupla-sena">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/dupla-sena">Tabela de Movimentação</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -48,6 +51,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/lotomania">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/lotomania">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/lotomania">Tabela de Movimentação</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -58,6 +62,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/mega-sena">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/mega-sena">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/mega-sena">Tabela de Movimentação</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -68,6 +73,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/quina">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/quina">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/quina">Tabela de Movimentação</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -78,6 +84,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/conferidor/timemania">Conferidor</a>
                         <a class="dropdown-item" href="/gerador/timemania">Gerador Automático</a>
+                        <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/timemania">Tabela de Movimentação</a>
                     </div>
                 </li>
             </ul>
