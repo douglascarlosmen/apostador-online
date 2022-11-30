@@ -87,7 +87,7 @@ class TabelaMovimentacaoTransformer
             /**
              * Calculando a Frequência em Porcentagem
              */
-            $dozensControl[$index]['freq_porc'] = isset($dozenControl['freq_qtd']) ? number_format(($dozenControl['freq_qtd'] / $contestQuantity) * 100, 2) : 0;
+            $dozensControl[$index]['freq_porc'] = isset($dozenControl['freq_qtd']) ? number_format(($dozenControl['freq_qtd'] / $contestQuantity) * 100, 0) : 0;
 
             /**
              * Calculando atraso atual
@@ -104,6 +104,6 @@ class TabelaMovimentacaoTransformer
 
         ksort($dozensControl);
 
-        return $dozensControl;
+        return [$dozensControl, $contestsDozens];
     }
 }

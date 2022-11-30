@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/conferidor/{lottery}', 'application.front.index')->name('conferidor');
 Route::view('/gerador/{lottery}', 'application.front.generator')->name('gerador');
+Route::view('/tabela-de-movimentacao-das-dezenas/{lottery}', 'application.front.movement')->name('movimentacao');
 Route::get('/tabela-de-movimentacao/{lottery}', [TabelaMovimentacaoController::class, 'index'])->name('tabela_movimentacao');
 Route::get('/ordenar', [OrdenadorController::class, 'order']);
 
