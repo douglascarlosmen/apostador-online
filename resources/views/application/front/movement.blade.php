@@ -77,52 +77,52 @@
     <p>Mostra a movimentação das dezenas nos últimos concursos, caso queira utilize os filtros.</p>
     <hr>
     <h3 class="text-center">Filtragem Avançada</h3>
-    <form action="" method="GET" class="row" id="advanced-filter">
+    <div action="" method="GET" class="row" id="advanced-filter">
         <div class="col-6">
             <label for="">Concurso Inicial:</label>
-            <input type="text" name="start_contest" class="form-control" value="{{Request::get('start_contest')}}">
+            <input type="text" name="start_contest" id="start_contest" class="form-control">
         </div>
         <div class="col-6">
             <label for="">Concurso Final:</label>
-            <input type="text" name="end_contest" class="form-control" value="{{Request::get('end_contest')}}">
+            <input type="text" name="end_contest" id="end_contest" class="form-control">
         </div>
-        <button class="btn btn-outline-secondary w-100 mt-2" type="submit">
+        <button class="btn btn-outline-secondary w-100 mt-2" onclick="advancedFilter()">
             Filtrar
         </button>
-    </form>
+    </div>
     <hr>
     <h3 class="text-center">Filtragem Rápida</h3>
     <div class="row justify-content-center">
-        <form action="" method="GET" class="col-md-2 fast-filter mt-1">
+        <div class="col-md-2 fast-filter mt-1">
             <input type="hidden" name="limit" value="10">
-            <button class="btn btn-outline-secondary w-100" type="submit">
+            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(10)">
                 Últimos <b>10</b> conc.
             </button>
-        </form>
-        <form action="" method="GET" class="col-md-2 fast-filter mt-1">
+        </div>
+        <div class="col-md-2 fast-filter mt-1">
             <input type="hidden" name="limit" value="20">
-            <button class="btn btn-outline-secondary w-100" type="submit">
+            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(20)">
                 Últimos <b>20</b> conc.
             </button>
-        </form>
-        <form action="" method="GET" class="col-md-2 fast-filter mt-1">
+        </div>
+        <div class="col-md-2 fast-filter mt-1">
             <input type="hidden" name="limit" value="30">
-            <button class="btn btn-outline-secondary w-100" type="submit">
+            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(30)">
                 Últimos <b>30</b> conc.
             </button>
-        </form>
-        <form action="" method="GET" class="col-md-2 fast-filter mt-1">
+        </div>
+        <div class="col-md-2 fast-filter mt-1">
             <input type="hidden" name="limit" value="50">
-            <button class="btn btn-outline-secondary w-100" type="submit">
+            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(50)">
                 Últimos <b>50</b> conc.
             </button>
-        </form>
-        <form action="" method="GET" class="col-md-2 fast-filter mt-1">
+        </div>
+        <div class="col-md-2 fast-filter mt-1">
             <input type="hidden" name="limit" value="150">
-            <button class="btn btn-outline-secondary w-100" type="submit">
+            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(150)">
                 Últimos <b>150</b> conc.
             </button>
-        </form>
+        </div>
     </div>
     <div class="table-responsive mt-5" id="movement-table">
 
@@ -157,16 +157,15 @@
 <script>
     let lastResult;
     let generateInfoToGeneratorPage = false;
+    let extension = "";
+
+    let oldLottery = lottery;
+    let splittedUrl = location.href.split('/');
+    lottery = splittedUrl[splittedUrl.length - 1];
 
     getMovementTable();
 
     async function getMovementTable(){
-        const params = await new Proxy(new URLSearchParams(window.location.search), {
-            get: (searchParams, prop) => searchParams.get(prop),
-        });
-
-        setExtension(params);
-
         let route = "{{route('tabela_movimentacao', 'lottery')}}".replace('lottery', lottery);
         axios.get(`${route}${extension}`)
             .then(response => {
@@ -265,14 +264,19 @@
             return "bg-late-good";
     }
 
-    let extension = "";
-    function setExtension(params){
-        extension = '';
-
-        if (params.limit) incrementExtension(`limit=${params.limit}`);
-        if (params.start_contest) incrementExtension(`start_contest=${params.start_contest}`);
-        if (params.end_contest) incrementExtension(`end_contest=${params.end_contest}`);
+    function fastFilter(limit){
+        extension = "";
+        incrementExtension(`limit=${limit}`);
+        getMovementTable();
     }
+
+    function advancedFilter(){
+        extension = "";
+        incrementExtension(`start_contest=${$("#start_contest").val()}`);
+        incrementExtension(`end_contest=${$("#end_contest").val()}`);
+        getMovementTable();
+    }
+
     function incrementExtension(increment){
         if (extension.length == 0){
             extension += `?${increment}`;
