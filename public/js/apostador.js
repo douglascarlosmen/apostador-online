@@ -13,6 +13,7 @@ const RESUME_GAMES = $("#resume-games");
 const RESULTS_CONTAINER = $("#results");
 
 var resultsChoosen = false;
+let addDozen = true;
 let dozens = [];
 let selectedGames = [];
 var lottery = "mega-sena";
@@ -297,19 +298,26 @@ function clearDozens(){
 }
 
 function toggleDozen(id){
-    if (blockClick) return;
-
     let element = NUMBERS_CONTAINER.children(`#${id}`)
     if (element.hasClass("selected")){
         element.removeClass('selected');
         let index = dozens.indexOf(element.children(0).html());
         dozens.splice(index, 1);
     }else{
-        if ((dozens.length + 1) > getLotteryData().maxPrize)
-            return Swal.fire("Aviso!", "Você selecionou o número máximo para essa loteria.", "warning");
+        if (generateInfoToGeneratorPage){
+            if ((dozens.length + 1) > getLotteryData().maxPrize)
+                return Swal.fire("Aviso!", "Você selecionou o número máximo para essa loteria.", "warning");
+        }
 
         element.addClass('selected');
-        dozens.push(element.children(0).html());
+        if (addDozen) dozens.push(element.children(0).html());
+    }
+
+    if (generateInfoToGeneratorPage){
+        let info = getInfo(dozens);
+        info.lastLotteryDozensMatch = lastResult.dozens.filter((obj) => dozens.indexOf(obj) !== -1).length;
+        showGenerateResults(info, lastResult, false);
+        console.log(dozens);
     }
 }
 

@@ -35,17 +35,17 @@
 <section id="contest-selection" class="container pt-5">
     <div class="row">
         <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()">
+            <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()" disabled>
                 <i class="fas fa-thumbs-up"></i> Palpite Apostador
             </button>
         </div>
         <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()">
+            <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()" disabled>
                 <i class="fas fa-chart-bar"></i> Mostrar Premiação
             </button>
         </div>
         <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-outline-success w-100" id="lastGameButton" onclick="selectGame()">
+            <button class="btn btn-outline-success w-100" id="selectGameButton" onclick="selectGame()" disabled>
                 <i class="fas fa-check"></i> Selecionar Jogo
             </button>
         </div>
@@ -173,10 +173,14 @@
 <script src="{{asset('js/generator.js')}}"></script>
 <script>
     let lastResult;
+    let generateInfoToGeneratorPage = true;
 
     axios.post("{{route('generate.last')}}", { lottery })
         .then(response => {
             lastResult = response.data.lastResult;
+            $("#selectGameButton").attr('disabled', false);
+            $("#lastGameButton").attr('disabled', false);
+            $("#lottery-button").attr('disabled', false);
         })
         .catch(error => {
             console.log(error.response.data);
@@ -194,15 +198,6 @@
         let count = 0;
         while(releaseGenerator != true){
             let generatedDozens = [];
-            let info = {
-                even: 0,
-                odd: 0,
-                fibonacci: 0,
-                prime: 0,
-                sum: 0,
-                threeMultiple: 0,
-                dozens: 0
-            };
             while (generatedDozens.length < maxPrize){
                 randomNumber = Math.floor(Math.random() * (maxNumber)) + 1;
                 let generatedDozen = randomNumber.toString().padStart(2, "0");
@@ -212,28 +207,18 @@
                 }
             }
 
-            generatedDozens.forEach(dozen => {
-                let intDozen = parseInt(dozen);
-                if (intDozen % 2 == 0) info.even++;
-                else if (intDozen % 2 != 0) info.odd++;
-
-                if (isPrime(intDozen)) info.prime++;
-
-                if (isFibonacci(intDozen)) info.fibonacci++;
-
-                if (intDozen % 3 == 0) info.threeMultiple++;
-
-                info.sum += intDozen;
-            });
-            info.dozens = generatedDozens.length;
+            let info = getInfo(generatedDozens);
 
             count++;
             if (count > 2500){
                 alert("Não conseguimos gerar um jogo adequado.");
                 break;
             }
-            //Check if the combination matches the parameters
+
+            info.lastLotteryDozensMatch = lastResult.dozens.filter((obj) => generatedDozens.indexOf(obj) !== -1).length;
+
             if (
+                info.lastLotteryDozensMatch >= params.minCompare && info.lastLotteryDozensMatch <= params.maxCompare &&
                 info.odd >= params.minOdd && info.odd <= params.maxOdd &&
                 info.sum >= params.minSum && info.sum <= params.maxSum &&
                 info.even >= params.minEven && info.even <= params.maxEven &&
@@ -241,7 +226,6 @@
                 info.threeMultiple >= params.minThreeMultiple && info.threeMultiple <= params.maxThreeMultiple &&
                 info.fibonacci >= params.minFibonacci && info.fibonacci <= params.maxFibonacci
             ) {
-                info.lastLotteryDozensMatch = lastResult.dozens.filter((obj) => generatedDozens.indexOf(obj) !== -1).length;
                 dozens = generatedDozens;
                 releaseGenerator = true;
                 showGenerateResults(info, lastResult);

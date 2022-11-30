@@ -336,7 +336,8 @@ function renderSelectedgames(){
     $("#selected-games").html('').append(template);
 }
 
-function showGenerateResults(info, lastResult){
+function showGenerateResults(info, lastResult, canToggleDozen = true){
+    console.log(info);
     //Primary
     $("#even").html(info.even);
     $("#odd").html(info.odd);
@@ -346,11 +347,15 @@ function showGenerateResults(info, lastResult){
     $("#prime").html(info.prime);
     $("#threeMultiple").html(info.threeMultiple);
     $("#sum").html(info.sum);
-    clearDozens();
 
-    dozens.forEach(async item => {
-        await toggleDozen(`number-${item}`);
-    });
+    if (canToggleDozen){
+        addDozen = false;
+        clearDozens();
+        dozens.forEach(async item => {
+            await toggleDozen(`number-${item}`);
+        });
+        addDozen = true;
+    }
     setDefaultParams(info);
 
     $("#contestLabel").html(`Estatísticas do Último Concurso ${lastResult.contestNumber}`);
@@ -394,4 +399,33 @@ function isFibonacci(number){
     // both is a perfect square
     return isPerfectSquare(5 * number * number + 4) ||
         isPerfectSquare(5 * number * number - 4);
+}
+
+function getInfo(arrayNumbers){
+    let info = {
+        even: 0,
+        odd: 0,
+        fibonacci: 0,
+        prime: 0,
+        sum: 0,
+        threeMultiple: 0,
+        dozens: 0
+    };
+
+    arrayNumbers.forEach(dozen => {
+        let intDozen = parseInt(dozen);
+        if (intDozen % 2 == 0) info.even++;
+        else if (intDozen % 2 != 0) info.odd++;
+
+        if (isPrime(intDozen)) info.prime++;
+
+        if (isFibonacci(intDozen)) info.fibonacci++;
+
+        if (intDozen % 3 == 0) info.threeMultiple++;
+
+        info.sum += intDozen;
+    });
+    info.dozens = arrayNumbers.length;
+
+    return info;
 }

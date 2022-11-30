@@ -71,6 +71,7 @@
 @section("scripts")
 <script src="{{asset('js/apostador.js')}}"></script>
 <script>
+    let generateInfoToGeneratorPage = false;
     applyLotteryNumbers();
 
     function uploadFile(){
