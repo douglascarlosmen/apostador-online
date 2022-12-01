@@ -284,7 +284,8 @@ function toggleDozen(id){
     if (generateInfoToGeneratorPage){
         let info = getInfo(dozens);
         info.lastLotteryDozensMatch = lastResult.dozens.filter((obj) => dozens.indexOf(obj) !== -1).length;
-        showGenerateResults(info, lastResult, false);
+        showGenerateResults("lastResult", lastResult, false);
+        showGenerateResults("info", info, false);
     }
 }
 

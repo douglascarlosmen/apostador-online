@@ -13,7 +13,7 @@ class GeneratorController extends Controller
     {
         $lastResult = new stdClass();
         $response = LotoResult::whereHas('loto', function ($query) use ($request) {
-            $query->where('name', $request->lottery);
+            return $query->where('name', $request->lottery);
         })->orderBy('contest_number', 'desc')->first();
         $lastResult->dozens = json_decode($response->dozens, true);
         $lastResult->contestNumber = $response->contest_number;

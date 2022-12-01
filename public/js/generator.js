@@ -44,46 +44,6 @@ function setDefaultParams(info){
     }
 }
 
-function setLastGameParams(lastResult){
-    let params = getDefaultParams();
-
-    if (lastResult.odd >= params.minOdd && lastResult.odd <= params.maxOdd) {
-        $('#lastOdd').addClass('ok');
-    }else{
-        $('#lastOdd').removeClass('ok');
-    }
-
-    if (lastResult.even >= params.minEven && lastResult.even <= params.maxEven) {
-        $('#lastEven').addClass('ok');
-    }else{
-        $('#lastEven').removeClass('ok');
-    }
-
-    if (lastResult.prime >= params.minPrime && lastResult.prime <= params.maxPrime) {
-        $('#lastPrime').addClass('ok');
-    }else{
-        $('#lastPrime').removeClass('ok');
-    }
-
-    if (lastResult.threeMultiple >= params.minThreeMultiple && lastResult.threeMultiple <= params.maxThreeMultiple) {
-        $('#lastThreeMultiple').addClass('ok');
-    }else{
-        $('#lastThreeMultiple').removeClass('ok');
-    }
-
-    if (lastResult.fibonacci >= params.minFibonacci && lastResult.fibonacci <= params.maxFibonacci) {
-        $('#lastFibonacci').addClass('ok');
-    }else{
-        $('#lastFibonacci').removeClass('ok');
-    }
-
-    if (lastResult.sum >= params.minSum && lastResult.sum <= params.maxSum) {
-        $('#lastSum').addClass('ok');
-    }else{
-        $('#lastSum').removeClass('ok');
-    }
-}
-
 function getDefaultParams(){
     switch(lottery){
         case 'mega-sena':
@@ -336,42 +296,49 @@ function renderSelectedgames(){
     $("#selected-games").html('').append(template);
 }
 
-function showGenerateResults(info, lastResult, canToggleDozen = true){
-    //Primary
-    $("#even").html(info.even);
-    $("#odd").html(info.odd);
-    $("#lastResultsMatch").html(info.lastLotteryDozensMatch);
-    $("#fibonacci").html(info.fibonacci);
-    //Secondary
-    $("#prime").html(info.prime);
-    $("#threeMultiple").html(info.threeMultiple);
-    $("#sum").html(info.sum);
+function showGenerateResults(type, data, canToggleDozen = true){
+    if (type == "info"){
+        //Primary
+        $("#even").html(data.even);
+        $("#odd").html(data.odd);
+        $("#lastResultsMatch").html(data.lastLotteryDozensMatch);
+        $("#fibonacci").html(data.fibonacci);
+        //Secondary
+        $("#prime").html(data.prime);
+        $("#threeMultiple").html(data.threeMultiple);
+        $("#sum").html(data.sum);
 
-    if (canToggleDozen){
-        addDozen = false;
-        clearDozens();
-        dozens.forEach(async item => {
-            await toggleDozen(`number-${item}`);
+        if (canToggleDozen){
+            addDozen = false;
+            clearDozens();
+            dozens.forEach(async item => {
+                await toggleDozen(`number-${item}`);
+            });
+            addDozen = true;
+        }
+        setDefaultParams(data);
+    }else{
+        $("#contestLabel").html(`Estatísticas do Último Concurso ${data.contestNumber}`);
+        //Primary
+        $("#lastEven").html(data.even);
+        $("#lastEven").addClass(getLotteryClass('number'));
+        $("#lastOdd").html(data.odd);
+        $("#lastOdd").addClass(getLotteryClass('number'));
+        $("#lastFibonacci").html(data.fibonacci);
+        $("#lastFibonacci").addClass(getLotteryClass('number'));
+        //Secondary
+        $("#lastPrime").html(data.prime);
+        $("#lastPrime").addClass(getLotteryClass('number'));
+        $("#lastThreeMultiple").html(data.threeMultiple);
+        $("#lastThreeMultiple").addClass(getLotteryClass('number'));
+        $("#lastSum").html(data.sum);
+        $("#lastSum").addClass(getLotteryClass('number'));
+        let resultsTemplate = "";
+        data.dozens.forEach(dozen => {
+            resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
         });
-        addDozen = true;
+        $("#lastGame").html(resultsTemplate);
     }
-    setDefaultParams(info);
-
-    $("#contestLabel").html(`Estatísticas do Último Concurso ${lastResult.contestNumber}`);
-    //Primary
-    $("#lastEven").html(lastResult.even);
-    $("#lastOdd").html(lastResult.odd);
-    $("#lastFibonacci").html(lastResult.fibonacci);
-    //Secondary
-    $("#lastPrime").html(lastResult.prime);
-    $("#lastThreeMultiple").html(lastResult.threeMultiple);
-    $("#lastSum").html(lastResult.sum);
-    let resultsTemplate = "";
-    lastResult.dozens.forEach(dozen => {
-        resultsTemplate += `<span class="numbers ${getLotteryClass()}"><b>${dozen}</b></span>`;
-    });
-    $("#lastGame").html(resultsTemplate);
-    setLastGameParams(lastResult);
 }
 
 function isPrime(number){

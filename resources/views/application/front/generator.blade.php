@@ -111,32 +111,32 @@
                     <div class="border p-2 d-flex flex-row justify-content-center">
                         <div class="col-md-6 d-flex flex-row justify-content-center">
                             <span>Par:</span>
-                            <span id="lastEven" class="text-bold ml-2">0</span>
+                            <span id="lastEven" class="text-bold ml-2" style="border: none !important">0</span>
                         </div>
                         |
                         <div class="col-md-6 d-flex flex-row justify-content-center">
                             <span>Ímpar:</span>
-                            <span id="lastOdd" class="text-bold ml-2">0</span>
+                            <span id="lastOdd" class="text-bold ml-2" style="border: none !important">0</span>
                         </div>
                     </div>
                     <div class="border p-2 d-flex flex-row justify-content-center">
                         <span>Números de Fibonacci:</span>
-                        <span id="lastFibonacci" class="text-bold ml-2">0</span>
+                        <span id="lastFibonacci" class="text-bold ml-2" style="border: none !important">0</span>
                     </div>
                     <div class="w-100 bg-black text-white p-2 text-center mt-3">
                         <b>Parâmetros Secundários</b>
                     </div>
                     <div class="border p-2 d-flex flex-row justify-content-center">
                         <span>Primos:</span>
-                        <span id="lastPrime" class="text-bold ml-2">0</span>
+                        <span id="lastPrime" class="text-bold ml-2" style="border: none !important">0</span>
                     </div>
                     <div class="border p-2 d-flex flex-row justify-content-center">
                         <span>Múltiplos de 3:</span>
-                        <span id="lastThreeMultiple" class="text-bold ml-2">0</span>
+                        <span id="lastThreeMultiple" class="text-bold ml-2" style="border: none !important">0</span>
                     </div>
                     <div class="border p-2 d-flex flex-row justify-content-center">
                         <span>Soma das Dezenas:</span>
-                        <span id="lastSum" class="text-bold ml-2">0</span>
+                        <span id="lastSum" class="text-bold ml-2" style="border: none !important">0</span>
                     </div>
                 </div>
             </div>
@@ -191,20 +191,22 @@
 <script src="{{asset('js/apostador.js')}}"></script>
 <script src="{{asset('js/generator.js')}}"></script>
 <script>
-    let lastResult;
-    let generateInfoToGeneratorPage = true;
-
-    axios.post("{{route('generate.last')}}", { lottery })
+    $(document).ready(function(){
+        axios.post("{{route('generate.last')}}", { lottery })
         .then(response => {
             $("#lastContestLabel").html(`Repetidas do (${response.data.lastResult.contestNumber})`);
             lastResult = response.data.lastResult;
             $("#selectGameButton").attr('disabled', false);
             $("#lastGameButton").attr('disabled', false);
             $("#lottery-button").attr('disabled', false);
+            showGenerateResults('lastResults', lastResult);
         })
         .catch(error => {
             console.log(error.response.data);
-        })
+        });
+    })
+    let lastResult;
+    let generateInfoToGeneratorPage = true;
 
     applyLotteryNumbers(false, false);
     setCheckResumeLayout();
@@ -272,7 +274,7 @@
             ) {
                 dozens = generatedDozens;
                 releaseGenerator = true;
-                showGenerateResults(info, lastResult);
+                showGenerateResults('info', info);
             }
         }
     }
