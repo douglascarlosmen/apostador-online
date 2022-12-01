@@ -270,18 +270,18 @@
     }
 
     function getFrequencyBg(number){
-        if (number < 10)
+        if (number <= getLotteryData().frequencyBad)
             return "bg-frequency-bad";
-        else if (number < 30)
+        else if (number < getLotteryData().frequencyMedium)
             return "bg-frequency-medium";
         else
             return "bg-frequency-good";
     }
 
     function getLateBg(number){
-        if (number <= 10)
+        if (number <= getLotteryData().lateBad)
             return "bg-late-bad";
-        else if (number <= 20)
+        else if (number <= getLotteryData().lateMedium)
             return "bg-late-medium";
         else
             return "bg-late-good";

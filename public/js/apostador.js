@@ -18,13 +18,13 @@ let dozens = [];
 let selectedGames = [];
 var lottery = "mega-sena";
 
-var megasenaLottery = { min: 1, max: 60, totalPrize: 6, elegiblePrize: 4, minSelected: 6, maxSelected: 15 };
-var lotofacilLottery = { min: 1, max: 25, totalPrize: 15, elegiblePrize: 11, minSelected: 15, maxSelected: 20  };
-var lotomaniaLottery = { min: 1, max: 100, totalPrize: 20, elegiblePrize: 15, minSelected: 50, maxSelected: 50  };
-var quinaLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 2, minSelected: 5, maxSelected: 15  };
-var duplaLottery = { min: 1, max: 50, totalPrize: 6, elegiblePrize: 3, minSelected: 7, maxSelected: 15  };
-var diaLottery = { min: 1, max: 31, totalPrize: 7, elegiblePrize: 4, minSelected: 6, maxSelected: 15  };
-var timeLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 3, minSelected: 10, maxSelected: 10  };
+var megasenaLottery = { min: 1, max: 60, totalPrize: 6, elegiblePrize: 4, minSelected: 6, maxSelected: 15, lateBad: 10, lateMedium: 20, frequencyBad: 10, frequencyMedium: 30 };
+var lotofacilLottery = { min: 1, max: 25, totalPrize: 15, elegiblePrize: 11, minSelected: 15, maxSelected: 20, lateBad: 1, lateMedium: 2, frequencyBad: 40, frequencyMedium: 70  };
+var lotomaniaLottery = { min: 1, max: 100, totalPrize: 20, elegiblePrize: 15, minSelected: 50, maxSelected: 50, lateBad: 5, lateMedium: 10, frequencyBad: 10, frequencyMedium: 30  };
+var quinaLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 2, minSelected: 5, maxSelected: 15, lateBad: 14, lateMedium: 30, frequencyBad: 10, frequencyMedium: 15  };
+var duplaLottery = { min: 1, max: 50, totalPrize: 6, elegiblePrize: 3, minSelected: 7, maxSelected: 15, lateBad: 4, lateMedium: 10, frequencyBad: 10, frequencyMedium: 30  };
+var diaLottery = { min: 1, max: 31, totalPrize: 7, elegiblePrize: 4, minSelected: 6, maxSelected: 15, lateBad: 2, lateMedium: 5, frequencyBad: 10, frequencyMedium: 30  };
+var timeLottery = { min: 1, max: 80, totalPrize: 5, elegiblePrize: 3, minSelected: 10, maxSelected: 10, lateBad: 15, lateMedium: 30, frequencyBad: 10, frequencyMedium: 30  };
 
 async function applyLotteryNumbers(getOptions = true, getContestResults = true){
     let oldLottery = lottery;
