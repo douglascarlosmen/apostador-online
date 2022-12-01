@@ -184,12 +184,12 @@
             tableRowTemplate += `<th class="${getLotteryClass('lottery')}">${key}</th>`;
             let alreadySetted = 0;
             for(let i = 1; i <= getLotteryData().max; i++){
-                if (alreadySetted <= getLotteryData().totalPrize && data[1][key].includes(i.toString().padStart(2, "0"))){
-                    tableRowTemplate += `<td class="${getLotteryClass('lottery')}">${data[1][key][alreadySetted]}</td>`;
+                if (alreadySetted <= getLotteryData().totalPrize && data[1][key].dozens.includes(i.toString().padStart(2, "0"))){
+                    tableRowTemplate += `<td class="${getLotteryClass('lottery')}">${data[1][key].dozens[alreadySetted]}</td>`;
                     alreadySetted++;
                 }else{
                     //lotomania check
-                    if (i == 100 && data[1][key].includes("00")) tableRowTemplate += `<td class="${getLotteryClass('lottery')}">00</td>`;
+                    if (i == 100 && data[1][key].dozens.includes("00")) tableRowTemplate += `<td class="${getLotteryClass('lottery')}">00</td>`;
                     else tableRowTemplate += `<td></td>`;
                 }
             }
