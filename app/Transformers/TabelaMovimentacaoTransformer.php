@@ -22,7 +22,10 @@ class TabelaMovimentacaoTransformer
 
         foreach ($this->results as $result) {
             $resultDozens = json_decode($result->dozens, true);
-            $contestsDozens[$result->contest_number] = $resultDozens;
+            $contestsDozens[$result->contest_number]['dozens'] = $resultDozens;
+            if (!is_null($result->cycle)) {
+                $contestsDozens[$result->contest_number]['cycle'] = $result->cycle;
+            }
 
             foreach ($this->dozens as $dozen) {
                 if (in_array($dozen, $resultDozens)) {
