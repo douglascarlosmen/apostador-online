@@ -15,6 +15,7 @@ class TabelaMovimentacaoController extends Controller
         $endContest = $request->end_contest ?? LotoResult::whereHas('loto', function ($query) use ($lottery) {
                                                     return $query->where('name', $lottery);
                                                 })->orderBy('contest_number','DESC')->first()->contest_number;
+
         $startContest = $request->start_contest ?? (int)$endContest - $limit;
 
         $results = LotoResult::whereBetween('contest_number', [$startContest, $endContest])
@@ -25,6 +26,7 @@ class TabelaMovimentacaoController extends Controller
             ->orderBy('contest_number', 'ASC')
             ->limit($limit)
             ->get();
+        
 
         $allLotteryDozens = Helper::getLotoDozens($lottery);
 

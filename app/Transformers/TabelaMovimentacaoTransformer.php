@@ -100,7 +100,7 @@ class TabelaMovimentacaoTransformer
             /**
              * Calculando Maior Atraso
              */
-            if (isset($dozensControl[$dozen]['maior_atraso']) && $dozensControl[$dozen]['maior_atraso'] < $dozensControl[$dozen]['maior_atraso_atual']) {
+            if ((isset($dozensControl[$dozen]['maior_atraso']) && isset($dozensControl[$dozen]['maior_atraso_atual'])) && $dozensControl[$dozen]['maior_atraso'] < $dozensControl[$dozen]['maior_atraso_atual']) {
                 $dozensControl[$dozen]['maior_atraso'] = $dozensControl[$dozen]['maior_atraso_atual'];
             }
         }
