@@ -11,7 +11,7 @@ class ConferidorService
         return count(array_intersect($dozensBet, $resultDozens));
     }
 
-    public function getOtherPrimesWithDozens(string $loto, array $dozens, int|string $minElegible)
+    public function getOtherPrimesWithDozens(string $loto, array $dozens, int $minElegible)
     {
         $loto = Loto::whereName($loto)->with('results')->first();
         $othersResults = [];

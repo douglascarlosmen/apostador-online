@@ -52,7 +52,7 @@
 
         <div class="col-md-6">
             <div class="d-flex align-items-center justify-content-center mt-2 mb-2 w-100">
-                <button class="btn btn-outline-info w-100" id="checkBet" onclick="" disabled>
+                <button class="btn btn-outline-info w-100" id="checkBet" onclick="checkBetsForGenerator()">
                     <i class="fas fa-chart-bar"></i> Conferir Premiação
                 </button>
             </div>
@@ -144,12 +144,46 @@
     </div>
 </section>
 
+<section id="checked-games-container" class="container mt-3">
+    <h4 class="text-center">Conferir a Premiação</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Faixa</th>
+                        <th class="text-center">Acertos</th>
+                    </tr>
+                </thead>
+                <tbody id="check-resume-content">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Concurso</th>
+                        <th class="text-center">Acertos</th>
+                    </tr>
+                </thead>
+                <tbody id="check-game-by-game-content">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
 <section id="selected-games-container" class="container mt-3">
     <h4 class="text-center">Jogos Selecionados</h4>
     <div id="selected-games">
 
     </div>
 </section>
+
+
 
 @endsection
 
@@ -173,6 +207,29 @@
         })
 
     applyLotteryNumbers(false, false);
+    setCheckResumeLayout();
+
+    function setCheckResumeLayout(){
+        $("#check-resume-content").html('');
+        let template = "";
+        for(let i = getLotteryData().elegiblePrize; i <= getLotteryData().totalPrize; i++){
+            template += `
+                <tr>
+                    <td class="text-center">${i}</td>
+                    <td class="text-center" id="check-resume-${i}">0</td>
+                </tr>
+            `;
+        }
+
+        template +=`
+            <tr>
+                <td class="text-center">Total </td>
+                <td class="text-center" id="check-resume-total">0</td>
+            </tr>
+        `
+
+        $("#check-resume-content").html(template);
+    }
 
     function getNumbers(){
         let maxNumber = getLotteryData().max;
@@ -230,6 +287,39 @@
             $("#lastGameButton").html("<i class='fas fa-chart-bar'></i> Exibir último resultado")
         }
         lastGameToggled = !lastGameToggled;
+    }
+
+    function checkBetsForGenerator(){
+        if (dozens.length < getLotteryData().totalPrize)
+            return Swal.fire("Erro", `O total de números selecionados precisam ser maior ou igual a ${getLotteryData().totalPrize}`, "error");
+        console.log(dozens);
+        setCheckResumeLayout();
+        $("#check-game-by-game-content").html('');
+        axios.post("{{route('check.primes')}}", {
+            lottery,
+            dozens,
+            minElegible: getLotteryData().elegiblePrize
+        })
+            .then(response =>{
+                let countTotal = 0;
+                let data = response.data;
+                Object.keys(data).forEach(key => {
+                    $(`#check-resume-${key}`).html(data[key].count);
+                    countTotal += data[key].count;
+                    data[key].contests.forEach(contest => {
+                        $("#check-game-by-game-content").append(`
+                            <tr class="${getLotteryClass('lottery')}">
+                                <td class="text-center">${contest}</td>
+                                <td class="text-center">${key}</td>
+                            </tr>
+                        `);
+                    })
+                });
+                $("#check-resume-total").html(countTotal);
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            })
     }
 </script>
 @endsection

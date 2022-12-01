@@ -17,7 +17,7 @@ Route::post('/conferir-resultado', [ConferidorController::class, 'checkResult'])
 Route::get('/obter-numero-de-concursos-pela-loteria', [AxiosController::class, 'getContestsByLoto'])->name('lottery.contest');
 Route::get('/obter-resultado-por-concurso-da-loteria', [AxiosController::class, 'getResultByConstestNumberAndLoto'])->name('lottery.results');
 
-Route::get('/conferir-premiacoes', [ConferidorController::class, 'checkPrimes'])->name('check.primes');
+Route::post('/conferir-premiacoes', [ConferidorController::class, 'checkPrimes'])->name('check.primes');
 
 Route::post('/generate', [GeneratorController::class, 'lastResultNumbers'])->name('generate.last');
 
