@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('update-loto-results')->daily();
+        $schedule->command('update-loto-cycles')->weekly();
     }
 
     /**
