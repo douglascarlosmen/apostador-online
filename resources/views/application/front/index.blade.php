@@ -2,11 +2,7 @@
 
 @section("css")
 <style>
-    .col-5{
-        width: 20%;
-        float:left;
-        position: relative;
-    }
+
 </style>
 @endsection
 
@@ -112,8 +108,7 @@
     async function getContestResult(){
         let contestNumber = CONTEST_SELECT.val();
 
-        if (contestNumber == "")
-            return Swal.fire("Aviso!", "Escolha um concurso para exibir os resultados.", "warning");
+        if (!contestNumber) return;
 
         dozens = [];
         await clearDozens();

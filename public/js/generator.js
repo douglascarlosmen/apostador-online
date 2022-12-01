@@ -337,7 +337,6 @@ function renderSelectedgames(){
 }
 
 function showGenerateResults(info, lastResult, canToggleDozen = true){
-    console.log(info);
     //Primary
     $("#even").html(info.even);
     $("#odd").html(info.odd);

@@ -2,12 +2,6 @@
 
 @section("css")
 <style>
-    .col-5{
-        width: 20%;
-        float:left;
-        position: relative;
-    }
-
     .border-black tr td, .border-black tr th{
         border-color:#000 !important;
     }
@@ -22,17 +16,6 @@
 
     table{
         font-weight: bold
-    }
-
-    .loading-overlay{
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 
     .bg-frequency-bad{
