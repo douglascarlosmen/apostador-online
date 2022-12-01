@@ -26,7 +26,8 @@ class LotoResult extends Model
         "date_next_contest",
         "next_context_number",
         "heart_team",
-        "lucky_month"
+        "lucky_month",
+        "cycle"
     ];
 
     public function loto()
