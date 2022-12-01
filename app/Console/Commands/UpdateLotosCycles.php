@@ -30,11 +30,17 @@ class UpdateLotosCycles extends Command
      */
     public function handle()
     {
-        $lotos = Loto::with('results')->get();
+        $lotos = Loto::with(['results' => function($query){
+            return $query->orderBy('contest_number', 'ASC');
+        }])->get();
 
         foreach ($lotos as $loto) {
             $cycleCounter = 1;
             $cycleArray = [];
+            foreach ($loto->results as $result) {
+                $result->update(['cycle' => null]);
+            }
+
             if (!empty($loto->results)) {
                 $allLotteryDozens = Helper::getLotoDozens($loto->name);
                 $allLotteryDozensCount = count($allLotteryDozens);

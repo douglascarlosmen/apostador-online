@@ -56,7 +56,6 @@ async function applyLotteryNumbers(getOptions = true, getContestResults = true){
     for(let i = getLotteryData().min; i <= getLotteryData().max; i++){
         if (i == 100) NUMBERS_CONTAINER.append(`<div id="number-00"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number-00')"><strong>00</strong></span></div>`)
         else NUMBERS_CONTAINER.append(`<div id="number-${leftPad(i, 2)}"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
-        
     }
 }
 

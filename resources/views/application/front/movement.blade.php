@@ -160,6 +160,7 @@
         let route = "{{route('tabela_movimentacao', 'lottery')}}".replace('lottery', lottery);
         axios.get(`${route}${extension}`)
             .then(response => {
+                console.log(response.data);
                 mountTable(response.data);
             })
             .catch(error => {
@@ -194,6 +195,9 @@
                 }
             }
             tableRowTemplate += `</tr>`;
+            if (data[1][key].cycle){
+                tableRowTemplate += `<tr><td class="text-center" colspan="${getLotteryData().max + 1}">Início do ciclo ${parseInt(data[1][key].cycle) + 1}</td></tr>`
+            }
         });
 
         let row1 = "<tr><th class='text-center bg-dark-01'>Atraso Atual</th>";
