@@ -54,4 +54,9 @@ class ConferidorController extends Controller
             return response($response);
         }
     }
+
+    public function checkPrimes(Request $request)
+    {
+        return response((new ConferidorService)->getOtherPrimesWithDozens('mega-sena', $request->dozens, $request->min_elegible));
+    }
 }

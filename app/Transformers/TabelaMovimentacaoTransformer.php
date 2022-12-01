@@ -22,7 +22,10 @@ class TabelaMovimentacaoTransformer
 
         foreach ($this->results as $result) {
             $resultDozens = json_decode($result->dozens, true);
-            $contestsDozens[$result->contest_number] = $resultDozens;
+            $contestsDozens[$result->contest_number]['dozens'] = $resultDozens;
+            if (!is_null($result->cycle)) {
+                $contestsDozens[$result->contest_number]['cycle'] = $result->cycle;
+            }
 
             foreach ($this->dozens as $dozen) {
                 if (in_array($dozen, $resultDozens)) {
@@ -97,7 +100,7 @@ class TabelaMovimentacaoTransformer
             /**
              * Calculando Maior Atraso
              */
-            if (isset($dozensControl[$dozen]['maior_atraso']) && $dozensControl[$dozen]['maior_atraso'] < $dozensControl[$dozen]['maior_atraso_atual']) {
+            if ((isset($dozensControl[$dozen]['maior_atraso']) && isset($dozensControl[$dozen]['maior_atraso_atual'])) && $dozensControl[$dozen]['maior_atraso'] < $dozensControl[$dozen]['maior_atraso_atual']) {
                 $dozensControl[$dozen]['maior_atraso'] = $dozensControl[$dozen]['maior_atraso_atual'];
             }
         }
