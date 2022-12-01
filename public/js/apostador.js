@@ -285,7 +285,6 @@ function toggleDozen(id){
         let info = getInfo(dozens);
         info.lastLotteryDozensMatch = lastResult.dozens.filter((obj) => dozens.indexOf(obj) !== -1).length;
         showGenerateResults(info, lastResult, false);
-        console.log(dozens);
     }
 }
 

@@ -15,81 +15,19 @@
 @section("content")
 @include("application.front.template.navbar")
 
-<section id="contest-selection" class="container pt-5">
-    <div class="row">
-        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()" disabled>
-                <i class="fas fa-thumbs-up"></i> Palpite Apostador
-            </button>
-        </div>
-        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()" disabled>
-                <i class="fas fa-chart-bar"></i> Mostrar Premiação
-            </button>
-        </div>
-        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-outline-success w-100" id="selectGameButton" onclick="selectGame()" disabled>
-                <i class="fas fa-check"></i> Selecionar Jogo
-            </button>
-        </div>
-        <div class="col-md-6 col-lg-3 d-flex align-items-end mt-2">
-            <button class="btn btn-outline-danger w-100" onclick="deleteAllGames()">
-                <i class="fa fa-trash"></i> Limpar Jogos
-            </button>
-        </div>
-    </div>
-</section>
-
-<section id="lastGameContainer" class="container mt-3" style="display: none">
-    <div class="row d-flex flex-row justify-content-center">
-        <h4 class="text-center w-100" id="contestLabel">Estatísticas do Último Concurso</h4>
-        <div class="col-md-6 p-2">
-            <div id="lastGame" class="row d-flex flex-row justify-content-center mb-2">
-
-            </div>
-            <div class="w-100 bg-black text-white p-2 text-center">
-                <b>Parâmetros Principais</b>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <div class="col-md-6 d-flex flex-row justify-content-center">
-                    <span>Par:</span>
-                    <span id="lastEven" class="text-bold ml-2">0</span>
-                </div>
-                |
-                <div class="col-md-6 d-flex flex-row justify-content-center">
-                    <span>Ímpar:</span>
-                    <span id="lastOdd" class="text-bold ml-2">0</span>
-                </div>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Números de Fibonacci:</span>
-                <span id="lastFibonacci" class="text-bold ml-2">0</span>
-            </div>
-            <div class="w-100 bg-black text-white p-2 text-center mt-3">
-                <b>Parâmetros Secundários</b>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Primos:</span>
-                <span id="lastPrime" class="text-bold ml-2">0</span>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Múltiplos de 3:</span>
-                <span id="lastThreeMultiple" class="text-bold ml-2">0</span>
-            </div>
-            <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Soma das Dezenas:</span>
-                <span id="lastSum" class="text-bold ml-2">0</span>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section id="contest-numbers" class="container mt-3">
     <div id="resume-games">
 
     </div>
     <div class="row mb-2">
         <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12 d-flex align-items-end mt-2">
+                    <button class="btn btn-secondary w-100" id="lottery-button" onclick="getNumbers()" disabled>
+                        <i class="fas fa-thumbs-up"></i> Palpite Apostador
+                    </button>
+                </div>
+            </div>
             <div id="contest-display" style="display: none">
                 <span id="numbers-header" class="megasena">
                     <i>Mega-Sena</i>
@@ -98,9 +36,26 @@
 
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-end mt-2">
+                    <button class="btn btn-outline-success w-100" id="selectGameButton" onclick="selectGame()" disabled>
+                        <i class="fas fa-check"></i> Selecionar Jogo
+                    </button>
+                </div>
+                <div class="col-md-6 d-flex align-items-end mt-2">
+                    <button class="btn btn-outline-danger w-100" onclick="deleteAllGames()">
+                        <i class="fa fa-trash"></i> Limpar Jogos
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-6 pt-4">
+        <div class="col-md-6">
+            <div class="d-flex align-items-center justify-content-center mt-2 mb-2 w-100">
+                <button class="btn btn-outline-info w-100" id="checkBet" onclick="" disabled>
+                    <i class="fas fa-chart-bar"></i> Conferir Premiação
+                </button>
+            </div>
             <div class="w-100 bg-black text-white p-2 text-center">
                 <b>Parâmetros Principais</b>
             </div>
@@ -116,7 +71,7 @@
                 </div>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
-                <span>Repetidos do Anterior:</span>
+                <span id="lastContestLabel">Repetidos do Anterior:</span>
                 <span id="lastResultsMatch" class="text-bold ml-2">0</span>
             </div>
             <div class="border p-2 d-flex flex-row justify-content-center">
@@ -137,6 +92,53 @@
             <div class="border p-2 d-flex flex-row justify-content-center">
                 <span>Soma das Dezenas:</span>
                 <span id="sum" class="text-bold ml-2">0</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-center mt-2 w-100">
+                <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()" disabled>
+                    Exibir último resultado
+                </button>
+            </div>
+
+            <div id="lastGameContainer" class="row flex-row justify-content-center mt-2" style="display: none">
+                <h4 class="text-center w-100" id="contestLabel">Estatísticas do Último Concurso</h4>
+                <div class="col-md-12">
+                    <div id="lastGame" class="row d-flex flex-row justify-content-center mb-2">
+        
+                    </div>
+                    <div class="w-100 bg-black text-white p-2 text-center">
+                        <b>Parâmetros Principais</b>
+                    </div>
+                    <div class="border p-2 d-flex flex-row justify-content-center">
+                        <div class="col-md-6 d-flex flex-row justify-content-center">
+                            <span>Par:</span>
+                            <span id="lastEven" class="text-bold ml-2">0</span>
+                        </div>
+                        |
+                        <div class="col-md-6 d-flex flex-row justify-content-center">
+                            <span>Ímpar:</span>
+                            <span id="lastOdd" class="text-bold ml-2">0</span>
+                        </div>
+                    </div>
+                    <div class="border p-2 d-flex flex-row justify-content-center">
+                        <span>Números de Fibonacci:</span>
+                        <span id="lastFibonacci" class="text-bold ml-2">0</span>
+                    </div>
+                    <div class="w-100 bg-black text-white p-2 text-center mt-3">
+                        <b>Parâmetros Secundários</b>
+                    </div>
+                    <div class="border p-2 d-flex flex-row justify-content-center">
+                        <span>Primos:</span>
+                        <span id="lastPrime" class="text-bold ml-2">0</span>
+                    </div>
+                    <div class="border p-2 d-flex flex-row justify-content-center">
+                        <span>Múltiplos de 3:</span>
+                        <span id="lastThreeMultiple" class="text-bold ml-2">0</span>
+                    </div>
+                    <div class="border p-2 d-flex flex-row justify-content-center">
+                        <span>Soma das Dezenas:</span>
+                        <span id="lastSum" class="text-bold ml-2">0</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -160,6 +162,7 @@
 
     axios.post("{{route('generate.last')}}", { lottery })
         .then(response => {
+            $("#lastContestLabel").html(`Repetidas do (${response.data.lastResult.contestNumber})`);
             lastResult = response.data.lastResult;
             $("#selectGameButton").attr('disabled', false);
             $("#lastGameButton").attr('disabled', false);
@@ -221,10 +224,10 @@
     function toggleLastGameContainer(){
         if (!lastGameToggled){
             $("#lastGameContainer").show();
-            $("#lastGameButton").html("<i class='fas fa-chart-bar'></i> Esconder Premiação")
+            $("#lastGameButton").html("<i class='fas fa-chart-bar'></i> Esconder último resultado")
         }else{
             $("#lastGameContainer").hide();
-            $("#lastGameButton").html("<i class='fas fa-chart-bar'></i> Mostrar Premiação")
+            $("#lastGameButton").html("<i class='fas fa-chart-bar'></i> Exibir último resultado")
         }
         lastGameToggled = !lastGameToggled;
     }
