@@ -2,29 +2,12 @@
 
 @section("css")
 <style>
-    .col-5{
-        width: 20%;
-        float:left;
-        position: relative;
-    }
-
     .ok{
         color: #28a745!important
     }
 
     .text-bold{
         color: #DC3545;
-    }
-
-    .loading-overlay{
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 </style>
 @endsection
@@ -210,7 +193,8 @@
             let info = getInfo(generatedDozens);
 
             count++;
-            if (count > 2500){
+            if (count > 15000){
+                console.log(count);
                 alert("Não conseguimos gerar um jogo adequado.");
                 break;
             }

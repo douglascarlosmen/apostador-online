@@ -18,12 +18,18 @@ textarea{
     min-height: 400px;
 }
 
+.lotofacil-display #numbers div{
+    width: 20% !important;
+}
+
 #numbers{
     background-color: #FEFDDC;
     height: 100%;
     border-radius: 10px;
     padding: 20px 20px 20px 20px;
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #numbers span, .numbers{

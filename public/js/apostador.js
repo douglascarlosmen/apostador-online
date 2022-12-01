@@ -49,46 +49,14 @@ async function applyLotteryNumbers(getOptions = true, getContestResults = true){
     selectedGames = [];
 
     NUMBERS_CONTAINER.html('');
-    switch (lottery){
-        case "mega-sena":
-            for(let i = megasenaLottery.min; i <= megasenaLottery.max; i++){
-                NUMBERS_CONTAINER.append(`<span class="col-5 megasena-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-            }
-            break;
-        case "lotofacil":
-            for(let i = lotofacilLottery.min; i <= lotofacilLottery.max; i++){
-                NUMBERS_CONTAINER.append(`<span class="col-5 lotofacil-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-            }
-            break;
-        case "lotomania":
-            for(let i = lotomaniaLottery.min; i <= lotomaniaLottery.max; i++){
-                if (i == 100){
-                    NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-00" onclick="toggleDozen('number-00')"><strong>00</strong></span>`)
-                }else{
-                    NUMBERS_CONTAINER.append(`<span class="col-5 lotomania-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-                }
-            }
-            break;
-        case "dupla-sena":
-            for(let i = duplaLottery.min; i <= duplaLottery.max; i++){
-                NUMBERS_CONTAINER.append(`<span class="col-5 dupla-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-            }
-            break;
-        case "quina":
-            for(let i = quinaLottery.min; i <= quinaLottery.max; i++){
-                NUMBERS_CONTAINER.append(`<span class="col-5 quina-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-            }
-            break;
-        case "dia-de-sorte":
-            for(let i = duplaLottery.min; i <= duplaLottery.max; i++){
-                NUMBERS_CONTAINER.append(`<span class="col-5 dia-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-            }
-            break;
-        case "timemania":
-            for(let i = timeLottery.min; i <= timeLottery.max; i++){
-                NUMBERS_CONTAINER.append(`<span class="col-5 time-number" id="number-${leftPad(i, 2)}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span>`)
-            }
-            break;
+
+    if (lottery == "lotofacil") $("#contest-display").addClass("lotofacil-display");
+    else $("#contest-display").removeClass("lotofacil-display");
+
+    for(let i = getLotteryData().min; i <= getLotteryData().max; i++){
+        if (i == 100) NUMBERS_CONTAINER.append(`<div id="number-00"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number-00')"><strong>00</strong></span></div>`)
+        else NUMBERS_CONTAINER.append(`<div id="number-${leftPad(i, 2)}"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
+        
     }
 }
 
@@ -292,13 +260,13 @@ function getLinesCount(lines = TEXT_CHECK.val().split("\n")){
 
 function clearDozens(){
     for(let i = 0; i < NUMBERS_CONTAINER.children().length; i++){
-        let children = NUMBERS_CONTAINER.children()[i];
+        let children = NUMBERS_CONTAINER.children()[i].firstChild;
         children.classList.remove("selected");
     }
 }
 
 function toggleDozen(id){
-    let element = NUMBERS_CONTAINER.children(`#${id}`)
+    let element = NUMBERS_CONTAINER.children(`#${id}`).children(0);
     if (element.hasClass("selected")){
         element.removeClass('selected');
         let index = dozens.indexOf(element.children(0).html());

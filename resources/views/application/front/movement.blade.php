@@ -2,29 +2,20 @@
 
 @section("css")
 <style>
-    .col-5{
-        width: 20%;
-        float:left;
-        position: relative;
-    }
-
     .border-black tr td, .border-black tr th{
         border-color:#000 !important;
     }
 
-    table{
-        font-weight: bold
+    table td:nth-child(5n + 1){
+        border-right: 3px solid #000;
     }
 
-    .loading-overlay{
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        z-index: 1000;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    td{
+        background-color: #CCC;
+    }
+
+    table{
+        font-weight: bold
     }
 
     .bg-frequency-bad{
@@ -184,7 +175,8 @@
         let template = "";
 
         for (let i = 1; i <= getLotteryData().max; i++){
-            tableHeaderTemplate += `<th>${i.toString().padStart(2, "0")}</th>`;
+            if (i == 100) tableHeaderTemplate += `<th>00</th>`;
+            else tableHeaderTemplate += `<th>${i.toString().padStart(2, "0")}</th>`;
         }
 
         Object.keys(data[1]).forEach((key, index) => {
@@ -196,7 +188,9 @@
                     tableRowTemplate += `<td class="${getLotteryClass('lottery')}">${data[1][key][alreadySetted]}</td>`;
                     alreadySetted++;
                 }else{
-                    tableRowTemplate += `<td></td>`;
+                    //lotomania check
+                    if (i == 100 && data[1][key].includes("00")) tableRowTemplate += `<td class="${getLotteryClass('lottery')}">00</td>`;
+                    else tableRowTemplate += `<td></td>`;
                 }
             }
             tableRowTemplate += `</tr>`;
@@ -209,11 +203,40 @@
         let row5 = "<tr><th class='text-center'>Maior Sequência</th>";
 
         for (let i = 1; i <= getLotteryData().max; i++){
-            row1 += `<td class="text-center ${getLateBg(data[0][i].atraso_atual)}">${data[0][i].atraso_atual}</td>`;
-            row2 += `<td class="text-center ${getFrequencyBg(data[0][i].freq_porc)}">${data[0][i].freq_porc}</td>`;
-            row3 += `<td class="text-center">${data[0][i].freq_qtd}</td>`;
-            row4 += `<td class="text-center">${data[0][i].maior_atraso}</td>`;
-            row5 += `<td class="text-center">${data[0][i].maior_seq}</td>`;
+            //lotomania check
+            if (i == 100){
+                console.log(data[0]["00"])
+                if (data[0]["00"]?.atraso_atual) row1 += `<td class="text-center ${getLateBg(data[0]["00"].atraso_atual)}">${data[0]["00"].atraso_atual}</td>`;
+                else row1 += `<td class="text-center ${getLateBg(0)}">-</td>`;
+
+                if (data[0]["00"]?.freq_porc) row2 += `<td class="text-center ${getFrequencyBg(data[0]["00"].freq_porc)}">${data[0]["00"].freq_porc}</td>`;
+                else row2 += `<td class="text-center ${getLateBg(0)}">-</td>`;
+
+                if (data[0]["00"]?.freq_qtd) row3 += `<td class="text-center">${data[0]["00"].freq_qtd}</td>`;
+                else row3 += `<td class="text-center">-</td>`;
+
+                if (data[0]["00"]?.maior_atraso)  row4 += `<td class="text-center">${data[0]["00"].maior_atraso}</td>`;
+                else row4 += `<td class="text-center">-</td>`;
+
+                if (data[0]["00"]?.maior_seq) row5 += `<td class="text-center">${data[0]["00"].maior_seq}</td>`;
+                else row5 += `<td class="text-center">-</td>`;
+            }else{
+                if (data[0][i]?.atraso_atual) row1 += `<td class="text-center ${getLateBg(data[0][i].atraso_atual)}">${data[0][i].atraso_atual}</td>`;
+                else row1 += `<td class="text-center ${getLateBg(0)}">-</td>`;
+
+                if (data[0][i]?.freq_porc) row2 += `<td class="text-center ${getFrequencyBg(data[0][i].freq_porc)}">${data[0][i].freq_porc}</td>`;
+                else row2 += `<td class="text-center ${getLateBg(0)}">-</td>`;
+
+                if (data[0][i]?.freq_qtd) row3 += `<td class="text-center">${data[0][i].freq_qtd}</td>`;
+                else row3 += `<td class="text-center">-</td>`;
+
+
+                if (data[0][i]?.maior_atraso)  row4 += `<td class="text-center">${data[0][i].maior_atraso}</td>`;
+                else row4 += `<td class="text-center">-</td>`;
+
+                if (data[0][i]?.maior_seq) row5 += `<td class="text-center">${data[0][i].maior_seq}</td>`;
+                else row5 += `<td class="text-center">-</td>`;
+            }
         }
 
         row1 += "</tr>";
