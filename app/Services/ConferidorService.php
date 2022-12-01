@@ -24,7 +24,7 @@ class ConferidorService
                 if (!isset($othersResults["$assertsCount"])) {
                     $othersResults["$assertsCount"]['count'] = 1;
                 } else {
-                    $othersResults["$assertsCount"] += 1;
+                    $othersResults["$assertsCount"]['count'] += 1;
                 }
                 $othersResults["$assertsCount"]['contests'][] = $result->contest_number;
             }
