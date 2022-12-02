@@ -9,6 +9,16 @@
     .text-bold{
         color: #DC3545;
     }
+
+    .fixedDozen{
+        background-color: #000 !important;
+        color: #FFF !important;
+    }
+
+    .excludedDozen{
+        background-color: #DC3545 !important;
+        color: #000 !important;
+    }
 </style>
 @endsection
 
@@ -34,6 +44,18 @@
                 </span>
                 <div id="numbers" class="w-100 megasena-border">
 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-end mt-2">
+                    <button class="btn btn-dark w-100" id="fixeDozenButton" onclick="changeToggleType('fix')">
+                        Fixar Dezena
+                    </button>
+                </div>
+                <div class="col-md-6 d-flex align-items-end mt-2">
+                    <button class="btn btn-outline-dark w-100" id="excludeDozenButton" onclick="changeToggleType('exclude')">
+                        Excluir Dezena
+                    </button>
                 </div>
             </div>
             <div class="row">
@@ -182,9 +204,6 @@
 
     </div>
 </section>
-
-
-
 @endsection
 
 @section("scripts")
@@ -207,6 +226,10 @@
     })
     let lastResult;
     let generateInfoToGeneratorPage = true;
+    let multiToggle = true;
+    let toggleType = "fix";
+    let fixedDozens = [];
+    let excludedDozens = [];
 
     applyLotteryNumbers(false, false);
     setCheckResumeLayout();
@@ -322,6 +345,22 @@
             .catch(error => {
                 console.log(error.response.data);
             })
+    }
+
+    function changeToggleType(type){
+        toggleType = type;
+
+        if (toggleType == 'fix'){
+            $("#fixeDozenButton").removeClass("btn-outline-dark");
+            $("#excludeDozenButton").removeClass("btn-dark");
+            $("#fixeDozenButton").addClass("btn-dark");
+            $("#excludeDozenButton").addClass("btn-outline-dark");
+        }else{
+            $("#excludeDozenButton").removeClass("btn-outline-dark");
+            $("#fixeDozenButton").removeClass("btn-dark");
+            $("#excludeDozenButton").addClass("btn-dark");
+            $("#fixeDozenButton").addClass("btn-outline-dark");
+        }
     }
 </script>
 @endsection

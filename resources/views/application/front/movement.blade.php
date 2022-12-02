@@ -148,6 +148,7 @@
 <script>
     let lastResult;
     let generateInfoToGeneratorPage = false;
+    let multiToggle = false;
     let extension = "";
 
     let oldLottery = lottery;

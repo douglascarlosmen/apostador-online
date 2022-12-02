@@ -266,18 +266,41 @@ function clearDozens(){
 
 function toggleDozen(id){
     let element = NUMBERS_CONTAINER.children(`#${id}`).children(0);
-    if (element.hasClass("selected")){
-        element.removeClass('selected');
-        let index = dozens.indexOf(element.children(0).html());
-        dozens.splice(index, 1);
+    let elementHtml = element.children(0).html();
+    if (multiToggle){
+        if (element.hasClass("fixedDozen") || element.hasClass("excludedDozen")){
+            if (toggleType == 'fix'){
+                element.removeClass("fixedDozen");
+                fixedDozens.splice(fixedDozens.indexOf(elementHtml), 1);
+            }else{
+                element.removeClass("excludedDozen");
+                excludedDozens.splice(excludedDozens.indexOf(elementHtml), 1);
+            }
+        }else if (element.hasClass("selected")){
+            element.removeClass('selected');
+            if (toggleType == 'fix'){
+                element.addClass("fixedDozen");
+                fixedDozens.push(elementHtml);
+            }else{
+                element.addClass("excludedDozen");
+                excludedDozens.push(elementHtml);
+                dozens.splice(dozens.indexOf(elementHtml), 1);
+            }
+        }else{
+            element.addClass('selected');
+            if (addDozen) dozens.push(elementHtml);
+        }
     }else{
-        if (generateInfoToGeneratorPage){
+        if (element.hasClass("selected")){
+            element.removeClass('selected');
+            dozens.splice(dozens.indexOf(elementHtml), 1);
+        }else{
             if ((dozens.length + 1) > getLotteryData().maxPrize)
                 return Swal.fire("Aviso!", "Você selecionou o número máximo para essa loteria.", "warning");
-        }
 
-        element.addClass('selected');
-        if (addDozen) dozens.push(element.children(0).html());
+            element.addClass('selected');
+            if (addDozen) dozens.push(elementHtml);
+        }
     }
 
     if (generateInfoToGeneratorPage){

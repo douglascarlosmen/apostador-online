@@ -68,6 +68,7 @@
 <script src="{{asset('js/apostador.js')}}"></script>
 <script>
     let generateInfoToGeneratorPage = false;
+    let multiToggle = false;
     applyLotteryNumbers();
 
     function uploadFile(){
