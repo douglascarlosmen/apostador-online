@@ -30,6 +30,10 @@ class OrdenadorController extends Controller
 
             foreach ($data['bets'] as $index => $row) {
                 $dozensBetArray = explode(',', $row);
+                $key = array_search('', $dozensBetArray);
+                if($key!==false){
+                    unset($dozensBetArray[$key]);
+                }
                 sort($dozensBetArray);
                 $response[] = $dozensBetArray;
             }

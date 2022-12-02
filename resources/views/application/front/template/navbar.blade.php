@@ -87,6 +87,11 @@
                         <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/timemania">Tabela de Movimentação</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ordenador">
+                        Ordenador
+                    </a>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 @if (Auth::user())
