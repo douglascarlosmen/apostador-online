@@ -22,7 +22,7 @@
 
     <footer class="mt-4">
         <div class="container">
-            &copy; 2022 Desenvolvido por WeXark
+            &copy; 2022 @if(date("Y") != 2022) ~ {{date("Y")}} @endif Desenvolvido por WeXark
         </div>
     </footer>
 

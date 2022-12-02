@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-apostador">
     <div class="container">
         <a class="navbar-brand" href="/">
             <img src="{{asset('img/logo-apostador.png')}}" width="160" height="80" alt="">
