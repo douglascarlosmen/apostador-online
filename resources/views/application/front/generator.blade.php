@@ -209,6 +209,7 @@
 @section("scripts")
 <script src="{{asset('js/apostador.js')}}"></script>
 <script src="{{asset('js/generator.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.0.18/chance.min.js"></script>
 <script>
     $(document).ready(function(){
         axios.post("{{route('generate.last')}}", { lottery })
@@ -264,22 +265,26 @@
         let randomNumber = 0;
         let releaseGenerator = false;
         let count = 0;
+
+        let formattedNumber = null;
+
         while(releaseGenerator != true){
-            let generatedDozens = [];
-            while (generatedDozens.length < maxPrize){
-                randomNumber = Math.floor(Math.random() * (maxNumber)) + 1;
-                let generatedDozen = randomNumber.toString().padStart(2, "0");
-                if (generatedDozen == "100") generatedDozen = "00";
-                if (!generatedDozens.includes(generatedDozen)){
-                    generatedDozens.push(generatedDozen);
+            let generatedDozens = fixedDozens;
+            let lotoNumbers = [];
+            for (let i = 1; i <= maxNumber; i++){
+                formattedNumber = i.toString().padStart(2, '0')
+                if (!excludedDozens.includes(formattedNumber)){
+                    lotoNumbers.push(formattedNumber);
                 }
             }
+
+            let selectedDozens = chance.pickset(lotoNumbers, (maxPrize - generatedDozens.length)).sort();
+            generatedDozens = generatedDozens.concat(selectedDozens);
 
             let info = getInfo(generatedDozens);
 
             count++;
             if (count > 15000){
-                console.log(count);
                 alert("Não conseguimos gerar um jogo adequado.");
                 break;
             }

@@ -312,7 +312,7 @@ function showGenerateResults(type, data, canToggleDozen = true){
             addDozen = false;
             clearDozens();
             dozens.forEach(async item => {
-                await toggleDozen(`number-${item}`);
+                await toggleDozen(`number-${item}`, true);
             });
             addDozen = true;
         }

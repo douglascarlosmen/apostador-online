@@ -264,17 +264,19 @@ function clearDozens(){
     }
 }
 
-function toggleDozen(id){
+function toggleDozen(id, displayOnly = false){
     let element = NUMBERS_CONTAINER.children(`#${id}`).children(0);
     let elementHtml = element.children(0).html();
     if (multiToggle){
         if (element.hasClass("fixedDozen") || element.hasClass("excludedDozen")){
-            if (toggleType == 'fix'){
-                element.removeClass("fixedDozen");
-                fixedDozens.splice(fixedDozens.indexOf(elementHtml), 1);
-            }else{
-                element.removeClass("excludedDozen");
-                excludedDozens.splice(excludedDozens.indexOf(elementHtml), 1);
+            if (!displayOnly){
+                if (toggleType == 'fix'){
+                    element.removeClass("fixedDozen");
+                    fixedDozens.splice(fixedDozens.indexOf(elementHtml), 1);
+                }else{
+                    element.removeClass("excludedDozen");
+                    excludedDozens.splice(excludedDozens.indexOf(elementHtml), 1);
+                }
             }
         }else if (element.hasClass("selected")){
             element.removeClass('selected');
