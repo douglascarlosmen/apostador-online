@@ -22,7 +22,7 @@
     </button>
     <div class="row mt-2">
         <div class="col-md-6">
-            <button class="btn btn-outline-secondary w-100" onclick="sort()">
+            <button class="btn btn-outline-secondary w-100" onclick="copy()">
                 <i class="fa fa-copy"></i> Copiar
             </button>
         </div>
@@ -105,6 +105,33 @@ function saveTextAsFile()
 
     downloadLink.click();
 }
+
+function copy(eventName, eventId) {
+    let textToCopy = document.getElementById("text-check").value;
+    console.log(textToCopy);
+    if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard api method'
+        navigator.clipboard.writeText(textToCopy);
+    } else {
+        // text area method
+        let textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        // make the textarea out of viewport
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        new Promise((res, rej) => {
+            // here the magic happens
+            document.execCommand('copy') ? res() : rej();
+            textArea.remove();
+        });
+    }
+
+    return Swal.fire("Jogo copiado!", "Use o CTRL + V para colar o seu jogo em algum campo de texto!", "success");
+    }
 
 </script>
 @endsection
