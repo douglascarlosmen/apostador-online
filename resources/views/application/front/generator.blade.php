@@ -13,11 +13,13 @@
     .fixedDozen{
         background-color: #000 !important;
         color: #FFF !important;
+        border-color: #000 !important;
     }
 
     .excludedDozen{
         background-color: #DC3545 !important;
         color: #000 !important;
+        border-color: #DC3545  !important;
     }
 </style>
 @endsection
