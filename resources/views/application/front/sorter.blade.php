@@ -108,7 +108,6 @@ function saveTextAsFile()
 
 function copy(eventName, eventId) {
     let textToCopy = document.getElementById("text-check").value;
-    console.log(textToCopy);
     if (navigator.clipboard && window.isSecureContext) {
         // navigator clipboard api method'
         navigator.clipboard.writeText(textToCopy);
@@ -131,7 +130,7 @@ function copy(eventName, eventId) {
     }
 
     return Swal.fire("Jogo copiado!", "Use o CTRL + V para colar o seu jogo em algum campo de texto!", "success");
-    }
+}
 
 </script>
 @endsection
