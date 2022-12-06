@@ -20,6 +20,18 @@
     <button class="btn btn-success w-100" onclick="sort()">
         Ordenar
     </button>
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <button class="btn btn-outline-secondary w-100" onclick="sort()">
+                <i class="fa fa-copy"></i> Copiar
+            </button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-outline-secondary w-100" onclick="saveTextAsFile()">
+                <i class="fa fa-download"></i> Baixar
+            </button>
+        </div>
+    </div>
 </section>
 
 @endsection
@@ -67,6 +79,31 @@ function uploadFile(){
 
     };
     reader.readAsText(file);
+}
+
+function saveTextAsFile()
+{
+    var textFileAsBlob = new Blob([document.getElementById("text-check").value], {type:'text/plain'}); 
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "jogos ordenados.txt";
+    downloadLink.innerHTML = "Download File";
+    if (window.webkitURL != null)
+    {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else
+    {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
 }
 
 </script>
