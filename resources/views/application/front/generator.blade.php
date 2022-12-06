@@ -169,7 +169,7 @@
 <section id="checked-games-container" class="container mt-3">
     <h4 class="text-center">Conferir a Premiação</h4>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" style="max-height: 300px; overflow-y:auto">
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
@@ -182,7 +182,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="max-height: 300px; overflow-y:auto">
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
