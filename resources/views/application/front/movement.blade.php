@@ -14,8 +14,8 @@
         background-color: #CCC;
     }
 
-    table{
-        font-weight: bold
+    table td, table th{
+        padding: 5px !important;
     }
 
     .bg-frequency-bad{
@@ -57,6 +57,10 @@
         background: #333;
         color: #fff;
     }
+
+    td.lotofacil{
+        background-color: #930989 !important;
+    }
 </style>
 @endsection
 
@@ -65,54 +69,57 @@
 
 <section id="movement" class="container mt-3">
     <h1 id="header" class="text-center">Tabela de Movimentação</h1>
-    <p>Mostra a movimentação das dezenas nos últimos concursos, caso queira utilize os filtros.</p>
-    <hr>
-    <h3 class="text-center">Filtragem Avançada</h3>
-    <div action="" method="GET" class="row" id="advanced-filter">
-        <div class="col-6">
-            <label for="">Concurso Inicial:</label>
-            <input type="text" name="start_contest" id="start_contest" class="form-control">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="text-center">Filtragem Avançada</h3>
+            <div action="" method="GET" class="row" id="advanced-filter">
+                <div class="col-6">
+                    <label for="">Concurso Inicial:</label>
+                    <input type="text" name="start_contest" id="start_contest" class="form-control">
+                </div>
+                <div class="col-6">
+                    <label for="">Concurso Final:</label>
+                    <input type="text" name="end_contest" id="end_contest" class="form-control">
+                </div>
+                <button class="btn btn-outline-secondary w-100 mt-2" onclick="advancedFilter()">
+                    Filtrar
+                </button>
+            </div>
         </div>
-        <div class="col-6">
-            <label for="">Concurso Final:</label>
-            <input type="text" name="end_contest" id="end_contest" class="form-control">
-        </div>
-        <button class="btn btn-outline-secondary w-100 mt-2" onclick="advancedFilter()">
-            Filtrar
-        </button>
-    </div>
-    <hr>
-    <h3 class="text-center">Filtragem Rápida</h3>
-    <div class="row justify-content-center">
-        <div class="col-md-2 fast-filter mt-1">
-            <input type="hidden" name="limit" value="10">
-            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(10)">
-                Últimos <b>10</b> conc.
-            </button>
-        </div>
-        <div class="col-md-2 fast-filter mt-1">
-            <input type="hidden" name="limit" value="20">
-            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(20)">
-                Últimos <b>20</b> conc.
-            </button>
-        </div>
-        <div class="col-md-2 fast-filter mt-1">
-            <input type="hidden" name="limit" value="30">
-            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(30)">
-                Últimos <b>30</b> conc.
-            </button>
-        </div>
-        <div class="col-md-2 fast-filter mt-1">
-            <input type="hidden" name="limit" value="50">
-            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(50)">
-                Últimos <b>50</b> conc.
-            </button>
-        </div>
-        <div class="col-md-2 fast-filter mt-1">
-            <input type="hidden" name="limit" value="150">
-            <button class="btn btn-outline-secondary w-100" onclick="fastFilter(150)">
-                Últimos <b>150</b> conc.
-            </button>
+        <div class="col-md-6">
+            <h3 class="text-center">Filtragem Rápida</h3>
+            <div class="row justify-content-center">
+                <div class="col-md-3 fast-filter mt-1">
+                    <input type="hidden" name="limit" value="10">
+                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter(10)">
+                        Últimos <b>10</b> conc.
+                    </button>
+                </div>
+                <div class="col-md-3 fast-filter mt-1">
+                    <input type="hidden" name="limit" value="20">
+                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter(20)">
+                        Últimos <b>20</b> conc.
+                    </button>
+                </div>
+                <div class="col-md-3 fast-filter mt-1">
+                    <input type="hidden" name="limit" value="30">
+                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter(30)">
+                        Últimos <b>30</b> conc.
+                    </button>
+                </div>
+                <div class="col-md-3 fast-filter mt-1">
+                    <input type="hidden" name="limit" value="50">
+                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter(50)">
+                        Últimos <b>50</b> conc.
+                    </button>
+                </div>
+                <div class="col-md-3 fast-filter mt-1">
+                    <input type="hidden" name="limit" value="150">
+                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter(150)">
+                        Últimos <b>150</b> conc.
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="table-responsive mt-5" id="movement-table">
@@ -197,7 +204,7 @@
             }
             tableRowTemplate += `</tr>`;
             if (data[1][key].cycle){
-                tableRowTemplate += `<tr><td class="text-center" colspan="${getLotteryData().max + 1}">Início do ciclo ${parseInt(data[1][key].cycle) + 1}</td></tr>`
+                tableRowTemplate += `<tr><td class="text-center" colspan="${getLotteryData().max + 1}"><b>Início do ciclo ${parseInt(data[1][key].cycle) + 1}</b></td></tr>`
             }
         });
 
