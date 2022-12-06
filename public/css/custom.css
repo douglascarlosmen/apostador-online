@@ -18,8 +18,23 @@ textarea{
     min-height: 400px;
 }
 
+.lotofacil-display #numbers{
+    width: 300px !important;
+}
+
 .lotofacil-display #numbers div{
     width: 20% !important;
+}
+
+.lotofacil-display #numbers-header{
+    left: -30px;
+}
+
+#contest-display{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #numbers{
@@ -56,8 +71,8 @@ textarea{
     color: white;
     border-radius: 5px;
     position: relative;
-    top: 15px;
-    left: 15px;
+    top: 25px;
+    left: -130px;
 }
 
 .bets{
