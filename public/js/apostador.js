@@ -277,6 +277,7 @@ function toggleDozen(id, displayOnly = false){
                     element.removeClass("excludedDozen");
                     excludedDozens.splice(excludedDozens.indexOf(elementHtml), 1);
                 }
+                dozens.splice(dozens.indexOf(elementHtml), 1);
             }
         }else if (element.hasClass("selected")){
             element.removeClass('selected');
@@ -292,6 +293,7 @@ function toggleDozen(id, displayOnly = false){
             element.addClass('selected');
             if (addDozen) dozens.push(elementHtml);
         }
+        $("#dozensCount").html(dozens.length);
     }else{
         if (element.hasClass("selected")){
             element.removeClass('selected');
