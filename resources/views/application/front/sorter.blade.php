@@ -41,7 +41,7 @@ function sort(){
             response.data.forEach(game => {
                 game.forEach((dozen, index) => {
                     if (index == game.length - 1) row += `${dozen}\n`
-                    else row += `${dozen} `
+                    else row += `${dozen},`
                 });
             })
 
