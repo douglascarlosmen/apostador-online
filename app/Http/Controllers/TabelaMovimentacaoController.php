@@ -31,7 +31,7 @@ class TabelaMovimentacaoController extends Controller
         $allLotteryDozens = Helper::getLotoDozens($lottery);
 
         $transformer = new TabelaMovimentacaoTransformer($results, $allLotteryDozens);
-            dd($transformer->transform());
+            
         return response()->json($transformer->transform());
     }
 
