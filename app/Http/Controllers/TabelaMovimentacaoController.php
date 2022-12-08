@@ -26,16 +26,13 @@ class TabelaMovimentacaoController extends Controller
             ->orderBy('contest_number', 'ASC')
             ->limit($limit)
             ->get();
-        
+
 
         $allLotteryDozens = Helper::getLotoDozens($lottery);
 
         $transformer = new TabelaMovimentacaoTransformer($results, $allLotteryDozens);
-        /**
-         * É só retornar esse objeto abaixo para a view
-         */
+            dd($transformer->transform());
         return response()->json($transformer->transform());
     }
-
 
 }

@@ -26,7 +26,7 @@ class TabelaMovimentacaoTransformer
             if (!is_null($result->cycle)) {
                 $contestsDozens[$result->contest_number]['cycle'] = $result->cycle;
             }
-            
+
             if (isset($this->results[$index - 1])) {
                 $contestsDozens[$result->contest_number]['repeat'] = count(array_intersect($resultDozens, $resultDozens = json_decode($this->results[$index - 1]['dozens'], true)));
             } else {
@@ -126,8 +126,21 @@ class TabelaMovimentacaoTransformer
             }
         }
 
+        $lastCyleDozens = [];
+
+        foreach ($contestsDozens as $contestsDozen) {
+            if (isset($contestsDozen['cycle'])) {
+                $lastCyleDozens = [];
+            }
+            $lastCyleDozens = array_unique(array_merge($lastCyleDozens, $contestsDozen['dozens']), SORT_REGULAR);
+        }
+
+        $missingDozens = array_diff($this->dozens, $lastCyleDozens);
+
+        sort($missingDozens);
+
         ksort($dozensControl);
 
-        return [$dozensControl, $contestsDozens];
+        return [$dozensControl, $contestsDozens, $missingDozens];
     }
 }
