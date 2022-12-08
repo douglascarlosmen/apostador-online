@@ -32,176 +32,178 @@
 @section("content")
 @include("application.front.template.navbar")
 
-<section id="contest-numbers" class="container mt-3">
+<section id="contest-numbers" class="px-5 mt-3">
     <div id="resume-games">
 
     </div>
     <div class="row mb-2">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-12 d-flex align-items-end mt-2">
-                    <button class="btn bg-orange w-100" id="lottery-button" onclick="getNumbers()" disabled>
-                        <i class="fas fa-thumbs-up"></i> Palpite Apostador
-                    </button>
-                </div>
-            </div>
-            <div id="contest-display" style="display: none">
-                <span id="numbers-header" class="megasena">
-                    <i>Mega-Sena</i>
-                </span>
+        <div class="col-lg-4">
+            <div id="contest-display" class="pt-2" style="display: none">
+                <button class="btn bg-orange w-100 mb-2" id="lottery-button" onclick="getNumbers()" disabled>
+                    <i class="fas fa-thumbs-up"></i> Palpite Apostador
+                </button>
                 <div id="numbers" class="w-100 megasena-border">
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 d-flex align-items-end mt-2">
-                    <button class="btn btn-dark w-100" id="fixeDozenButton" onclick="changeToggleType('fix')">
-                        Fixar Dezena
-                    </button>
-                </div>
-                <div class="col-md-6 d-flex align-items-end mt-2">
-                    <button class="btn btn-outline-dark w-100" id="excludeDozenButton" onclick="changeToggleType('exclude')">
-                        Excluir Dezena
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 d-flex align-items-end mt-2">
-                    <button class="btn btn-outline-success w-100" id="selectGameButton" onclick="selectGame()" disabled>
-                        <i class="fas fa-check"></i> Selecionar Jogo
-                    </button>
-                </div>
-                <div class="col-md-6 d-flex align-items-end mt-2">
-                    <button class="btn btn-outline-danger w-100" onclick="clearGame()">
-                        <i class="fa fa-trash"></i> Limpar Jogo
-                    </button>
-                </div>
+            <div class="d-flex flex-row justify-content-center">
+                <span class="text-center">Dezenas Jogo:<b id="dozensCount" class="text-bold">0</b></span>
+                <b class="mx-2"> | </b>
+                <span class="text-center">Fixas: <b id="fixedDozensCount">0</b></span>
+                <b class="mx-2"> | </b>
+                <span class="text-center">Excluídas:<b id="excludedDozensCount">0</b></span>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="d-flex align-items-center justify-content-center mt-2 mb-2 w-100">
-                <button class="btn btn-outline-info w-100" id="checkBet" onclick="checkBetsForGenerator()">
-                    <i class="fas fa-chart-bar"></i> Conferir Premiação
-                </button>
-            </div>
-            <span class="text-center">Dezenas: <span id="dozensCount">0</span></span>
+        <div class="col-lg-8">
             <div class="row">
-                <div class="col-6">
-                    <div class="border p-2 d-flex flex-row justify-content-center">
-                        <div class="col-md-6 d-flex flex-row justify-content-center">
-                            <span>Par:</span>
-                            <span id="even" class="text-bold ml-2">0</span>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-6 d-flex align-items-end mt-2">
+                            <button class="btn btn-dark w-100" id="fixeDozenButton" onclick="changeToggleType('fix')">
+                                Fixar Dezena
+                            </button>
                         </div>
-                        |
-                        <div class="col-md-6 d-flex flex-row justify-content-center">
-                            <span>Ímpar:</span>
-                            <span id="odd" class="text-bold ml-2">0</span>
+                        <div class="col-md-6 d-flex align-items-end mt-2">
+                            <button class="btn btn-outline-danger w-100" id="excludeDozenButton" onclick="changeToggleType('exclude')">
+                                Excluir Dezena
+                            </button>
                         </div>
                     </div>
-                    <div class="border p-2 d-flex flex-row justify-content-center">
-                        <span id="lastContestLabel">Repetidos do Anterior:</span>
-                        <span id="lastResultsMatch" class="text-bold ml-2">0</span>
-                    </div>
-                    <div class="border p-2 d-flex flex-row justify-content-center">
-                        <span>Números de Fibonacci:</span>
-                        <span id="fibonacci" class="text-bold ml-2">0</span>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="border p-2 d-flex flex-row justify-content-center">
-                        <span>Primos:</span>
-                        <span id="prime" class="text-bold ml-2">0</span>
-                    </div>
-                    <div class="border p-2 d-flex flex-row justify-content-center">
-                        <span>Múltiplos de 3:</span>
-                        <span id="threeMultiple" class="text-bold ml-2">0</span>
-                    </div>
-                    <div class="border p-2 d-flex flex-row justify-content-center">
-                        <span>Soma das Dezenas:</span>
-                        <span id="sum" class="text-bold ml-2">0</span>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex align-items-center justify-content-center mt-2 w-100">
-                <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()" disabled>
-                    Exibir último resultado
-                </button>
-            </div>
-
-            <div id="lastGameContainer" class="row flex-row justify-content-center mt-2" style="display: none">
-                <h4 class="text-center w-100" id="contestLabel">Estatísticas do Último Concurso</h4>
-                <div class="col-md-12">
-                    <div id="lastGame" class="row d-flex flex-row justify-content-center mb-2">
-        
+                    <div class="row mb-2">
+                        <div class="col-md-6 d-flex align-items-end mt-2">
+                            <button class="btn btn-outline-success w-100" id="selectGameButton" onclick="selectGame()" disabled>
+                                <i class="fas fa-check"></i> Selecionar Jogo
+                            </button>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-end mt-2">
+                            <button class="btn btn-outline-danger w-100" onclick="clearGame()">
+                                <i class="fa fa-trash"></i> Limpar Jogo
+                            </button>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <div class="border p-2 d-flex flex-row justify-content-center">
                                 <div class="col-md-6 d-flex flex-row justify-content-center">
                                     <span>Par:</span>
-                                    <span id="lastEven" class="text-bold ml-2" style="border: none !important">0</span>
+                                    <span id="even" class="text-bold ml-2">0</span>
                                 </div>
                                 |
                                 <div class="col-md-6 d-flex flex-row justify-content-center">
                                     <span>Ímpar:</span>
-                                    <span id="lastOdd" class="text-bold ml-2" style="border: none !important">0</span>
+                                    <span id="odd" class="text-bold ml-2">0</span>
                                 </div>
                             </div>
                             <div class="border p-2 d-flex flex-row justify-content-center">
-                                <span>Números de Fibonacci:</span>
-                                <span id="lastFibonacci" class="text-bold ml-2" style="border: none !important">0</span>
+                                <span id="lastContestLabel">Repetidos do Anterior:</span>
+                                <span id="lastResultsMatch" class="text-bold ml-2">0</span>
                             </div>
                             <div class="border p-2 d-flex flex-row justify-content-center">
-                                <span>Primos:</span>
-                                <span id="lastPrime" class="text-bold ml-2" style="border: none !important">0</span>
+                                <span>Números de Fibonacci:</span>
+                                <span id="fibonacci" class="text-bold ml-2">0</span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="border p-2 d-flex flex-row justify-content-center">
+                                <span>Primos:</span>
+                                <span id="prime" class="text-bold ml-2">0</span>
+                            </div>
+                            <div class="border p-2 d-flex flex-row justify-content-center">
                                 <span>Múltiplos de 3:</span>
-                                <span id="lastThreeMultiple" class="text-bold ml-2" style="border: none !important">0</span>
+                                <span id="threeMultiple" class="text-bold ml-2">0</span>
                             </div>
                             <div class="border p-2 d-flex flex-row justify-content-center">
                                 <span>Soma das Dezenas:</span>
-                                <span id="lastSum" class="text-bold ml-2" style="border: none !important">0</span>
+                                <span id="sum" class="text-bold ml-2">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mt-2 w-100">
+                        <button class="btn btn-outline-info w-100" id="lastGameButton" onclick="toggleLastGameContainer()" disabled>
+                            Exibir último resultado
+                        </button>
+                    </div>
+                    <div id="lastGameContainer" class="row flex-row justify-content-center mt-2" style="display: none">
+                        <h4 class="text-center w-100" id="contestLabel">Estatísticas do Último Concurso</h4>
+                        <div class="col-md-12">
+                            <div id="lastGame" class="row d-flex flex-row justify-content-center mb-2">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="border p-2 d-flex flex-row justify-content-center">
+                                        <div class="col-md-6 d-flex flex-row justify-content-center">
+                                            <span>Par:</span>
+                                            <span id="lastEven" class="text-bold ml-2" style="border: none !important">0</span>
+                                        </div>
+                                        |
+                                        <div class="col-md-6 d-flex flex-row justify-content-center">
+                                            <span>Ímpar:</span>
+                                            <span id="lastOdd" class="text-bold ml-2" style="border: none !important">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="border p-2 d-flex flex-row justify-content-center">
+                                        <span>Números de Fibonacci:</span>
+                                        <span id="lastFibonacci" class="text-bold ml-2" style="border: none !important">0</span>
+                                    </div>
+                                    <div class="border p-2 d-flex flex-row justify-content-center">
+                                        <span>Primos:</span>
+                                        <span id="lastPrime" class="text-bold ml-2" style="border: none !important">0</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="border p-2 d-flex flex-row justify-content-center">
+                                        <span>Múltiplos de 3:</span>
+                                        <span id="lastThreeMultiple" class="text-bold ml-2" style="border: none !important">0</span>
+                                    </div>
+                                    <div class="border p-2 d-flex flex-row justify-content-center">
+                                        <span>Soma das Dezenas:</span>
+                                        <span id="lastSum" class="text-bold ml-2" style="border: none !important">0</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center justify-content-center mt-2 mb-2 w-100">
+                        <button class="btn btn-info w-100" id="checkBet" onclick="checkBetsForGenerator()">
+                            <i class="fas fa-chart-bar"></i> Conferir Premiação
+                        </button>
+                    </div>
+                    <section id="checked-games-container" class="container mt-3">
+                        <div class="row">
+                            <div class="col-md-6" style="max-height: 300px; overflow-y:auto">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Faixa</th>
+                                            <th class="text-center">Acertos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="check-resume-content">
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6" style="max-height: 300px; overflow-y:auto">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Concurso</th>
+                                            <th class="text-center">Acertos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="check-game-by-game-content">
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section id="checked-games-container" class="container mt-3">
-    <h4 class="text-center">Conferir a Premiação</h4>
-    <div class="row">
-        <div class="col-md-6" style="max-height: 300px; overflow-y:auto">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th class="text-center">Faixa</th>
-                        <th class="text-center">Acertos</th>
-                    </tr>
-                </thead>
-                <tbody id="check-resume-content">
-
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6" style="max-height: 300px; overflow-y:auto">
-            <table class="table table-hover table-bordered">
-                <thead>
-                    <tr>
-                        <th class="text-center">Concurso</th>
-                        <th class="text-center">Acertos</th>
-                    </tr>
-                </thead>
-                <tbody id="check-game-by-game-content">
-
-                </tbody>
-            </table>
         </div>
     </div>
 </section>
@@ -209,9 +211,19 @@
 <section id="selected-games-container" class="container mt-3">
     <div class="flex-row justify-content-between">
         <h4 class="text-center">Jogos Selecionados</h4>
-        <button class="btn btn-outline-danger w-100" onclick="deleteAllGames()">
-            <i class="fa fa-trash"></i> Limpar Jogos
-        </button>
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-success w-100" onclick="downloadAllGames()">
+                    <i class="fa fa-download"></i> Baixar Jogos
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-danger w-100" onclick="deleteAllGames()">
+                    <i class="fa fa-trash"></i> Limpar Jogos
+                </button>
+            </div>
+        </div>
+
     </div>
     <div id="selected-games">
 
@@ -370,23 +382,56 @@
 
         if (toggleType == 'fix'){
             $("#fixeDozenButton").removeClass("btn-outline-dark");
-            $("#excludeDozenButton").removeClass("btn-dark");
+            $("#excludeDozenButton").removeClass("btn-danger");
             $("#fixeDozenButton").addClass("btn-dark");
-            $("#excludeDozenButton").addClass("btn-outline-dark");
+            $("#excludeDozenButton").addClass("btn-outline-danger");
         }else{
-            $("#excludeDozenButton").removeClass("btn-outline-dark");
+            $("#excludeDozenButton").removeClass("btn-outline-danger");
             $("#fixeDozenButton").removeClass("btn-dark");
-            $("#excludeDozenButton").addClass("btn-dark");
+            $("#excludeDozenButton").addClass("btn-danger");
             $("#fixeDozenButton").addClass("btn-outline-dark");
         }
     }
 
     async function clearGame(){
         dozens = [];
+        fixedDozens = [];
+        excludedDozens = [];
         await clearDozens();
         let info = getInfo(dozens);
         info.lastLotteryDozensMatch = 0;
         showGenerateResults('info', info);
+        $("#dozensCount").html(dozens.length);
+        $("#fixedDozensCount").html(fixedDozens.length);
+        $("#excludedDozensCount").html(excludedDozens.length);
+    }
+
+    function downloadAllGames(){
+        var stringText = "";
+        selectedGames.forEach(game => {
+            stringText += game + "\n";
+        })
+        var textFileAsBlob = new Blob([stringText], {type:'text/plain'}); 
+        var downloadLink = document.createElement("a");
+        downloadLink.download = `jogos selecionados - ${lottery}.txt`;
+        downloadLink.innerHTML = "Download File";
+        if (window.webkitURL != null)
+        {
+            // Chrome allows the link to be clicked
+            // without actually adding it to the DOM.
+            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        }
+        else
+        {
+            // Firefox requires the link to be added to the DOM
+            // before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+        }
+
+        downloadLink.click();
     }
 </script>
 @endsection

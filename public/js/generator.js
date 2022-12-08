@@ -1,6 +1,12 @@
 function setDefaultParams(info){
     let params = getDefaultParams();
 
+    if (dozens.length >= params.minSelected && dozens.length <= params.maxSelected) {
+        $('#dozensCount').addClass('ok');
+    }else{
+        $('#dozensCount').removeClass('ok');
+    }
+
     if (info.lastLotteryDozensMatch >= params.minCompare && info.lastLotteryDozensMatch <= params.maxCompare) {
         $('#lastResultsMatch').addClass('ok');
     }else{
@@ -229,6 +235,16 @@ function getDefaultParams(){
 function selectGame(){
     if (dozens.length == 0)
         return Swal.fire("Aviso!", "Você precisa gerar um jogo para selecioná-lo.", "warning");
+
+        gameAlreadySelected = false;
+    selectedGames.forEach(game => {
+        if (game == dozens)
+            gameAlreadySelected = true;
+    });
+
+    if (gameAlreadySelected)
+        return Swal.fire("Aviso!", "Você já selecionou esse jogo", "warning");
+
     selectedGames.push(dozens);
     renderSelectedgames();
 }

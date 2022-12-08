@@ -261,6 +261,8 @@ function clearDozens(){
     for(let i = 0; i < NUMBERS_CONTAINER.children().length; i++){
         let children = NUMBERS_CONTAINER.children()[i].firstChild;
         children.classList.remove("selected");
+        children.classList.remove("fixedDozen");
+        children.classList.remove("excludedDozen");
     }
 }
 
@@ -294,6 +296,8 @@ function toggleDozen(id, displayOnly = false){
             if (addDozen) dozens.push(elementHtml);
         }
         $("#dozensCount").html(dozens.length);
+        $("#fixedDozensCount").html(fixedDozens.length);
+        $("#excludedDozensCount").html(excludedDozens.length);
     }else{
         if (element.hasClass("selected")){
             element.removeClass('selected');
