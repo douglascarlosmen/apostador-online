@@ -30,6 +30,21 @@ class TabelaMovimentacaoTransformer
             foreach ($this->dozens as $dozen) {
                 if (in_array($dozen, $resultDozens)) {
 
+                    if ($dozen % 2 == 0) {
+                        if(!isset($contestsDozens[$result->contest_number]['even'])) {
+                            $contestsDozens[$result->contest_number]['even'] = 1;
+                        } else {
+                            $contestsDozens[$result->contest_number]['even'] += 1;
+                        }
+                    } else {
+                        if(!isset($contestsDozens[$result->contest_number]['odd'])) {
+                            $contestsDozens[$result->contest_number]['odd'] = 1;
+                        } else {
+                            $contestsDozens[$result->contest_number]['odd'] += 1;
+                        }
+                    }
+
+
                     /**
                      * Calculando a Frequência em Quantidade
                      */
