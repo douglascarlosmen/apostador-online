@@ -19,13 +19,13 @@
     }
 
     .bg-frequency-bad{
-        background-color: #C5EFF7;
+        background-color: rgb(216, 39, 39);
     }
     .bg-frequency-medium{
-        background-color:  gray;
+        background-color:  rgb(224, 165, 54);
     }
     .bg-frequency-good{
-        background-color: blue;
+        background-color: rgb(63, 199, 63);
         color: white;
     }
 
@@ -60,6 +60,10 @@
 
     td.lotofacil{
         background-color: #930989 !important;
+    }
+
+    .game-two{
+        background-color: #cc0c32;
     }
 </style>
 @endsection
@@ -112,30 +116,19 @@
             </div>
         </div>
     </div>
+    @if (request()->lottery == "dupla-sena")
+        <div class="d-flex flex-column justify-content-center align-items-center mt-2">
+            <p>Legenda Dupla-Sena</p>
+            <div class="row">
+                <p class="mr-2"><span class="dupla label-box">.</span> 1° Sorteio</p>
+                <p><span class="game-two label-box">.</span> 2° Sorteio</p>
+            </div>
+        </div>
+    @endif
     <div class="table-responsive mt-5" id="movement-table">
 
     </div>
 </section>
-
-<section class="container mt-3">
-    <h1 class="text-center">Legenda da Tabela de Movimentação</h1>
-    <div class="row justify-content-center align-items-center w-100">
-        <div class="col-md-6">
-            <h3>Legenda - Atraso Atual</h3>
-            <p><span class="bg-late-bad label-box">.</span> - Atraso normal </p>
-            <p><span class="bg-late-medium label-box">.</span> - Provavelmente vai sair </p>
-            <p><span class="bg-late-good label-box">.</span> - Deve Sair </p>
-        </div>
-
-        <div class="col-md-6">
-            <h3>Legenda - Frequência em %</h3>
-            <p><span class="bg-frequency-bad label-box">.</span> - Frequência Ruim <small>(Menor ou Igual a 10%)</small></p>
-            <p><span class="bg-frequency-medium label-box">.</span> - Frequência Média <small>(Maior que 10% e Menor ou igual a 30%)</small></p>
-            <p><span class="bg-frequency-good label-box">.</span> - Frequência Ruim <small>(Maior ou igual a 30%)</small></p>
-        </div>
-    </div>
-</section>
-
 
 @endsection
 
@@ -178,23 +171,51 @@
             else tableHeaderTemplate += `<th>${i.toString().padStart(2, "0")}</th>`;
         }
 
+        tableHeaderTemplate += `
+            <th>Par</th>
+            <th>Ímpar</th>
+            <th>Repetidas</th>
+        `;
+
+        let lastCycle = "";
+
         Object.keys(data[1]).forEach((key, index) => {
             tableRowTemplate += "<tr class='text-center'>";
-            tableRowTemplate += `<th class="${getLotteryClass('lottery')}">${key}</th>`;
             let alreadySetted = 0;
-            for(let i = 1; i <= getLotteryData().max; i++){
-                if (alreadySetted <= getLotteryData().totalPrize && data[1][key].dozens.includes(i.toString().padStart(2, "0"))){
-                    tableRowTemplate += `<td class="${getLotteryClass('lottery')}">${data[1][key].dozens[alreadySetted]}</td>`;
-                    alreadySetted++;
-                }else{
-                    //lotomania check
-                    if (i == 100 && data[1][key].dozens.includes("00")) tableRowTemplate += `<td class="${getLotteryClass('lottery')}">00</td>`;
-                    else tableRowTemplate += `<td></td>`;
+            tableRowTemplate += `<th class="${getLotteryClass('lottery')}">${key}</th>`;
+            if (lottery == "dupla-sena"){ //dupla-sena return 2 contests in one array result
+                let dozenIndex = "";
+                for(let i = 1; i <= getLotteryData().max; i++){
+                    if (data[1][key].dozens.includes(i.toString().padStart(2, "0"))){
+                        dozenIndex = data[1][key].dozens.indexOf(i.toString().padStart(2, "0"))
+                        tableRowTemplate += `<td class="${getLotteryClass('lottery')} ${getDuplaSenaGameClass(dozenIndex)}">${data[1][key].dozens[dozenIndex]}</td>`;
+                        alreadySetted++;
+                    }else{
+                        tableRowTemplate += `<td></td>`;
+                    }
+                }
+            }else{
+                for(let i = 1; i <= getLotteryData().max; i++){
+                    if (alreadySetted <= getLotteryData().totalPrize && data[1][key].dozens.includes(i.toString().padStart(2, "0"))){
+                        tableRowTemplate += `<td class="${getLotteryClass('lottery')}">${data[1][key].dozens[alreadySetted]}</td>`;
+                        alreadySetted++;
+                    }else{
+                        //lotomania check
+                        if (i == 100 && data[1][key].dozens.includes("00")) tableRowTemplate += `<td class="${getLotteryClass('lottery')}">00</td>`;
+                        else tableRowTemplate += `<td></td>`;
+                    }
                 }
             }
+            tableRowTemplate += `
+                <td style="background-color: #FF6A6A"><b>${data[1][key].even ?? 0}</b></td>
+                <td style="background-color: #FF6A6A"><b>${data[1][key].odd ?? 0}</b></td>
+                <td style="background-color: #FF6A6A"><b>${data[1][key].repeat ?? 0}</b></td>
+            `;
+
             tableRowTemplate += `</tr>`;
             if (data[1][key].cycle){
-                tableRowTemplate += `<tr><td class="text-center" colspan="${getLotteryData().max + 1}"><b>Início do ciclo ${parseInt(data[1][key].cycle) + 1}</b></td></tr>`
+                lastCycle = data[1][key].cycle;
+                tableRowTemplate += `<tr><td class="text-center" colspan="${getLotteryData().max + 4}"><b>Início do ciclo ${parseInt(data[1][key].cycle) + 1}</b></td></tr>`
             }
         });
 
@@ -247,6 +268,12 @@
         row4 += "</tr>";
         row5 += "</tr>";
 
+        let cycleDozens = "";
+        data[2].forEach((dozen, index) => {
+            if (index != data[2].length - 1) cycleDozens += dozen + " | ";
+            else cycleDozens += dozen;
+        });
+
         template += `
             <table class="table ${getLotteryClass('border')} w-100 table-bordered border-black"">
                 <thead class="${getLotteryClass('lottery')}">
@@ -260,6 +287,26 @@
                 </tbody>
 
                 <tfoot>
+                    <tr>
+                        <td style="background-color: white; border-width: 0px" colspan="${getLotteryData().max + 4}">
+                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                <b>Ciclo (${lastCycle}) - Dezenas ausentes no ciclo</b>
+                                <b>${cycleDozens}</b>
+                                <b class="mt-2">Frequência</b>
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-4" style="width: 100px">
+                                        <p><span class="bg-frequency-good label-box">.</span> Alta</p>
+                                    </div>
+                                    <div class="col-4" style="width: 100px">
+                                        <p><span class="bg-frequency-medium label-box">.</span> Média</p>
+                                    </div>
+                                    <div class="col-4" style="width: 100px">
+                                        <p><span class="bg-frequency-bad label-box">.</span> Baixa</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                     ${row1}
                     ${row2}
                     ${row3}
@@ -308,6 +355,11 @@
         }else{
             extension += `&${increment}`;
         }
+    }
+
+    function getDuplaSenaGameClass(index){
+        if (index < 5) return "game-one";
+        else return "game-two";
     }
 </script>
 @endsection
