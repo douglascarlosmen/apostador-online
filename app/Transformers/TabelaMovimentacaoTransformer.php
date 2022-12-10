@@ -20,15 +20,36 @@ class TabelaMovimentacaoTransformer
         $dozensControl = [];
         $contestQuantity = count($this->results);
 
-        foreach ($this->results as $result) {
+        foreach ($this->results as $index => $result) {
             $resultDozens = json_decode($result->dozens, true);
             $contestsDozens[$result->contest_number]['dozens'] = $resultDozens;
             if (!is_null($result->cycle)) {
                 $contestsDozens[$result->contest_number]['cycle'] = $result->cycle;
             }
 
+            if (isset($this->results[$index - 1])) {
+                $contestsDozens[$result->contest_number]['repeat'] = count(array_intersect($resultDozens, $resultDozens = json_decode($this->results[$index - 1]['dozens'], true)));
+            } else {
+                $contestsDozens[$result->contest_number]['repeat'] = '-';
+            }
+
             foreach ($this->dozens as $dozen) {
                 if (in_array($dozen, $resultDozens)) {
+
+                    if ($dozen % 2 == 0) {
+                        if (!isset($contestsDozens[$result->contest_number]['even'])) {
+                            $contestsDozens[$result->contest_number]['even'] = 1;
+                        } else {
+                            $contestsDozens[$result->contest_number]['even'] += 1;
+                        }
+                    } else {
+                        if (!isset($contestsDozens[$result->contest_number]['odd'])) {
+                            $contestsDozens[$result->contest_number]['odd'] = 1;
+                        } else {
+                            $contestsDozens[$result->contest_number]['odd'] += 1;
+                        }
+                    }
+
 
                     /**
                      * Calculando a Frequência em Quantidade
@@ -105,8 +126,21 @@ class TabelaMovimentacaoTransformer
             }
         }
 
+        $lastCyleDozens = [];
+
+        foreach ($contestsDozens as $contestsDozen) {
+            if (isset($contestsDozen['cycle'])) {
+                $lastCyleDozens = [];
+            }
+            $lastCyleDozens = array_unique(array_merge($lastCyleDozens, $contestsDozen['dozens']), SORT_REGULAR);
+        }
+
+        $missingDozens = array_diff($this->dozens, $lastCyleDozens);
+
+        sort($missingDozens);
+
         ksort($dozensControl);
 
-        return [$dozensControl, $contestsDozens];
+        return [$dozensControl, $contestsDozens, $missingDozens];
     }
 }

@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Models\Loto;
 use Illuminate\Console\Command;
-use App\Constants\Dozens;
 use App\Helpers\Helper;
 
 class UpdateLotosCycles extends Command
