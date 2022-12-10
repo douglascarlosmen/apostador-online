@@ -36,7 +36,11 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+
             <div id="contest-display" class="w-100" style="display: none">
+                @if (request()->lottery == "dupla-sena")
+                <h4>1° Sorteio</h4>
+                @endif
                 <span id="numbers-header" class="megasena">
                     <i>Mega-Sena</i>
                 </span>
@@ -44,6 +48,17 @@
 
                 </div>
             </div>
+            @if (request()->lottery == "dupla-sena")
+            <div id="contest-display" class="w-100">
+                <h4 class="mt-2">2° Sorteio</h4>
+                <span id="numbers-header" class="dupla">
+                    <i>Dupla-Sena</i>
+                </span>
+                <div id="numbers2" class="w-100 dupla-border">
+
+                </div>
+            </div>
+            @endif
         </div>
 
         <div class="col-md-6 pt-4">
@@ -120,9 +135,20 @@
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
                 resultsChoosen = true;
-                response.data.dozens.forEach(async item => {
-                    await toggleDozen(`number-${item}`);
-                })
+                if (lottery == "dupla-sena"){
+                    let game1 = [...response.data.dozens.slice(0, 6)];
+                    let game2 = [...response.data.dozens.slice(6)];
+                    game1.forEach(async item => {
+                        await toggleDozen(`number-${item}`);
+                    });
+                    game2.forEach(async item => {
+                        await toggleDozen(`number2-${item}`, false, true);
+                    });
+                }else{
+                    response.data.dozens.forEach(async item => {
+                        await toggleDozen(`number-${item}`);
+                    })
+                }
                 freeActions();
             })
             .catch(error => {
