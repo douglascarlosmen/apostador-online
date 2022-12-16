@@ -142,7 +142,7 @@
                         await toggleDozen(`number-${item}`);
                     });
                     game2.forEach(async item => {
-                        await toggleDozen(`number2-${item}`, false, true);
+                        await toggleDozen(`number2-${item}`, false);
                     });
                 }else{
                     response.data.dozens.forEach(async item => {

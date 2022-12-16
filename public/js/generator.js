@@ -325,8 +325,8 @@ function showGenerateResults(type, data, canToggleDozen = true){
         $("#sum").html(data.sum);
 
         if (canToggleDozen){
+            clearDozens(false);
             addDozen = false;
-            clearDozens();
             dozens.forEach(async item => {
                 await toggleDozen(`number-${item}`, true);
             });

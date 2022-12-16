@@ -54,14 +54,14 @@ async function applyLotteryNumbers(getOptions = true, getContestResults = true){
     else $("#contest-display").removeClass("lotofacil-display");
 
     for(let i = getLotteryData().min; i <= getLotteryData().max; i++){
-        if (i == 100) NUMBERS_CONTAINER.append(`<div id="number-00"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number-00')"><strong>00</strong></span></div>`)
-        else NUMBERS_CONTAINER.append(`<div id="number-${leftPad(i, 2)}"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
+        if (i == 100) NUMBERS_CONTAINER.append(`<div><span id="number-00" class="${getLotteryClass('number')}" onclick="toggleDozen('number-00')"><strong>00</strong></span></div>`)
+        else NUMBERS_CONTAINER.append(`<div><span id="number-${leftPad(i, 2)}" class="${getLotteryClass('number')}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
     }
 
     if (lottery == "dupla-sena"){
         $("#numbers2").html('');
         for(let i = getLotteryData().min; i <= getLotteryData().max; i++){
-            $("#numbers2").append(`<div id="number2-${leftPad(i, 2)}"><span class="${getLotteryClass('number')}" onclick="toggleDozen('number2-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
+            $("#numbers2").append(`<div><span id="number2-${leftPad(i, 2)}" class="${getLotteryClass('number')}" onclick="toggleDozen('number2-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
         }
     }
 }
@@ -264,24 +264,23 @@ function getLinesCount(lines = TEXT_CHECK.val().split("\n")){
     TEXT_TOTAL_GAMES.append(`Total de Jogos: ${lineCount}`);
 }
 
-function clearDozens(){
+function clearDozens(removeFixedAndExcluded = true){
     for(let i = 0; i < NUMBERS_CONTAINER.children().length; i++){
         let children = NUMBERS_CONTAINER.children()[i].firstChild;
         children.classList.remove("selected");
-        children.classList.remove("fixedDozen");
-        children.classList.remove("excludedDozen");
+        if (removeFixedAndExcluded){
+            children.classList.remove("fixedDozen");
+            children.classList.remove("excludedDozen");
+        }
     }
 }
 
-function toggleDozen(id, displayOnly = false, game2 = false){
-    let element = null;
+function toggleDozen(id, displayOnly = false){
+    let element = $(`#${id}`);
 
-    if (game2 == false)
-        element = NUMBERS_CONTAINER.children(`#${id}`).children(0);
-    else
-        element = $("#numbers2").children(`#${id}`).children(0);
     let elementHtml = element.children(0).html();
     if (multiToggle){
+        console.log(displayOnly, elementHtml, element.hasClass("fixedDozen"));
         if (element.hasClass("fixedDozen") || element.hasClass("excludedDozen")){
             if (!displayOnly){
                 if (toggleType == 'fix'){
