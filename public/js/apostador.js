@@ -280,7 +280,6 @@ function toggleDozen(id, displayOnly = false){
 
     let elementHtml = element.children(0).html();
     if (multiToggle){
-        console.log(displayOnly, elementHtml, element.hasClass("fixedDozen"));
         if (element.hasClass("fixedDozen") || element.hasClass("excludedDozen")){
             if (!displayOnly){
                 if (toggleType == 'fix'){
