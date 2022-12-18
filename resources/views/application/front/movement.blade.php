@@ -109,8 +109,8 @@
                 </div>
                 <div class="col-md-2 fast-filter mt-1">
                     <input type="hidden" name="limit" value="150">
-                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter(150)">
-                        Últimos <b>150</b> conc.
+                    <button class="btn btn-outline-secondary w-100" onclick="fastFilter('all')">
+                        Todos concursos
                     </button>
                 </div>
             </div>
@@ -244,20 +244,22 @@
                 if (data[0]["00"]?.maior_seq) row5 += `<td class="text-center">${data[0]["00"].maior_seq}</td>`;
                 else row5 += `<td class="text-center">-</td>`;
             }else{
-                if (data[0][i]?.atraso_atual) row1 += `<td class="text-center ${getLateBg(data[0][i].atraso_atual)}">${data[0][i].atraso_atual}</td>`;
+                let formattedIndex = i.toString().padStart(2, "0");
+
+                if (data[0][formattedIndex]?.atraso_atual) row1 += `<td class="text-center ${getLateBg(data[0][formattedIndex].atraso_atual)}">${data[0][formattedIndex].atraso_atual}</td>`;
                 else row1 += `<td class="text-center ${getLateBg(0)}">-</td>`;
 
-                if (data[0][i]?.freq_porc) row2 += `<td class="text-center ${getFrequencyBg(data[0][i].freq_porc)}">${data[0][i].freq_porc}</td>`;
+                if (data[0][formattedIndex]?.freq_porc) row2 += `<td class="text-center ${getFrequencyBg(data[0][formattedIndex].freq_porc)}">${data[0][formattedIndex].freq_porc}</td>`;
                 else row2 += `<td class="text-center ${getLateBg(0)}">-</td>`;
 
-                if (data[0][i]?.freq_qtd) row3 += `<td class="text-center">${data[0][i].freq_qtd}</td>`;
+                if (data[0][formattedIndex]?.freq_qtd) row3 += `<td class="text-center">${data[0][formattedIndex].freq_qtd}</td>`;
                 else row3 += `<td class="text-center">-</td>`;
 
 
-                if (data[0][i]?.maior_atraso)  row4 += `<td class="text-center">${data[0][i].maior_atraso}</td>`;
+                if (data[0][formattedIndex]?.maior_atraso)  row4 += `<td class="text-center">${data[0][formattedIndex].maior_atraso}</td>`;
                 else row4 += `<td class="text-center">-</td>`;
 
-                if (data[0][i]?.maior_seq) row5 += `<td class="text-center">${data[0][i].maior_seq}</td>`;
+                if (data[0][formattedIndex]?.maior_seq) row5 += `<td class="text-center">${data[0][formattedIndex].maior_seq}</td>`;
                 else row5 += `<td class="text-center">-</td>`;
             }
         }

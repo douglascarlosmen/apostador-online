@@ -27,8 +27,8 @@ class TabelaMovimentacaoTransformer
                 $contestsDozens[$result->contest_number]['cycle'] = $result->cycle;
             }
 
-            if (isset($this->results[$index - 1])) {
-                $contestsDozens[$result->contest_number]['repeat'] = count(array_intersect($resultDozens, $resultDozens = json_decode($this->results[$index - 1]['dozens'], true)));
+            if (isset($this->results[$index])) {
+                $contestsDozens[$result->contest_number]['repeat'] = count(array_intersect($resultDozens, $resultDozens = json_decode($this->results[$index]['dozens'], true)));
             } else {
                 $contestsDozens[$result->contest_number]['repeat'] = '-';
             }
