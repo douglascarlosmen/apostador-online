@@ -1,6 +1,6 @@
 :root {
     --mega: #00923F;
-    --lotofacil: #A349A4;
+    --lotofacil:#A449A2;
     --lotomania: #E1753B;
     --quina: #37287F;
     --dupla: #8F293F;
@@ -227,13 +227,12 @@ footer{
 }
 
 .bg-apostador{
-    background-image: linear-gradient(45deg, #005DA8, #197FAB);
-    background-color: #005DA8;
+    background-color: #52CCA3;
 }
 
 /* TEMPLATE */
 .navbar-nav .dropdown-menu {
-    background-image: linear-gradient(45deg,#005DA8 0 50%, #197FAB 40% 100%);
+    background-color: #52CCA3;
     color: black !important;
 }
 
@@ -243,9 +242,15 @@ footer{
 }
 
 .bg-apostador .nav-link{
+    color: black !important;
+}
+
+.nav-link.megasena, .nav-link.quina,
+.nav-link.lotomania, .nav-link.lotofacil,
+.nav-link.dia, .nav-link.dupla{
     color: white !important;
 }
 
 .bg-apostador .dropdown-item{
-    color: white !important;
+    color: black !important;
 }
