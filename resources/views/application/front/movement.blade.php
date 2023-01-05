@@ -219,9 +219,8 @@
             }
         });
 
-        let row1 = "<tr><th class='text-center bg-dark-01'>Atraso Atual</th>";
-        let row2 = "<tr><th class='text-center bg-dark-02'>Frequência em %</th>";
-        let row3 = "<tr><th class='text-center bg-dark-03'>Frequência em Qtd.</th>";
+        let row1 = "<tr><th class='text-center bg-dark-01'>Dezenas Atrasadas</th>";
+        let row2 = "<tr><th class='text-center bg-dark-02'>Frequência</th>";
         let row4 = "<tr><th class='text-center'>Maior Atraso</th>";
         let row5 = "<tr><th class='text-center'>Maior Sequência</th>";
 
@@ -234,9 +233,6 @@
 
                 if (data[0]["00"]?.freq_porc) row2 += `<td class="text-center ${getFrequencyBg(data[0]["00"].freq_porc)}">${data[0]["00"].freq_porc}</td>`;
                 else row2 += `<td class="text-center ${getLateBg(0)}">-</td>`;
-
-                if (data[0]["00"]?.freq_qtd) row3 += `<td class="text-center">${data[0]["00"].freq_qtd}</td>`;
-                else row3 += `<td class="text-center">-</td>`;
 
                 if (data[0]["00"]?.maior_atraso)  row4 += `<td class="text-center">${data[0]["00"].maior_atraso}</td>`;
                 else row4 += `<td class="text-center">-</td>`;
@@ -251,10 +247,6 @@
 
                 if (data[0][formattedIndex]?.freq_porc) row2 += `<td class="text-center ${getFrequencyBg(data[0][formattedIndex].freq_porc)}">${data[0][formattedIndex].freq_porc}</td>`;
                 else row2 += `<td class="text-center ${getLateBg(0)}">-</td>`;
-
-                if (data[0][formattedIndex]?.freq_qtd) row3 += `<td class="text-center">${data[0][formattedIndex].freq_qtd}</td>`;
-                else row3 += `<td class="text-center">-</td>`;
-
 
                 if (data[0][formattedIndex]?.maior_atraso)  row4 += `<td class="text-center">${data[0][formattedIndex].maior_atraso}</td>`;
                 else row4 += `<td class="text-center">-</td>`;
@@ -294,7 +286,7 @@
                             <div class="d-flex flex-column justify-content-center align-items-center">
                                 <b>Ciclo (${lastCycle}) - Dezenas ausentes no ciclo</b>
                                 <b>${cycleDozens}</b>
-                                <b class="mt-2">Frequência</b>
+                                <b class="mt-2">Legenda</b>
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-4" style="width: 100px">
                                         <p><span class="bg-frequency-good label-box">.</span> Alta</p>
