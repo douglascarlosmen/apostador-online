@@ -10,6 +10,40 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="row">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ordenador">
+                                Organizador
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ordenador">
+                                Imprimir Apostas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" disabled>
+                                Bolões
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" disabled>
+                                Planilhas Grátis
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" disabled>
+                                Contato
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="col-12">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown p-1">
@@ -21,6 +55,8 @@
                                 <a class="dropdown-item" href="/conferidor/lotofacil">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/lotofacil">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/lotofacil">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown p-1">
@@ -32,6 +68,8 @@
                                 <a class="dropdown-item" href="/conferidor/mega-sena">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/mega-sena">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/mega-sena">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown p-1">
@@ -43,6 +81,8 @@
                                 <a class="dropdown-item" href="/conferidor/quina">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/quina">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/quina">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown p-1">
@@ -54,6 +94,8 @@
                                 <a class="dropdown-item" href="/conferidor/dupla-sena">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/dupla-sena">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/dupla-sena">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown p-1">
@@ -65,6 +107,8 @@
                                 <a class="dropdown-item" href="/conferidor/lotomania">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/lotomania">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/lotomania">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown p-1">
@@ -76,6 +120,8 @@
                                 <a class="dropdown-item" href="/conferidor/dia-de-sorte">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/dia-de-sorte">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/dia-de-sorte">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown p-1">
@@ -86,16 +132,9 @@
                                 <a class="dropdown-item" href="/conferidor/timemania">Conferidor</a>
                                 <a class="dropdown-item" href="/gerador/timemania">Gerador Automático</a>
                                 <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/timemania">Tabela de Movimentação</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
+                                <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-12 d-flex justify-content-center align-items-center">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/ordenador">
-                                Ordenador
-                            </a>
                         </li>
                     </ul>
                 </div>
