@@ -151,7 +151,6 @@
         let route = "{{route('tabela_movimentacao', 'lottery')}}".replace('lottery', lottery);
         axios.get(`${route}${extension}`)
             .then(response => {
-                console.log(response.data);
                 mountTable(response.data);
             })
             .catch(error => {
@@ -258,7 +257,6 @@
 
         row1 += "</tr>";
         row2 += "</tr>";
-        row3 += "</tr>";
         row4 += "</tr>";
         row5 += "</tr>";
 
