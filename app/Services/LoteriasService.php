@@ -4,74 +4,13 @@ namespace App\Services;
 
 class LoteriasService
 {
-
-    protected $urls;
+    protected $url;
+    protected $token;
 
     public function __construct()
     {
-        $this->urls = config('loterias.urls');
-    }
-
-    /**
-     * Obtém a lista dos nomes das loterias
-     * disponíveis para consulta na api
-     */
-    public function listLotosNames(): array
-    {
-        foreach ($this->urls as $base_url) {
-            $url = $base_url;
-
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-            $response = curl_exec($curl);
-
-            if (curl_errno($curl)) {
-                continue;
-            } else {
-                $resultStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-                if ($resultStatus == 200) {
-                    return json_decode($response, true);
-                } else {
-                    continue;
-                }
-            }
-        }
-    }
-
-    /**
-     * Obtém o resultado mais recente de
-     * determinada loteria
-     */
-    public function getLatestLotoResult(string $lotoName): array
-    {
-        foreach ($this->urls as $base_url) {
-            $url = $base_url . "$lotoName/latest";
-
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-            $response = curl_exec($curl);
-
-            if (curl_errno($curl)) {
-                continue;
-            } else {
-                $resultStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-                if ($resultStatus == 200) {
-                    return json_decode($response, true);
-                } else {
-                    continue;
-                }
-            }
-        }
+        $this->url = config('api_loterias.url');
+        $this->token = config('api_loterias.token');
     }
 
     /**
@@ -80,58 +19,23 @@ class LoteriasService
      */
     public function getSpecificContestLotoResult(string $lotoName, string|int $contestNumber): array
     {
-        foreach ($this->urls as $base_url) {
-            $url = $base_url . "$lotoName/$contestNumber";
+        $url = $this->url . "loteria=$lotoName&token=" . $this->token . "&concurso=$contestNumber";
 
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
 
-            $response = curl_exec($curl);
+        $response = curl_exec($curl);
 
-            if (curl_errno($curl)) {
-                continue;
-            } else {
-                $resultStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        if (curl_errno($curl)) {
 
-                if ($resultStatus == 200) {
-                    return json_decode($response, true);
-                } else {
-                    continue;
-                }
-            }
-        }
-    }
+        } else {
+            $resultStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-    /**
-     * Obtém todos os resultados de
-     * uma determinada loteria
-     */
-    public function getAllLotoResults(string $lotoName): array
-    {
-        foreach ($this->urls as $base_url) {
-            $url = $base_url . $lotoName;
-
-            $curl = curl_init($url);
-            curl_setopt($curl, CURLOPT_URL, $url);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
-            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-            $response = curl_exec($curl);
-
-            if (curl_errno($curl)) {
-                continue;
-            } else {
-                $resultStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-                if ($resultStatus == 200) {
-                    return json_decode($response, true);
-                } else {
-                    continue;
-                }
+            if ($resultStatus == 200) {
+                return json_decode($response, true);
             }
         }
     }

@@ -24,6 +24,8 @@ class UpdateLotosResults extends Command
      */
     protected $description = 'Busca novos resultados e atualiza o banco de dados';
 
+    protected $results = [];
+
     /**
      * Execute the console command.
      *
@@ -34,12 +36,16 @@ class UpdateLotosResults extends Command
         $lotos = Loto::all();
 
         foreach ($lotos as $loto) {
+
+            $mostRecentResult = $loto->results()->orderBy('contest_number', 'DESC')->first();
+            $nextContest = $mostRecentResult->contest_number+1;
+
             $resultsCounter = 0;
             $this->info("Buscando Resultados Recentes da $loto->name");
-            $results = (new LoteriasService)->getAllLotoResults($loto->name);
+            $this->getLatestLotoResult($loto->name, $nextContest);
 
-            if (!empty($results)) {
-                foreach ($results as $result) {
+            if (!empty($this->results)) {
+                foreach ($this->results as $result) {
                     if (!LotoResult::where('loto_id', $loto->id)->where('contest_number', $result['concurso'])->exists()) {
                         LotoResult::create([
                             "loto_id" => $loto->id,
@@ -65,6 +71,33 @@ class UpdateLotosResults extends Command
             $message = "$resultsCounter novos resultados da $loto->name";
             Log::info($message);
             $this->info($message);
+        }
+    }
+
+    private function getLatestLotoResult($lotoName, $nextContest)
+    {
+        $result = (new LoteriasService)->getSpecificContestLotoResult($lotoName, $nextContest);
+        
+        if ($result['numero_concurso'] != $nextContest) {
+            return;
+        } else {
+            $this->results[] = [
+                'nome' => $lotoName,
+                'concurso' => $result['numero_concurso'],
+                'data' => $result['data_concurso'],
+                'local' => $result['local_realizacao'],
+                'dezenas' => isset($result['dezenas']) ? $result['dezenas'] : '',
+                'premiacoes' => $result['premiacao'],
+                'estadosPremiados' => [],
+                'acumulou' => isset($result['acumulou']) ? $result['acumulou'] : '',
+                'acumuladaProxConcurso' => isset($result['valor_acumulado']) ? $result['valor_acumulado'] : '',
+                'dataProxConcurso' => $result['data_proximo_concurso'],
+                'proxConcurso' => $result['concurso_proximo'],
+                'timeCoracao' => '',
+                'mesSorte' => ''
+            ];
+
+            $this->getLatestLotoResult($lotoName, $nextContest+1);
         }
     }
 }
