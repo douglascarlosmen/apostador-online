@@ -4,6 +4,7 @@ use App\Http\Controllers\AxiosController;
 use App\Http\Controllers\ConferidorController;
 use App\Http\Controllers\GeneratorController;
 use App\Http\Controllers\OrdenadorController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TabelaMovimentacaoController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return redirect('/conferidor/megasena');
-});
+Route::get('/', [SiteController::class, 'index']);
