@@ -10,7 +10,8 @@ class SiteController extends Controller
     {
         $recentlyLotosResults = Loto::with(['results' => function ($query) {
             $query->orderBy('contest_number', 'DESC');
-        }])->get()->transform(function ($loto) {
+        }])->orderByRaw("FIELD(name, 'lotofacil', 'megasena', 'quina',
+            'duplasena', 'diadesorte', 'timemania')")->get()->transform(function ($loto) {
             return $loto->results->first();
         });
 

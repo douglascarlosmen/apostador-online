@@ -45,6 +45,30 @@ class LotoResult extends Model
         return number_format($this->accumulated_next_contest, 2, ",", ".");
     }
 
+    public function getFormattedNameAttribute(){
+        switch($this->name){
+            case "megasena": return "Mega Sena";
+            case "lotofacil": return "Lotofácil";
+            case "quina": return "Quina";
+            case "duplasena": return "Dupla-Sena";
+            case "lotomania": return "Lotomania";
+            case "diadesorte": return "Dia de Sorte";
+            case "timemania": return "Timemania";
+        }
+    }
+
+    public function getStyleClassByName(){
+        switch($this->name){
+            case "megasena": return "megasena-number";
+            case "lotofacil": return "lotofacil-number";
+            case "lotomania": return "lotomania-number";
+            case "duplasena": return "dupla-number";
+            case "quina": return "quina-number";
+            case "diadesorte": return "dia-number";
+            case "timemania": return "time-number";
+        }
+    }
+
     // Functions
     public function nextContestInDays()
     {

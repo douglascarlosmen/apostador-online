@@ -11,3 +11,8 @@
         </div>
     </section>
 @endsection
+
+
+@section("scripts")
+<script src="{{asset('js/apostador.js')}}"></script>
+@endsection
