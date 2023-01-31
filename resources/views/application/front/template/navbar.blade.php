@@ -62,12 +62,12 @@
                         <li class="nav-item dropdown p-1">
                             <a class="nav-link dropdown-toggle btn megasena" href="#" role="button" data-toggle="dropdown"
                                 aria-expanded="false">
-                                Mega-Sena
+                                Mega Sena
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/conferidor/mega-sena">Conferidor</a>
-                                <a class="dropdown-item" href="/gerador/mega-sena">Gerador Automático</a>
-                                <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/mega-sena">Tabela de Movimentação</a>
+                                <a class="dropdown-item" href="/conferidor/megasena">Conferidor</a>
+                                <a class="dropdown-item" href="/gerador/megasena">Gerador Automático</a>
+                                <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/megasena">Tabela de Movimentação</a>
                                 <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
                                 <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
@@ -91,9 +91,9 @@
                                 Dupla-Sena
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/conferidor/dupla-sena">Conferidor</a>
-                                <a class="dropdown-item" href="/gerador/dupla-sena">Gerador Automático</a>
-                                <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/dupla-sena">Tabela de Movimentação</a>
+                                <a class="dropdown-item" href="/conferidor/duplasena">Conferidor</a>
+                                <a class="dropdown-item" href="/gerador/duplasena">Gerador Automático</a>
+                                <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/duplasena">Tabela de Movimentação</a>
                                 <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
                                 <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>
@@ -117,9 +117,9 @@
                                 Dia de Sorte
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/conferidor/dia-de-sorte">Conferidor</a>
-                                <a class="dropdown-item" href="/gerador/dia-de-sorte">Gerador Automático</a>
-                                <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/dia-de-sorte">Tabela de Movimentação</a>
+                                <a class="dropdown-item" href="/conferidor/diadesorte">Conferidor</a>
+                                <a class="dropdown-item" href="/gerador/diadesorte">Gerador Automático</a>
+                                <a class="dropdown-item" href="/tabela-de-movimentacao-das-dezenas/diadesorte">Tabela de Movimentação</a>
                                 <a class="dropdown-item disabled" href="#" disabled>Fechamento</a>
                                 <a class="dropdown-item disabled" href="#" disabled>Importar Jogos</a>
                             </div>

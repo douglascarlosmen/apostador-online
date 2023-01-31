@@ -38,21 +38,21 @@
         <div class="col-md-6">
 
             <div id="contest-display" class="w-100" style="display: none">
-                @if (request()->lottery == "dupla-sena")
+                @if (request()->lottery == "duplasena")
                 <h4>1° Sorteio</h4>
                 @endif
                 <span id="numbers-header" class="megasena">
-                    <i>Mega-Sena</i>
+                    <i>megasena</i>
                 </span>
                 <div id="numbers" class="w-100 megasena-border">
 
                 </div>
             </div>
-            @if (request()->lottery == "dupla-sena")
+            @if (request()->lottery == "duplasena")
             <div id="contest-display" class="w-100">
                 <h4 class="mt-2">2° Sorteio</h4>
                 <span id="numbers-header" class="dupla">
-                    <i>Dupla-Sena</i>
+                    <i>duplasena</i>
                 </span>
                 <div id="numbers2" class="w-100 dupla-border">
 
@@ -135,7 +135,7 @@
         axios.get(`{{route('lottery.results')}}?loto_name=${lottery}&contest_number=${contestNumber}`)
             .then(response => {
                 resultsChoosen = true;
-                if (lottery == "dupla-sena"){
+                if (lottery == "duplasena"){
                     let game1 = [...response.data.dozens.slice(0, 6)];
                     let game2 = [...response.data.dozens.slice(6)];
                     game1.forEach(async item => {
@@ -253,7 +253,7 @@
         let tableRowTemplate = "<th style='width: 50px'>ACERTOS</th>";
         let icon = ""
         switch(lottery){
-            case "mega-sena":
+            case "megasena":
                 for(let i = megasenaLottery.totalPrize; i >= 1; i--){
                     if (i >= megasenaLottery.elegiblePrize)
                         icon = `<i class="fas fa-trophy"></i>`;
@@ -283,7 +283,7 @@
                     tableRowTemplate += `<td>${getPoints(i, points)}</td>`
                 }
                 break;
-            case "dupla-sena":
+            case "duplasena":
                 for(let i = duplaLottery.totalPrize; i >= 1; i--){
                     if (i >= duplaLottery.elegiblePrize)
                         icon = `<i class="fas fa-trophy"></i>`;
@@ -303,7 +303,7 @@
                     tableRowTemplate += `<td>${getPoints(i, points)}</td>`
                 }
                 break;
-            case "dia-de-sorte":
+            case "diadesorte":
                 for(let i = diaLottery.totalPrize; i >= 1; i--){
                     if (i >= diaLottery.elegiblePrize)
                         icon = `<i class="fas fa-trophy"></i>`;

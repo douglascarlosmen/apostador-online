@@ -116,9 +116,9 @@
             </div>
         </div>
     </div>
-    @if (request()->lottery == "dupla-sena")
+    @if (request()->lottery == "duplasena")
         <div class="d-flex flex-column justify-content-center align-items-center mt-2">
-            <p>Legenda Dupla-Sena</p>
+            <p>Legenda duplasena</p>
             <div class="row">
                 <p class="mr-2"><span class="dupla label-box">.</span> 1° Sorteio</p>
                 <p><span class="game-two label-box">.</span> 2° Sorteio</p>
@@ -182,7 +182,7 @@
             tableRowTemplate += "<tr class='text-center'>";
             let alreadySetted = 0;
             tableRowTemplate += `<th class="${getLotteryClass('lottery')}">${key}</th>`;
-            if (lottery == "dupla-sena"){ //dupla-sena return 2 contests in one array result
+            if (lottery == "duplasena"){ //duplasena return 2 contests in one array result
                 let dozenIndex = "";
                 for(let i = 1; i <= getLotteryData().max; i++){
                     if (data[1][key].dozens.includes(i.toString().padStart(2, "0"))){

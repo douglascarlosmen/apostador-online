@@ -16,7 +16,7 @@ class Helper {
         $dozens = [];
 
         switch ($loto) {
-            case 'mega-sena':
+            case 'megasena':
                 $dozens = Dozens::MEGA_SENA;
                 break;
             case 'lotofacil':
@@ -31,10 +31,10 @@ class Helper {
             case 'timemania':
                 $dozens = Dozens::TIMEMANIA;
                 break;
-            case 'dupla-sena':
+            case 'duplasena':
                 $dozens = Dozens::DUPLA_SENA;
                 break;
-            case 'dia-de-sorte':
+            case 'diadesorte':
                 $dozens = Dozens::DIA_DE_SORTE;
                 break;
         }

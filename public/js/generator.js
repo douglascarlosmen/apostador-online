@@ -52,7 +52,7 @@ function setDefaultParams(info){
 
 function getDefaultParams(){
     switch(lottery){
-        case 'mega-sena':
+        case 'megasena':
             var params = {
                 minSelected: 6,
                 maxSelected: 15,
@@ -140,7 +140,7 @@ function getDefaultParams(){
                 maxSum: 250,
             };
         break;
-        case 'dia-de-sorte':
+        case 'diadesorte':
             var params = {
                 minSelected: 7,
                 maxSelected: 15,
@@ -162,7 +162,7 @@ function getDefaultParams(){
                 maxSum: 130,
             };
         break;
-        case 'dupla-sena':
+        case 'duplasena':
             var params = {
                 minSelected: 6,
                 maxSelected: 15,

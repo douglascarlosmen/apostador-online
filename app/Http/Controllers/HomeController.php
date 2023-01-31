@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return redirect('/gerador/mega-sena');
+        return redirect('/gerador/megasena');
     }
 }

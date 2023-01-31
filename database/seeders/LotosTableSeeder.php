@@ -16,7 +16,7 @@ class LotosTableSeeder extends Seeder
      */
     public function run()
     {
-        $lotosNames = (new LoteriasService)->listLotosNames();
+        $lotosNames = ['megasena', 'quina', 'lotofacil', 'lotomania', 'duplasena', 'timemania', 'diadesorte'];
 
         foreach ($lotosNames as $name) {
             Loto::create([

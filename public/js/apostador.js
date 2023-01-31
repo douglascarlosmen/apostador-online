@@ -16,7 +16,7 @@ var resultsChoosen = false;
 let addDozen = true;
 let dozens = [];
 let selectedGames = [];
-var lottery = "mega-sena";
+var lottery = "megasena";
 
 var megasenaLottery = { min: 1, max: 60, totalPrize: 6, elegiblePrize: 4, minSelected: 6, maxSelected: 15, lateBad: 10, lateMedium: 20, frequencyBad: 10, frequencyMedium: 30 };
 var lotofacilLottery = { min: 1, max: 25, totalPrize: 15, elegiblePrize: 11, minSelected: 15, maxSelected: 20, lateBad: 1, lateMedium: 2, frequencyBad: 40, frequencyMedium: 70  };
@@ -58,7 +58,7 @@ async function applyLotteryNumbers(getOptions = true, getContestResults = true){
         else NUMBERS_CONTAINER.append(`<div><span id="number-${leftPad(i, 2)}" class="${getLotteryClass('number')}" onclick="toggleDozen('number-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
     }
 
-    if (lottery == "dupla-sena"){
+    if (lottery == "duplasena"){
         $("#numbers2").html('');
         for(let i = getLotteryData().min; i <= getLotteryData().max; i++){
             $("#numbers2").append(`<div><span id="number2-${leftPad(i, 2)}" class="${getLotteryClass('number')}" onclick="toggleDozen('number2-${leftPad(i, 2)}')"><strong>${leftPad(i, 2)}</strong></span></div>`);
@@ -69,7 +69,7 @@ async function applyLotteryNumbers(getOptions = true, getContestResults = true){
 async function changeLotteryLayout(oldLottery, lottery){
     //Remove old style
     switch (oldLottery){
-        case "mega-sena":
+        case "megasena":
             NUMBERS_CONTAINER.removeClass("megasena-border");
             NUMBERS_HEADER.removeClass("megasena");
             CHECK_BUTTON.removeClass("megasena");
@@ -84,7 +84,7 @@ async function changeLotteryLayout(oldLottery, lottery){
             NUMBERS_HEADER.removeClass("lotomania");
             CHECK_BUTTON.removeClass("lotomania");
             break;
-        case "dupla-sena":
+        case "duplasena":
             NUMBERS_CONTAINER.removeClass("dupla-border");
             NUMBERS_HEADER.removeClass("dupla");
             CHECK_BUTTON.removeClass("dupla");
@@ -94,7 +94,7 @@ async function changeLotteryLayout(oldLottery, lottery){
             NUMBERS_HEADER.removeClass("quina");
             CHECK_BUTTON.removeClass("quina");
             break;
-        case "dia-de-sorte":
+        case "diadesorte":
             NUMBERS_CONTAINER.removeClass("dia-border");
             NUMBERS_HEADER.removeClass("dia");
             CHECK_BUTTON.removeClass("dia");
@@ -109,10 +109,10 @@ async function changeLotteryLayout(oldLottery, lottery){
     //add new style
     NUMBERS_HEADER.html('');
     switch(lottery){
-        case "mega-sena":
+        case "megasena":
             NUMBERS_CONTAINER.addClass("megasena-border");
             NUMBERS_HEADER.addClass("megasena");
-            NUMBERS_HEADER.append("<i>Mega-Sena</i>");
+            NUMBERS_HEADER.append("<i>megasena</i>");
             CHECK_BUTTON.addClass("megasena");
             break;
         case "lotofacil":
@@ -127,10 +127,10 @@ async function changeLotteryLayout(oldLottery, lottery){
             NUMBERS_HEADER.append("<i>Lotomania</i>");
             CHECK_BUTTON.addClass("lotomania");
             break;
-        case "dupla-sena":
+        case "duplasena":
             NUMBERS_CONTAINER.addClass("dupla-border");
             NUMBERS_HEADER.addClass("dupla");
-            NUMBERS_HEADER.append("<i>Dupla-Sena</i>");
+            NUMBERS_HEADER.append("<i>duplasena</i>");
             CHECK_BUTTON.addClass("dupla");
             break;
         case "quina":
@@ -139,7 +139,7 @@ async function changeLotteryLayout(oldLottery, lottery){
             NUMBERS_HEADER.append("<i>Quina</i>");
             CHECK_BUTTON.addClass("quina");
             break;
-        case "dia-de-sorte":
+        case "diadesorte":
             NUMBERS_CONTAINER.addClass("dia-border");
             NUMBERS_HEADER.addClass("dia");
             NUMBERS_HEADER.append("<i>Dia de Sorte</i>");
@@ -172,7 +172,7 @@ function getLotteryClass(classType = 'number'){
 
     if (classType == 'number'){
         switch(lottery){
-            case "mega-sena":
+            case "megasena":
                 lotteryNumberClass = "megasena-number";
                 break;
             case "lotofacil":
@@ -181,13 +181,13 @@ function getLotteryClass(classType = 'number'){
             case "lotomania":
                 lotteryNumberClass = "lotomania-number";
                 break;
-            case "dupla-sena":
+            case "duplasena":
                 lotteryNumberClass = "dupla-number";
                 break;
             case "quina":
                 lotteryNumberClass = "quina-number";
                 break;
-            case "dia-de-sorte":
+            case "diadesorte":
                 lotteryNumberClass = "dia-number";
                 break;
             case "timemania":
@@ -198,7 +198,7 @@ function getLotteryClass(classType = 'number'){
         return lotteryNumberClass;
     }else if (classType == 'border'){
         switch(lottery){
-            case "mega-sena":
+            case "megasena":
                 lotteryBorderClass = "megasena-border";
                 break;
             case "lotofacil":
@@ -207,13 +207,13 @@ function getLotteryClass(classType = 'number'){
             case "lotomania":
                 lotteryBorderClass = "lotomania-border";
                 break;
-            case "dupla-sena":
+            case "duplasena":
                 lotteryBorderClass = "dupla-border";
                 break;
             case "quina":
                 lotteryBorderClass = "quina-border";
                 break;
-            case "dia-de-sorte":
+            case "diadesorte":
                 lotteryBorderClass = "dia-border";
                 break;
             case "timemania":
@@ -224,7 +224,7 @@ function getLotteryClass(classType = 'number'){
         return lotteryBorderClass;
     }else if (classType == 'lottery'){
         switch(lottery){
-            case "mega-sena":
+            case "megasena":
                 lotteryClass = "megasena";
                 break;
             case "lotofacil":
@@ -233,13 +233,13 @@ function getLotteryClass(classType = 'number'){
             case "lotomania":
                 lotteryClass = "lotomania";
                 break;
-            case "dupla-sena":
+            case "duplasena":
                 lotteryClass = "dupla";
                 break;
             case "quina":
                 lotteryClass = "quina";
                 break;
-            case "dia-de-sorte":
+            case "diadesorte":
                 lotteryClass = "dia";
                 break;
             case "timemania":
@@ -332,7 +332,7 @@ function toggleDozen(id, displayOnly = false){
 function getLotteryData(){
     let data;
     switch(lottery){
-        case "mega-sena":
+        case "megasena":
             data = megasenaLottery;
             break;
         case "lotofacil":
@@ -341,13 +341,13 @@ function getLotteryData(){
         case "lotomania":
             data = lotomaniaLottery;
             break;
-        case "dupla-sena":
+        case "duplasena":
             data = duplaLottery;
             break;
         case "quina":
             data = quinaLottery;
             break;
-        case "dia-de-sorte":
+        case "diadesorte":
             data = diaLottery;
             break;
         case "timemania":
