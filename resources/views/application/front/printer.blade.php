@@ -4,7 +4,7 @@
 @include("application.front.template.navbar")
 
 <section id="contest-numbers" class="container mt-3">
-  <form action="{{route('print.make')}}" method="POST">
+  <form action="{{route('print.make')}}" method="POST" target="_blank">
     @csrf
     <div class="row">
         <div class="col-md-4 mt-5">
