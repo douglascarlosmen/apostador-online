@@ -31,7 +31,7 @@ class PrintController extends Controller
 
             $this->games[] = view('application.tickets.'.$request->loto.'.game', ['game' => $game, 'type' => $request->type])->render();
             $this->count++;
-            if ($request->loto == 'lotomania'){
+            if ($request->loto == 'lotomania' || $request->loto == 'timemania'){
                 $this->tickets[] = view('application.tickets.'.$request->loto.'.ticket', ['games' => $this->games, 'quantity' => $quantity, 'type' => $request->type])->render();
                 $this->games = [];
             }else if ($this->count % 3 == 0){
