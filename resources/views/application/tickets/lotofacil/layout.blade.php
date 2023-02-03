@@ -67,6 +67,7 @@
         margin-left: 0.7cm;
         margin-right: 0.2cm;
         margin-bottom: 0.1cm;
+        margin-top: 0.38cm;
         width: 7.2cm;
         height: 0.2cm;
         display: flex;
@@ -87,9 +88,6 @@
     <title>Imprimir Jogo</title>
   </head>
   <body>
-    <button id="print" onclick="print()">
-      imprimir
-    </button>
     @foreach ($tickets as $ticket)
       {!! $ticket !!}
     @endforeach
