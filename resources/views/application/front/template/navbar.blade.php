@@ -23,7 +23,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/ordenador">
+                            <a class="nav-link" href="/print">
                                 Imprimir Apostas
                             </a>
                         </li>
