@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(LotosTableSeeder::class);
-        $this->call(LotosResultsTableSeeder::class);
+        // $this->call(LotosResultsTableSeeder::class);
     }
 }

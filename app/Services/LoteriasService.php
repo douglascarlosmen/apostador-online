@@ -39,4 +39,31 @@ class LoteriasService
             }
         }
     }
+
+    /**
+     * Obtém o resultado do último concurso
+     * de determinada loteria
+     */
+    public function getLastLotoResult(string $lotoName): array
+    {
+        $url = $this->url . "loteria=$lotoName&token=" . $this->token;
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+
+        } else {
+            $resultStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            if ($resultStatus == 200) {
+                return json_decode($response, true);
+            }
+        }
+    }
 }
