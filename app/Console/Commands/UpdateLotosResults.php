@@ -39,8 +39,9 @@ class UpdateLotosResults extends Command
             return $query->orderBy('contest_number', 'DESC');
         }])->get();
 
+        $progressbar = $this->output->createProgressBar(count($lotos));
+        $progressbar->start();
         foreach ($lotos as $loto) {
-
             $lastContestResult = (new LoteriasService)->getLastLotoResult($loto->name);
 
             if (!empty($lastContestResult)) {
@@ -50,23 +51,28 @@ class UpdateLotosResults extends Command
 
                         $result = (new LoteriasService)->getSpecificContestLotoResult($loto->name, $contestNumber);
 
-                        LotoResult::create([
-                            "loto_id" => $loto->id,
-                            "name" => $loto->name,
-                            "contest_number" => $result['numero_concurso'],
-                            "contest_date" => $result['data_concurso'],
-                            "place" => $result['local_realizacao'],
-                            "dozens" => json_encode($result['dezenas']),
-                            "awards" => json_encode($result['premiacao']),
-                            "awarded_states" => !empty($result['local_ganhadores']) ? json_encode($result['local_ganhadores']) : '',
-                            "accumulated" => $result['acumulou'],
-                            "accumulated_next_contest" => $result['valor_estimado_proximo_concurso'],
-                            "date_next_contest" => $result['data_proximo_concurso'],
-                            "next_context_number" => $result['concurso_proximo']
-                        ]);
+                        if (isset($result['numero_concurso'])){
+                            LotoResult::create([
+                                "loto_id" => $loto->id,
+                                "name" => $loto->name,
+                                "contest_number" => $result['numero_concurso'],
+                                "contest_date" => $result['data_concurso'],
+                                "place" => $result['local_realizacao'],
+                                "dozens" => json_encode($result['dezenas']),
+                                "awards" => json_encode($result['premiacao']),
+                                "awarded_states" => !empty($result['local_ganhadores']) ? json_encode($result['local_ganhadores']) : '',
+                                "accumulated" => $result['acumulou'],
+                                "accumulated_next_contest" => $result['valor_estimado_proximo_concurso'],
+                                "date_next_contest" => $result['data_proximo_concurso'],
+                                "next_context_number" => $result['concurso_proximo']
+                            ]);
+                        }
                     }
                 }
             }
+
+            $progressbar->advance();
         }
+        $progressbar->finish();
     }
 }

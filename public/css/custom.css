@@ -1,11 +1,11 @@
 :root {
     --mega: #00923F;
-    --lotofacil:#A449A2;
-    --lotomania: #E1753B;
-    --quina: #37287F;
-    --dupla: #8F293F;
+    --lotofacil:#930989;
+    --lotomania: #FF6633;
+    --quina: #003399;
+    --dupla: #990000;
     --dia: #DAA505;
-    --time: #FFED00;
+    --time: #FFFF00;
     --time-green: #006600;
   }
 
@@ -89,7 +89,7 @@ textarea{
 footer{
     min-height: 90px;
     padding: 1em;
-    background-color: rgb(184, 184, 184);
+    background-color: #00CCFF;
     color: #000;
 }
 
@@ -227,13 +227,13 @@ footer{
 }
 
 .bg-apostador{
-    background-color: #52CCA3;
+    background-color: #00CCFF;
 }
 
 /* TEMPLATE */
 .navbar-nav .dropdown-menu {
-    background-color: #52CCA3;
-    color: black !important;
+    /* background-color: #00CCFF; */
+    color: white !important;
 }
 
 .navbar-nav .dropdown-item:hover{
@@ -252,5 +252,5 @@ footer{
 }
 
 .bg-apostador .dropdown-item{
-    color: black !important;
+    color: white !important;
 }

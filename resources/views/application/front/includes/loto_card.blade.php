@@ -11,12 +11,12 @@
                 <div class="col-8 text-center">
                     <div class="p-2 w-100 mb-3 rounded border border-dark" style="background-color: blanchedalmond">
                         @if ($lotoResult->accumulated)
-                            <span><strong>Acumulou! R$ {{ $lotoResult->formatted_accumulated_next_contest }}</strong></span>
+                            <span><strong>Acumulou! R$ {{ $lotoResult->acumulated_abbr }}</strong></span>
                         @else
                             <span><strong>Prêmio distribuído!</strong></span>
                         @endif
                     </div>
-                    <p>Próximo Concurso: em {{ $lotoResult->nextContestInDays() }}</p>
+                    <p>Próximo Concurso: {{ $lotoResult->nextContestInDays() }}</p>
                 </div>
             </div>
         </div>

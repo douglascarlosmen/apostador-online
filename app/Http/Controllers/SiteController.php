@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FormatterHelper;
 use App\Models\Loto;
 
 class SiteController extends Controller
@@ -10,8 +11,7 @@ class SiteController extends Controller
     {
         $recentlyLotosResults = Loto::with(['results' => function ($query) {
             $query->orderBy('contest_number', 'DESC');
-        }])->orderByRaw("FIELD(name, 'lotofacil', 'megasena', 'quina',
-            'duplasena', 'diadesorte', 'timemania')")->get()->transform(function ($loto) {
+        }])->orderByRaw("FIELD(name, 'lotofacil', 'megasena', 'quina', 'duplasena', 'diadesorte', 'timemania', 'lotomania')")->get()->transform(function ($loto) {
             return $loto->results->first();
         });
 

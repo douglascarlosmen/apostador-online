@@ -17,7 +17,7 @@ class LoteriasService
      * Obtém o resultado de um concurso específico
      * de determinada loteria
      */
-    public function getSpecificContestLotoResult(string $lotoName, string|int $contestNumber): array
+    public function getSpecificContestLotoResult(string $lotoName, string|int $contestNumber)
     {
         $url = $this->url . "loteria=$lotoName&token=" . $this->token . "&concurso=$contestNumber";
 

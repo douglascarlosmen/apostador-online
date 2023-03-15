@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\FormatterHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +46,10 @@ class LotoResult extends Model
         return number_format($this->accumulated_next_contest, 2, ",", ".");
     }
 
+    public function getAcumulatedAbbrAttribute(){
+        return FormatterHelper::numtostring($this->accumulated_next_contest);
+    }
+
     public function getFormattedNameAttribute(){
         switch($this->name){
             case "megasena": return "Mega Sena";
@@ -72,12 +77,16 @@ class LotoResult extends Model
     // Functions
     public function nextContestInDays()
     {
-        if($diff = $this->date_next_contest->diffInDays(Carbon::now()) < 1) {
-            $diff = $this->date_next_contest->diffInHours(Carbon::now()) . ' horas';
-        } else {
-            $diff = $diff . ' dias';
-        }
+        if (!$this->date_next_contest) return "Não há previsão";
 
-        return $diff;
+        $now = Carbon::now()->format('Y-m-d 00:00:00');
+        $diff = $this->date_next_contest->diffInDays($now);
+        if ($diff == 1){
+            return "Amanhã";
+        } else if($diff < 1) {
+            return "Hoje";
+        } else {
+            return $diff == 1 ? "em ". $diff . ' dia' : "em ". $diff . ' dias';
+        }
     }
 }

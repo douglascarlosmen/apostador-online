@@ -63,7 +63,7 @@
     }
 
     .game-two{
-        background-color: #cc0c32;
+        background-color: #cc0c32 !important;
     }
 </style>
 @endsection
@@ -206,9 +206,9 @@
                 }
             }
             tableRowTemplate += `
-                <td style="background-color: #FF6A6A"><b>${data[1][key].even ?? 0}</b></td>
-                <td style="background-color: #FF6A6A"><b>${data[1][key].odd ?? 0}</b></td>
-                <td style="background-color: #FF6A6A"><b>${data[1][key].repeat ?? 0}</b></td>
+                <td class="${getLotteryClass('lottery')}"><b>${data[1][key].even ?? 0}</b></td>
+                <td class="${getLotteryClass('lottery')}"><b>${data[1][key].odd ?? 0}</b></td>
+                <td class="${getLotteryClass('lottery')}"><b>${data[1][key].repeat ?? 0}</b></td>
             `;
 
             tableRowTemplate += `</tr>`;
@@ -349,7 +349,7 @@
     }
 
     function getDuplaSenaGameClass(index){
-        if (index < 5) return "game-one";
+        if (index <= 5) return "game-one";
         else return "game-two";
     }
 </script>
